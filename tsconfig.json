@@ -1,13 +1,4 @@
 {
-  "include": [
-    "**/*.ts",
-    "**/*.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "apps",
-    "packages",
-  ],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
