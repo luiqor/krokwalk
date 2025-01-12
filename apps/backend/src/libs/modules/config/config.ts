@@ -6,7 +6,7 @@ const { APP_PORT } = process.env;
 
 const config = {
   APP: {
-    PORT: APP_PORT,
+    PORT: Number(APP_PORT),
   },
 };
 
