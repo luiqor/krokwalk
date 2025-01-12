@@ -5,9 +5,13 @@
     "start:dev": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "4.21.2",
     "shared": "*"
   },
   "devDependencies": {
+    "@types/express": "5.0.0",
+    "tsx": "^4.19.2",
     "typescript": "5.6.2"
   }
 }
