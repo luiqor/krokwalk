@@ -39,11 +39,12 @@ class BaseApplication {
         res: Response,
         next: NextFunction
       ): void => {
-        console.error(err.stack);
-
         if (err instanceof HTTPError) {
-          res.status(err.status).send(err);
-          next();
+          res.status(err.status).send({
+            message: err.message,
+            status: err.status,
+            cause: err.cause,
+          });
         }
 
         res.status(500).send(
@@ -53,6 +54,7 @@ class BaseApplication {
             cause: err,
           })
         );
+        next();
       }
     );
   }
