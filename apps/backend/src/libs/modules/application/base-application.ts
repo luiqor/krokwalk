@@ -1,18 +1,26 @@
-import express from "express";
+import express, {
+  Application as ExpressApplication,
+  Request,
+  Response,
+  NextFunction,
+  Router,
+} from "express";
+import { HTTPError } from "../../../libs/http/http";
 
 class BaseApplication {
-  private app: express.Application;
+  private app: ExpressApplication;
 
   private port: number;
 
-  private apiRouter: express.Router;
+  private apiRouter: Router;
 
-  constructor({ port, router }: { port: number; router: express.Router }) {
+  constructor({ port, router }: { port: number; router: Router }) {
     this.app = express();
     this.apiRouter = router;
     this.port = port;
     this.setupMiddleware();
     this.setupRoutes();
+    this.initErrorHandler();
   }
 
   private setupMiddleware() {
@@ -21,6 +29,32 @@ class BaseApplication {
 
   private setupRoutes() {
     this.app.use("/api", this.apiRouter);
+  }
+
+  private initErrorHandler() {
+    this.app.use(
+      (
+        err: HTTPError,
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ): void => {
+        console.error(err.stack);
+
+        if (err instanceof HTTPError) {
+          res.status(err.status).send(err);
+          next();
+        }
+
+        res.status(500).send(
+          new HTTPError({
+            message: "Internal Server Error",
+            status: 500,
+            cause: err,
+          })
+        );
+      }
+    );
   }
 
   public start() {
