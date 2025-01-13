@@ -1,11 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, Handler } from "express";
 
-const handleAsyncronically =
-  <T>(
-    fn: (req: Request, res: Response, next: NextFunction) => Promise<T> | void
-  ) =>
-  (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
+const handleAsyncronically = (handler: Handler) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    Promise.resolve(handler(req, res, next)).catch(next);
   };
+};
 
 export { handleAsyncronically };
