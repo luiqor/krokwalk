@@ -1,22 +1,11 @@
+import styles from "./root.module.css";
+
 const Root = () => {
   return (
-    <>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h2>Hello world</h2>
-      <h2>Hello world</h2>
-      <h2>Hello world</h2>
-      <h2>Hello world</h2>
-      <h2>Hello world</h2>
-      <h3>Hello world</h3>
-      <h3>Hello world</h3>
-      <h4>Hello world</h4>
-      <div>Hello world</div>
-    </>
+    <div className={styles.container}>
+      <div className={styles.toolbar}></div>
+      <div className={styles.map}></div>
+    </div>
   );
 };
 

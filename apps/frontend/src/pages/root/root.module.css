@@ -1,0 +1,15 @@
+.container {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+.toolbar {
+  background-color: red;
+  width: 400px;
+}
+
+.map {
+  background-color: blue;
+  flex: 1;
+}
