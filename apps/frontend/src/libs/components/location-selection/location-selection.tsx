@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import {
   Timeline,
   TimelineConnector,
@@ -7,7 +7,7 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
-import { Place, LocationSearching } from "@mui/icons-material";
+import { Place, LocationSearching, MyLocation } from "@mui/icons-material";
 import { timelineItemClasses } from "@mui/lab/TimelineItem";
 
 import styles from "./location-selection.module.css";
@@ -33,7 +33,21 @@ const LocationSelection = () => {
           <TimelineConnector className={styles.dottedLine} />
         </TimelineSeparator>
         <TimelineContent sx={{ paddingRight: 0 }}>
-          <TextField required label="Starting point" fullWidth size="small" />
+          <TextField
+            required
+            label="Starting point"
+            fullWidth
+            size="small"
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <MyLocation sx={{ fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
         </TimelineContent>
       </TimelineItem>
       <TimelineItem sx={{ minHeight: 0 }}>

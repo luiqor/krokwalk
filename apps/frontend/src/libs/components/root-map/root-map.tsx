@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -11,6 +11,8 @@ const ZOOM_DEFAULT = 16;
 const RootMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const [startingPointMarker, setStartingPointMarker] =
+    useState<L.Marker | null>(null);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -23,6 +25,7 @@ const RootMap = () => {
       tileLayers.Default.addTo(map);
 
       L.control.layers(tileLayers).addTo(map);
+
       mapInstanceRef.current = map; // TODO: handleReset of zoom mapInstanceRef.current.setView( [...current], ZOOM_DEFAULT);
 
       return () => {
@@ -30,6 +33,23 @@ const RootMap = () => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.on("click", (e: L.LeafletMouseEvent) => {
+        const { lat, lng } = e.latlng;
+        const marker = L.marker([lat, lng]);
+        marker.addTo(mapInstanceRef.current!);
+
+        setStartingPointMarker((prev) => {
+          if (prev) {
+            mapInstanceRef.current!.removeLayer(prev);
+          }
+          return marker;
+        });
+      });
+    }
+  }, [startingPointMarker]);
 
   return (
     <div className={styles.container}>
