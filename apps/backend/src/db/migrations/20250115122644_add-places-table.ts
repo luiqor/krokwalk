@@ -7,7 +7,7 @@ const ColumnName = {
   TITLE: "title",
   DESCRIPTION: "description",
   ADDRESS: "address",
-  PREVIEW: "preview",
+  PREVIEW_LINK: "preview_link",
   LANTITUDE: "latitude",
   LONGITUDE: "longitude",
   ELEVATION: "elevation",
@@ -21,7 +21,7 @@ function up(knex: Knex): Promise<void> {
     table.string(ColumnName.TITLE).notNullable();
     table.string(ColumnName.DESCRIPTION).notNullable();
     table.string(ColumnName.ADDRESS).notNullable();
-    table.string(ColumnName.PREVIEW).notNullable();
+    table.string(ColumnName.PREVIEW_LINK).notNullable();
     table.float(ColumnName.LANTITUDE).notNullable();
     table.float(ColumnName.LONGITUDE).notNullable();
     table.float(ColumnName.ELEVATION);

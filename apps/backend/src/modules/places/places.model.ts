@@ -1,0 +1,24 @@
+import { BaseModel } from "~/libs/modules/model/model";
+import { DatabaseTableName } from "~/libs/modules/database/database";
+
+class PlacesModel extends BaseModel {
+  public title!: string;
+
+  public description!: string;
+
+  public address!: string;
+
+  public previewLink!: string;
+
+  public latitude!: number;
+
+  public longitude!: number;
+
+  public elevation?: number;
+
+  public static override get tableName(): string {
+    return DatabaseTableName.PLACES;
+  }
+}
+
+export { PlacesModel };
