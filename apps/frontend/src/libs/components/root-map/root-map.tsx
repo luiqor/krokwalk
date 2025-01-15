@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import styles from "./root-map.module.css";
+
 import { mapOptions, tileLayers } from "./libs/constants/constants.js";
+
+import styles from "./root-map.module.css";
 
 const ZOOM_DEFAULT = 16;
 

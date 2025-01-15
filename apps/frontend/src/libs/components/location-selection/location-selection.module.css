@@ -1,0 +1,17 @@
+.dottedLine {
+  border-right: 3px dotted var(--color-gray);
+  background-color: var(--color-white) !important;
+  height: 10px;
+}
+
+.iconWrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.separator {
+  padding-top: 20px;
+}

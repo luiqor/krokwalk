@@ -2,7 +2,7 @@
   --color-white: #ffffff;
   --color-blue-100: #eef8fb;
   --color-blue-200: #79c6ec;
-  --color-blue-300: #52b1e0;
+  --color-blue-300: #42a5f5;
   --color-blue-400: #242a3a;
   --color-gray: #e1e1e1;
   --font-size-100: 14px;
@@ -26,6 +26,7 @@ body {
   font-family: "R", sans-serif;
   font-size: 14px;
   line-height: 1.5;
+  color: #3e4968;
 }
 
 #root {
@@ -55,6 +56,13 @@ h4,
 h5,
 h6 {
   margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 input,
