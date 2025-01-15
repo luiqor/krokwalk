@@ -1,5 +1,8 @@
 .container {
   flex: 1;
-  display: flex;
+}
+
+.map {
   height: 100%;
+  width: 100%;
 }

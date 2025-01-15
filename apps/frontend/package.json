@@ -14,11 +14,13 @@
     "@emotion/styled": "11.14.0",
     "@mui/icons-material": "6.4.0",
     "@mui/material": "6.4.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "leaflet": "1.9.4",
+    "react": "19.0.0-rc.1",
+    "react-dom": "19.0.0-rc.1",
     "shared": "*"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.16",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
     "@types/react-router-dom": "5.3.3",
