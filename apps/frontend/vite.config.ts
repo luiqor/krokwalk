@@ -1,4 +1,5 @@
 import { type ConfigEnv, defineConfig, loadEnv } from "vite";
+import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
@@ -10,6 +11,14 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 
   return defineConfig({
     plugins: [react()],
+    resolve: {
+      alias: [
+        {
+          find: "~",
+          replacement: fileURLToPath(new URL("src", import.meta.url)),
+        },
+      ],
+    },
     server: {
       port: Number(VITE_APP_DEVELOPMENT_PORT),
       proxy: {

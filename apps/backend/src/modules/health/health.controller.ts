@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { BaseController } from "../../libs/modules/controller/base-controller";
+import { BaseController } from "~/libs/modules/controller/base-controller";
 
 class HealthController extends BaseController {
   public initializeRoutes() {

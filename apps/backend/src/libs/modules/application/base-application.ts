@@ -5,7 +5,7 @@ import express, {
   NextFunction,
   Router,
 } from "express";
-import { HTTPError } from "../../../libs/http/http";
+import { HTTPError } from "~/libs/http/http";
 
 class BaseApplication {
   private app: ExpressApplication;

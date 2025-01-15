@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "start:dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.7",

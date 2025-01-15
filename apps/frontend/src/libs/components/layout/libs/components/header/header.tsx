@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AppRoute } from "../../../../../enums/enums.js";
+import { AppRoute } from "~/libs/enums/enums.js";
 
 import styles from "./header.module.css";
 
