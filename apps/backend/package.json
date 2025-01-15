@@ -2,16 +2,24 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "migrate:create": "npx knex migrate:make --knexfile knexfile.ts",
+    "migrate:latest": "npx knex migrate:latest --knexfile knexfile.ts",
+    "migrate:rollback": "npx knex migrate:rollback --knexfile knexfile.ts",
+    "seed:run": "npx knex seed:run --knexfile knexfile.ts"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "dotenv": "16.4.7",
     "express": "4.21.2",
+    "knex": "3.1.0",
+    "objection": "3.1.5",
+    "pg": "8.13.1",
     "shared": "*"
   },
   "devDependencies": {
     "@types/express": "5.0.0",
-    "tsx": "^4.19.2",
+    "@types/knex": "0.16.1",
+    "tsx": "4.19.2",
     "typescript": "5.6.2"
   }
 }
