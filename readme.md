@@ -6,14 +6,14 @@
 erDiagram
     PLACES {
         int id PK
-        string title
-        string description
-        string address
-        string preview_link
-        float latitude
-        float longitude
+        string title "NN"
+        string description "NN"
+        string address "NN"
+        string thumbnail_link "NN"
+        float lan "NN"
+        float lng "NN"
         float elevation
-        datetime created_at
-        datetime updated_at
+        datetime created_at "NN"
+        datetime updated_at "NN"
     }
 ```
