@@ -8,11 +8,11 @@ class PlacesModel extends BaseModel {
 
   public address!: string;
 
-  public previewLink!: string;
+  public thumbnailLink!: string;
 
-  public latitude!: number;
+  public lat!: number;
 
-  public longitude!: number;
+  public lng!: number;
 
   public elevation?: number;
 

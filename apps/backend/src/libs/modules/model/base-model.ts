@@ -3,7 +3,7 @@ import { Model } from "objection";
 class BaseModel extends Model {
   public createdAt!: string;
 
-  public id!: number;
+  public id!: string;
 
   public updatedAt!: string;
 

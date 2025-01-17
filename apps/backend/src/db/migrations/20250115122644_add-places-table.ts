@@ -7,23 +7,28 @@ const ColumnName = {
   TITLE: "title",
   DESCRIPTION: "description",
   ADDRESS: "address",
-  PREVIEW_LINK: "preview_link",
-  LANTITUDE: "latitude",
-  LONGITUDE: "longitude",
+  THUMBNAIL_LINK: "thumbnail_link",
+  LAT: "lat",
+  LNG: "lng",
   ELEVATION: "elevation",
   CREATED_AT: "created_at",
   UPDATED_AT: "updated_at",
 } as const;
 
-function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable(TABLE_NAME, (table) => {
-    table.increments(ColumnName.ID).primary();
+async function up(knex: Knex): Promise<void> {
+  await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
+  await knex.schema.createTable(TABLE_NAME, (table) => {
+    table
+      .uuid(ColumnName.ID)
+      .primary()
+      .defaultTo(knex.raw("uuid_generate_v4()"));
     table.string(ColumnName.TITLE).notNullable();
-    table.string(ColumnName.DESCRIPTION).notNullable();
+    table.text(ColumnName.DESCRIPTION).notNullable();
     table.string(ColumnName.ADDRESS).notNullable();
-    table.string(ColumnName.PREVIEW_LINK).notNullable();
-    table.float(ColumnName.LANTITUDE).notNullable();
-    table.float(ColumnName.LONGITUDE).notNullable();
+    table.string(ColumnName.THUMBNAIL_LINK).notNullable();
+    table.float(ColumnName.LAT).notNullable();
+    table.float(ColumnName.LNG).notNullable();
     table.float(ColumnName.ELEVATION);
     table
       .dateTime(ColumnName.CREATED_AT)
@@ -36,8 +41,8 @@ function up(knex: Knex): Promise<void> {
   });
 }
 
-function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable(TABLE_NAME);
+async function down(knex: Knex): Promise<void> {
+  await knex.schema.dropTableIfExists(TABLE_NAME);
 }
 
 export { up, down };
