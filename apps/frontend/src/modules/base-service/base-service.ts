@@ -1,27 +1,26 @@
 import { ContentType, HTTPService } from "../http/http.js";
 import { ENV } from "~/modules/env/env.js";
 
-interface Identifiable {
+type Identifiable = {
   id: string;
-}
+};
 
-interface Constructor {
+type Constructor = {
   baseUrl?: string;
   basePath: string;
   http: HTTPService;
-}
+};
 
 class BaseService<T, N> {
   private static token: string | null = null;
 
-  private baseUrl: string;
+  private baseUrl: string = ENV.API;
 
   private basePath: string;
 
   private http: HTTPService;
 
-  constructor({ baseUrl = ENV.API, basePath, http }: Constructor) {
-    this.baseUrl = baseUrl;
+  constructor({ basePath, http }: Constructor) {
     this.basePath = basePath;
     this.http = http;
   }
