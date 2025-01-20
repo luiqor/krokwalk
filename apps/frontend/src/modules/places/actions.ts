@@ -11,9 +11,9 @@ const loadPlaces = createAsyncThunk<
 >(`${sliceName}/load-places`, async (_payload, { extra }) => {
   const { placesService } = extra;
 
-  const palces = await placesService.getAll();
+  const places = await placesService.getAll();
 
-  return palces;
+  return places;
 });
 
 export { loadPlaces };
