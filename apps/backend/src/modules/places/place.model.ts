@@ -1,7 +1,7 @@
 import { BaseModel } from "~/libs/modules/model/model";
 import { DatabaseTableName } from "~/libs/modules/database/database";
 
-class PlacesModel extends BaseModel {
+class PlaceModel extends BaseModel {
   public title!: string;
 
   public description!: string;
@@ -21,4 +21,4 @@ class PlacesModel extends BaseModel {
   }
 }
 
-export { PlacesModel };
+export { PlaceModel };

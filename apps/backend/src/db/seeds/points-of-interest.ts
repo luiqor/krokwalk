@@ -1,13 +1,13 @@
 import { Knex } from "knex";
-import { PlacesEntity } from "../../modules/places/places.entity";
+import { PlaceEntity } from "../../modules/places/places";
 
 const TABLE_NAME = "places";
 
 async function seed(knex: Knex): Promise<void> {
   await knex(TABLE_NAME).del();
 
-  const places: PlacesEntity[] = [
-    PlacesEntity.initializeNew({
+  const places: PlaceEntity[] = [
+    PlaceEntity.initializeNew({
       title: "Lyadsky Gate",
       description: `Lach Gates (Ukrainian: Лядські ворота) at Independence Square in Kyiv is a monument built in 2001 to commemorate one of the Medieval Kyiv city gates. At the top is a sculpture of Archangel Michael which is the city's symbol.
 
@@ -20,7 +20,7 @@ Lach gates were one of three known gates of Medieval Kyiv (Old Kyiv), the others
       lat: 50.4509266,
       lng: 30.522968,
     }),
-    PlacesEntity.initializeNew({
+    PlaceEntity.initializeNew({
       title: "Golden Gate",
       description: `The Golden Gate of Kyiv (Ukrainian: Золоті ворота, romanized: Zoloti vorota [zɔloˈti woˈrɔtɐ]) was the main gate in the 11th century fortifications of Kyiv, the capital of Kievan Rus'. It was named in imitation of the Golden Gate of Constantinople. The structure was dismantled in the Middle Ages, leaving few vestiges of its existence.
 
@@ -33,7 +33,7 @@ The rebuilt structure on the corner of Volodymyr street and Yaroslaviv Val Stree
       lat: 50.4488619,
       lng: 30.5133715,
     }),
-    PlacesEntity.initializeNew({
+    PlaceEntity.initializeNew({
       title: "St. Sophia's Cathedral",
       description: `Saint Sophia Cathedral (Ukrainian: Софійський собор) in Kyiv is an architectural monument of Kyivan Rus' and a UNESCO World Heritage site. The cathedral was built in the 11th century and remains one of the most iconic landmarks in the city.
 
@@ -44,7 +44,7 @@ The cathedral features stunning mosaics and frescoes that have survived centurie
       lat: 50.452984,
       lng: 30.514381,
     }),
-    PlacesEntity.initializeNew({
+    PlaceEntity.initializeNew({
       title: "St. Michael's Golden-Domed Monastery",
       description: `St. Michael's Golden-Domed Monastery (Ukrainian: Михайлівський золотоверхий монастир) is a functioning monastery in Kyiv, known for its brilliant golden domes. It was originally built in the Middle Ages but was destroyed during the Soviet period in the 1930s.
 
@@ -55,7 +55,7 @@ In the late 1990s and early 2000s, the monastery was reconstructed to its former
       lat: 50.4557276,
       lng: 30.5230178,
     }),
-    PlacesEntity.initializeNew({
+    PlaceEntity.initializeNew({
       title: "St. Andrew's Church",
       description: `St. Andrew's Church (Ukrainian: Андріївська церква) is an exquisite Baroque church located at the top of Andriyivskyy Descent. Designed by the Italian architect Bartolomeo Rastrelli in the mid-18th century, the church is a masterpiece of art and architecture.
 
@@ -66,7 +66,7 @@ Its striking blue and gold exterior and panoramic view of the surrounding city m
       lat: 50.4589924,
       lng: 30.5179772,
     }),
-    PlacesEntity.initializeNew({
+    PlaceEntity.initializeNew({
       title: "House with Chimeras",
       description: `The House with Chimeras (Ukrainian: Будинок з химерами) is an Art Nouveau-style building in Kyiv, famous for its elaborate and unusual decorations featuring animals and mythical creatures. Designed by architect Vladislav Horodetsky in 1902, the building was originally intended as an apartment block.
 

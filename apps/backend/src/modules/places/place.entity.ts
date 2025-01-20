@@ -4,7 +4,7 @@ import { type Entity } from "~/libs/types/types";
 
 import { type PlacesEntityParameters } from "./libs/types/places-entity-parameters.type";
 
-class PlacesEntity implements Entity {
+class PlaceEntity implements Entity {
   private id: null | string;
 
   private title: string;
@@ -65,8 +65,8 @@ class PlacesEntity implements Entity {
     lat: number;
     lng: number;
     elevation?: number;
-  }): PlacesEntity {
-    return new PlacesEntity({
+  }): PlaceEntity {
+    return new PlaceEntity({
       id: uuidv4(),
       title,
       description,
@@ -77,6 +77,32 @@ class PlacesEntity implements Entity {
       elevation: elevation ?? null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+    });
+  }
+
+  public static initialize({
+    id,
+    title,
+    description,
+    address,
+    thumbnailLink,
+    lat,
+    lng,
+    elevation,
+    createdAt,
+    updatedAt,
+  }: PlacesEntityParameters): PlaceEntity {
+    return new PlaceEntity({
+      id,
+      title,
+      description,
+      address,
+      thumbnailLink,
+      lat,
+      lng,
+      elevation,
+      createdAt,
+      updatedAt,
     });
   }
 
@@ -96,4 +122,4 @@ class PlacesEntity implements Entity {
   }
 }
 
-export { PlacesEntity };
+export { PlaceEntity };
