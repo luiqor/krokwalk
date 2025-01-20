@@ -1,16 +1,11 @@
-import { BaseService } from "../base-service/base-service.js";
-import { http } from "../http/http.js";
-
+import { PlacesService } from "./places.service.js";
 import { actions, reducer } from "./slice.js";
 
 const allActions = {
   ...actions,
 };
 
-const placesService = new BaseService<unknown, unknown>({
-  basePath: "/places",
-  http,
-});
+const placesService = new PlacesService();
 
 export { allActions as actions, reducer };
 export { placesService };

@@ -11,6 +11,10 @@ type Constructor = {
   http: HTTPService;
 };
 
+type Multiple<T> = {
+  items: T[];
+};
+
 class BaseService<T, N> {
   private static token: string | null = null;
 
@@ -40,7 +44,7 @@ class BaseService<T, N> {
     });
   }
 
-  public getAll(): Promise<T[]> {
+  public getAll(): Promise<Multiple<T>> {
     return this.http.load(this.getUrl(), {
       method: "GET",
       token: BaseService.token,

@@ -1,1 +1,4 @@
-export { type PlacesGetAllResponseDto } from "./libs/types/types";
+export {
+  type PlacesGetAllResponseDto,
+  type PlaceDto,
+} from "./libs/types/types";
