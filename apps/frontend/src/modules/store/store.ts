@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { rootReducer } from "./rootReducer.js";
+import { placesService, reducer as placesReducer } from "../place/place.js";
 
-const extraArgument = {
-  // services
+const reducers = {
+  places: placesReducer,
 };
 
-export const store = configureStore({
-  reducer: rootReducer,
+const extraArgument = {
+  placesService,
+};
+
+const store = configureStore({
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
@@ -15,3 +19,5 @@ export const store = configureStore({
       },
     }),
 });
+
+export { store, extraArgument };

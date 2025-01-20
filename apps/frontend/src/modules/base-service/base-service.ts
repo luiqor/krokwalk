@@ -1,4 +1,4 @@
-import { ContentType, HTTPService } from "../http/http.js";
+import { ContentType, type HTTPService } from "../http/http.js";
 import { ENV } from "~/modules/env/env.js";
 
 type Identifiable = {
