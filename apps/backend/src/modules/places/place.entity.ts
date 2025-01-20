@@ -106,9 +106,20 @@ class PlaceEntity implements Entity {
     });
   }
 
-  public toObject(): PlacesEntityParameters {
+  public toObject(): {
+    id: string;
+    title: string;
+    description: string;
+    address: string;
+    thumbnailLink: string;
+    lat: number;
+    lng: number;
+    elevation: number | null;
+    createdAt: string;
+    updatedAt: string;
+  } {
     return {
-      id: this.id,
+      id: this.id as string,
       title: this.title,
       description: this.description,
       address: this.address,
