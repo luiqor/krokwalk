@@ -5,6 +5,8 @@ import express, {
   NextFunction,
   Router,
 } from "express";
+import cors from "cors";
+
 import { HTTPError } from "~/libs/http/http";
 import { BaseDatabase } from "../database/base-database";
 
@@ -37,6 +39,7 @@ class BaseApplication {
 
   private setupMiddleware() {
     this.app.use(express.json());
+    this.app.use(cors());
   }
 
   private setupRoutes() {

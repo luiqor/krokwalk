@@ -22,16 +22,16 @@ const { reducer, actions, name } = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(loadPlaces.fulfilled, (state, action) => {
+      state.places = action.payload;
+      // state.filteredPlaces = action.payload;
+      state.status = DataStatus.FULFILLED;
+    });
     builder.addMatcher(isPending, (state) => {
       state.status = DataStatus.PENDING;
     });
     builder.addMatcher(isRejected, (state) => {
       state.status = DataStatus.REJECTED;
-    });
-    builder.addCase(loadPlaces.fulfilled, (state, action) => {
-      state.places = action.payload;
-      // state.filteredPlaces = action.payload;
-      state.status = DataStatus.FULFILLED;
     });
   },
 });

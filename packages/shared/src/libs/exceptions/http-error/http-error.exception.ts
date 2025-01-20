@@ -1,4 +1,4 @@
-import { HTTPCode } from "../../http/http.js";
+import { HTTPCode } from "../../http/libs/enums/enums";
 
 type HTTPCodeType = (typeof HTTPCode)[keyof typeof HTTPCode];
 
