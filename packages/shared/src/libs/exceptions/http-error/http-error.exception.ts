@@ -1,4 +1,4 @@
-import { HTTPCode } from "src/libs/http/http";
+import { HTTPCode } from "../../http/http.js";
 
 type HTTPCodeType = (typeof HTTPCode)[keyof typeof HTTPCode];
 

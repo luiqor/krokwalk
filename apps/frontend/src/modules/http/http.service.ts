@@ -1,4 +1,4 @@
-import { ContentType, HttpHeaders } from "./libs/enums/enums.js";
+import { ContentType, HttpHeaders, HTTPCode } from "./libs/enums/enums.js";
 import { HTTPError } from "./libs/exceptions/exceptions.js";
 
 type HTTPMethod = "GET" | "POST" | "PATCH" | "DELETE";
@@ -60,7 +60,7 @@ class HTTPService {
         errorBody.message || errorBody.error || JSON.stringify(errorBody);
 
       const error = new HTTPError({
-        status: response.status,
+        status: response.status as (typeof HTTPCode)[keyof typeof HTTPCode],
         message: errorMessage,
         cause: response.statusText,
       });
