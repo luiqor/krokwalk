@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { placesService, reducer as placesReducer } from "../places/places.js";
+import { placeService, reducer as placesReducer } from "../places/places.js";
 
 const reducers = {
   places: placesReducer,
 };
 
 const extraArgument = {
-  placesService,
+  placeService,
 };
 
 const store = configureStore({

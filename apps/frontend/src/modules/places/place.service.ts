@@ -3,7 +3,7 @@ import { http } from "../http/http.js";
 
 import { type PlaceDto } from "./libs/types/types.js";
 
-class PlacesService extends BaseService<PlaceDto, unknown> {
+class PlaceService extends BaseService<PlaceDto, unknown> {
   constructor() {
     super({
       basePath: "/places",
@@ -12,4 +12,4 @@ class PlacesService extends BaseService<PlaceDto, unknown> {
   }
 }
 
-export { PlacesService };
+export { PlaceService };

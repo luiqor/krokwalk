@@ -29,7 +29,7 @@ const { reducer, actions, name } = createSlice({
       state.status = DataStatus.REJECTED;
     });
     builder.addCase(loadPlaces.fulfilled, (state, action) => {
-      state.places = action.payload.items;
+      state.places = action.payload;
       // state.filteredPlaces = action.payload;
       state.status = DataStatus.FULFILLED;
     });

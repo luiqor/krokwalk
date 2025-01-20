@@ -1,11 +1,13 @@
-import { PlacesService } from "./places.service.js";
-import { actions, reducer } from "./slice.js";
+import { loadPlaces } from "./actions.js";
+import { PlaceService } from "./place.service.js";
+import { actions, reducer } from "./place.slice.js";
 
 const allActions = {
   ...actions,
+  loadPlaces,
 };
 
-const placesService = new PlacesService();
+const placeService = new PlaceService();
 
 export { allActions as actions, reducer };
-export { placesService };
+export { placeService };

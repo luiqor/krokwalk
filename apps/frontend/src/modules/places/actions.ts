@@ -1,19 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { type PlacesGetAllResponseDto } from "./libs/types/types.js";
+import { PlaceDto } from "./libs/types/types.js";
 import { AsyncThunkConfig } from "../store/libs/types/types.js";
-import { name as sliceName } from "./slice.js";
+import { name as sliceName } from "./place.slice.js";
 
-const loadPlaces = createAsyncThunk<
-  PlacesGetAllResponseDto,
-  void,
-  AsyncThunkConfig
->(`${sliceName}/load-places`, async (_payload, { extra }) => {
-  const { placesService } = extra;
+const loadPlaces = createAsyncThunk<PlaceDto[], void, AsyncThunkConfig>(
+  `${sliceName}/load-places`,
+  async (_, { extra, rejectWithValue }) => {
+    try {
+      const { placeService } = extra;
 
-  const places = await placesService.getAll();
+      const { items } = await placeService.getAll();
 
-  return places;
-});
+      return items;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export { loadPlaces };

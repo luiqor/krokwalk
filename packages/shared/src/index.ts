@@ -4,4 +4,4 @@ export {
   type PlacesGetAllResponseDto,
   type PlaceDto,
 } from "./libs/modules/places/places";
-export { HTTPCode } from "../src/libs/http/http";
+export { HTTPCode } from "./libs/http/http";
