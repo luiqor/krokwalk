@@ -6,6 +6,7 @@ import { PlaceService } from "./place.service";
 const placeRepository = new PlaceRepository(PlaceModel);
 const placeService = new PlaceService(placeRepository);
 const placeController = new PlaceController(placeService);
+
 const placeRouter = placeController.router;
 
 export { placeRouter };

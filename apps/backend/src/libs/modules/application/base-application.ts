@@ -6,6 +6,7 @@ import express, {
   Router,
 } from "express";
 import { HTTPError } from "~/libs/http/http";
+import { BaseDatabase } from "../database/base-database";
 
 class BaseApplication {
   private app: ExpressApplication;
@@ -14,10 +15,21 @@ class BaseApplication {
 
   private apiRouter: Router;
 
-  constructor({ port, router }: { port: number; router: Router }) {
+  private database: BaseDatabase;
+
+  constructor({
+    port,
+    router,
+    database,
+  }: {
+    port: number;
+    router: Router;
+    database: BaseDatabase;
+  }) {
     this.app = express();
     this.apiRouter = router;
     this.port = port;
+    this.database = database;
     this.setupMiddleware();
     this.setupRoutes();
     this.initErrorHandler();
@@ -39,6 +51,8 @@ class BaseApplication {
         res: Response,
         next: NextFunction
       ): void => {
+        console.error(err);
+
         if (err instanceof HTTPError) {
           res.status(err.status).send({
             message: err.message,
@@ -60,6 +74,7 @@ class BaseApplication {
   }
 
   public start() {
+    this.database.connect();
     this.app.listen(this.port, () => {
       console.log(`Server is running on http://localhost:${this.port}`);
     });
