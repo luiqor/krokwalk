@@ -49,6 +49,7 @@ const RootMap = () => {
     if (mapInstanceRef.current) {
       mapInstanceRef.current.on("click", (e: L.LeafletMouseEvent) => {
         const { lat, lng } = e.latlng;
+
         const marker = L.marker([lat, lng]);
         marker.addTo(mapInstanceRef.current!);
 
@@ -66,6 +67,7 @@ const RootMap = () => {
     if (mapInstanceRef.current && status === DataStatus.FULFILLED) {
       places.forEach((place) => {
         const { lat, lng, thumbnailLink, title } = place;
+
         const customIcon = L.divIcon({
           html: ReactDOMServer.renderToString(
             <Marker thumbnailLink={thumbnailLink} title={title} />
@@ -73,7 +75,9 @@ const RootMap = () => {
           className: styles.marker,
           iconAnchor: [20, 40],
         });
+
         const marker = L.marker([lat, lng], { icon: customIcon });
+
         marker.addTo(mapInstanceRef.current!);
       });
     }

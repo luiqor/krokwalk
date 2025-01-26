@@ -6,14 +6,31 @@
 erDiagram
     PLACES {
         int id PK
-        string title "NN"
-        string description "NN"
-        string address "NN"
-        string thumbnail_link "NN"
-        float lan "NN"
-        float lng "NN"
-        float elevation
-        datetime created_at "NN"
-        datetime updated_at "NN"
+        string title
+        string description
+        string address
+        string thumbnail_link
+        float lan
+        float lng
+        float elevation "Nullable"
+        datetime created_at
+        datetime updated_at
+    }
+
+    PLACES_TAGS }o--|| PLACES : "place_id"
+    PLACES_TAGS }o--|| TAGS : "tag_id"
+    PLACES_TAGS {
+        uuid id PK
+        uuid place_id FK
+        uuid tag_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    TAGS {
+        uuid id PK
+        string title
+        datetime created_at
+        datetime updated_at
     }
 ```
