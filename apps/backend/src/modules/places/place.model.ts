@@ -1,5 +1,5 @@
-import { BaseModel } from "~/libs/modules/model/model";
-import { DatabaseTableName } from "~/libs/modules/database/database";
+import { BaseModel } from "../../libs/modules/model/model";
+import { DatabaseTableName } from "../../libs/modules/database/database";
 
 class PlaceModel extends BaseModel {
   public title!: string;

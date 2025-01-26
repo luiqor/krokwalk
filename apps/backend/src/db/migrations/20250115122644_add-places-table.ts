@@ -26,7 +26,7 @@ async function up(knex: Knex): Promise<void> {
     table.string(ColumnName.TITLE).notNullable();
     table.text(ColumnName.DESCRIPTION).notNullable();
     table.string(ColumnName.ADDRESS).notNullable();
-    table.string(ColumnName.THUMBNAIL_LINK).notNullable();
+    table.string(ColumnName.THUMBNAIL_LINK, 1000).notNullable();
     table.float(ColumnName.LAT).notNullable();
     table.float(ColumnName.LNG).notNullable();
     table.float(ColumnName.ELEVATION);

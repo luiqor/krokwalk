@@ -62,7 +62,7 @@ In the late 1990s and early 2000s, the monastery was reconstructed to its former
 Its striking blue and gold exterior and panoramic view of the surrounding city make it one of the most beautiful religious structures in Kyiv. It is now a major tourist attraction and a functioning church with significant historical importance.`,
       address: "Andriyivskyy descent, 23",
       thumbnailLink:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/AndrewsChurchKyiv.jpg/800px-AndrewsChurchKyiv.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/2/2a/%D0%90%D0%BD%D0%B4%D1%80%D1%96%D1%97%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_%D1%86%D0%B5%D1%80%D0%BA%D0%B2%D0%B0_DJI_0176.jpg",
       lat: 50.4589924,
       lng: 30.5179772,
     }),
@@ -73,7 +73,7 @@ Its striking blue and gold exterior and panoramic view of the surrounding city m
 Its unique facade includes intricate sculptures of elephants, dolphins, frogs, and other figures, showcasing Horodetsky's fascination with exotic wildlife. Today, it serves as the Presidential Administration's reception house and stands as a testament to Kyiv's eclectic architecture.`,
       address: "Bankova St, 10",
       thumbnailLink:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/House_with_Chimaeras_%28Dec%2C_2014%29.jpg/800px-House_with_Chimaeras_%28Dec%2C_2014%29.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/%D0%91%D1%83%D0%B4%D0%B8%D0%BD%D0%BE%D0%BA_%D1%96%D0%B7_%D1%85%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%D0%BC%D0%B8-3.JPG/1280px-%D0%91%D1%83%D0%B4%D0%B8%D0%BD%D0%BE%D0%BA_%D1%96%D0%B7_%D1%85%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%D0%BC%D0%B8-3.JPG",
       lat: 50.4450683,
       lng: 30.5286211,
     }),

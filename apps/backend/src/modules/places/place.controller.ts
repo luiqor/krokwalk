@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { BaseController } from "~/libs/modules/controller/base-controller";
+import { BaseController } from "../../libs/modules/controller/base-controller";
 import { PlaceService } from "./place.service";
 
 class PlaceController extends BaseController {
