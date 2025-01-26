@@ -1,0 +1,18 @@
+.marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--color-blue-200);
+  position: relative;
+  transform: rotate(-45deg);
+}
+
+.thumbnail {
+  height: 40px;
+  width: 40px !important;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border: 2px solid var(--color-blue-200);
+}

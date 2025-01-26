@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
+import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 
 import { mapOptions, tileLayers } from "./libs/constants/constants.js";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import { actions as placesActions } from "~/modules/places/places.js";
 import { DataStatus } from "~/libs/enums/enums.js";
+import { Marker } from "./libs/components/marker.js";
 
 import styles from "./root-map.module.css";
 
@@ -63,8 +65,15 @@ const RootMap = () => {
   useEffect(() => {
     if (mapInstanceRef.current && status === DataStatus.FULFILLED) {
       places.forEach((place) => {
-        const { lat, lng } = place;
-        const marker = L.marker([lat, lng]);
+        const { lat, lng, thumbnailLink, title } = place;
+        const customIcon = L.divIcon({
+          html: ReactDOMServer.renderToString(
+            <Marker thumbnailLink={thumbnailLink} title={title} />
+          ),
+          className: styles.marker,
+          iconAnchor: [20, 40],
+        });
+        const marker = L.marker([lat, lng], { icon: customIcon });
         marker.addTo(mapInstanceRef.current!);
       });
     }
