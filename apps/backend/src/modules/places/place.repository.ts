@@ -1,5 +1,8 @@
+import { RelationName } from "~/libs/enums/relation-name.enum";
+
 import { PlaceEntity } from "./place.entity";
 import { PlaceModel } from "./place.model";
+import { TagEntity } from "../tags/tag.entity";
 
 class PlaceRepository {
   private placeModel: typeof PlaceModel;
@@ -9,7 +12,9 @@ class PlaceRepository {
   }
 
   public async getAll(): Promise<PlaceEntity[]> {
-    const places = await this.placeModel.query();
+    const places = await this.placeModel
+      .query()
+      .withGraphJoined(RelationName.TAGS);
 
     return await Promise.all(
       places.map(async (place) => {
@@ -24,6 +29,14 @@ class PlaceRepository {
           elevation: place.elevation ?? null,
           createdAt: place.createdAt,
           updatedAt: place.updatedAt,
+          tags: place.tags!.map((tag) => {
+            return TagEntity.initialize({
+              id: tag.id,
+              title: tag.title,
+              createdAt: tag.createdAt,
+              updatedAt: tag.updatedAt,
+            });
+          }),
         });
       })
     );

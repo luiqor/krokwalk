@@ -39,6 +39,20 @@ class TagEntity implements Entity {
     });
   }
 
+  public static initialize({
+    id,
+    title,
+    createdAt,
+    updatedAt,
+  }: TagEntityParameters): TagEntity {
+    return new TagEntity({
+      id,
+      title,
+      createdAt,
+      updatedAt,
+    });
+  }
+
   public toObject(): {
     id: string;
     title: string;

@@ -1,3 +1,10 @@
+type Tags = {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type PlaceDto = {
   id: string;
   title: string;
@@ -9,6 +16,7 @@ type PlaceDto = {
   elevation: number | null;
   createdAt: string;
   updatedAt: string;
+  tags: Tags[];
 };
 
 export { type PlaceDto };

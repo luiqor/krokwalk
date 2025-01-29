@@ -1,3 +1,5 @@
+import { type TagEntity } from "~/modules/tags/tags";
+
 type PlacesEntityParameters = {
   id: string | null;
   title: string;
@@ -9,6 +11,7 @@ type PlacesEntityParameters = {
   elevation: number | null;
   createdAt: string;
   updatedAt: string;
+  tags: TagEntity[];
 };
 
 export { type PlacesEntityParameters };
