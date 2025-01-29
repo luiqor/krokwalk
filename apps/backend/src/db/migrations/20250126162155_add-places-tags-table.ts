@@ -14,6 +14,8 @@ const ColumnName = {
   UPDATED_AT: "updated_at",
 } as const;
 
+const DELETE_STRATEGY = "CASCADE";
+
 async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(TableName.PLACES_TAGS, (table) => {
     table
@@ -24,12 +26,14 @@ async function up(knex: Knex): Promise<void> {
       .uuid(ColumnName.PLACE_ID)
       .notNullable()
       .references(ColumnName.ID)
-      .inTable(TableName.PLACES);
+      .inTable(TableName.PLACES)
+      .onDelete(DELETE_STRATEGY);
     table
       .uuid(ColumnName.TAG_ID)
       .notNullable()
       .references(ColumnName.ID)
-      .inTable(TableName.TAGS);
+      .inTable(TableName.TAGS)
+      .onDelete(DELETE_STRATEGY);
     table
       .dateTime(ColumnName.CREATED_AT)
       .notNullable()
