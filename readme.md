@@ -5,7 +5,7 @@
 ```mermaid
 erDiagram
     PLACES {
-        int id PK
+        uuid id PK
         string title
         string description
         string address
