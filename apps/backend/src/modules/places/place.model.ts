@@ -3,7 +3,6 @@ import { Model, type RelationMappings } from "objection";
 import { BaseModel } from "../../libs/modules/model/model";
 import { DatabaseTableName } from "../../libs/modules/database/database";
 
-import { PlaceTagModel } from "./place-tag.model";
 import { TagModel } from "../tags/tag.model";
 
 class PlaceModel extends BaseModel {
@@ -30,7 +29,6 @@ class PlaceModel extends BaseModel {
           from: `${DatabaseTableName.PLACES}.id`,
           through: {
             from: `${DatabaseTableName.PLACES_TAGS}.placeId`,
-            modelClass: PlaceTagModel,
             to: `${DatabaseTableName.PLACES_TAGS}.tagId`,
           },
           to: `${DatabaseTableName.TAGS}.id`,

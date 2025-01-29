@@ -12,7 +12,7 @@ erDiagram
         string thumbnail_link
         float lan
         float lng
-        float elevation "Nullable"
+        float elevation "~"
         datetime created_at
         datetime updated_at
     }
