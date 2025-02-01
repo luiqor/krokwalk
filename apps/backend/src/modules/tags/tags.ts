@@ -1,1 +1,1 @@
-export { TagEntity } from "./tag.entity";
+export { type TagEntity } from "./tag.entity";

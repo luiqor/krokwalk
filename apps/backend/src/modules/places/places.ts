@@ -10,4 +10,3 @@ const placeController = new PlaceController(placeService);
 const placeRouter = placeController.router;
 
 export { placeRouter };
-export { PlaceEntity } from "./place.entity";

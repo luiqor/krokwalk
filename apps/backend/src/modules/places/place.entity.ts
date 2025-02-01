@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { type Entity } from "~/libs/types/types";
-
-import { type PlacesEntityParameters } from "./libs/types/places-entity-parameters.type";
+import { type Entity } from "../../libs/types/types";
 import { type TagEntity } from "../tags/tags";
+import { type TourEntity } from "../tours/tours";
+
+import { type PlacesEntityParameters } from "./libs/types/types";
 
 class PlaceEntity implements Entity {
   private id: null | string;
@@ -28,6 +29,8 @@ class PlaceEntity implements Entity {
 
   private tags: TagEntity[];
 
+  private tours: TourEntity[];
+
   private constructor({
     id,
     title,
@@ -40,6 +43,7 @@ class PlaceEntity implements Entity {
     createdAt,
     updatedAt,
     tags,
+    tours,
   }: PlacesEntityParameters) {
     this.id = id;
     this.title = title;
@@ -52,6 +56,7 @@ class PlaceEntity implements Entity {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.tags = tags;
+    this.tours = tours;
   }
 
   public static initializeNew({
@@ -83,6 +88,7 @@ class PlaceEntity implements Entity {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       tags: [],
+      tours: [],
     });
   }
 
@@ -98,6 +104,7 @@ class PlaceEntity implements Entity {
     createdAt,
     updatedAt,
     tags,
+    tours,
   }: PlacesEntityParameters): PlaceEntity {
     return new PlaceEntity({
       id,
@@ -111,6 +118,7 @@ class PlaceEntity implements Entity {
       createdAt,
       updatedAt,
       tags,
+      tours,
     });
   }
 
@@ -126,6 +134,7 @@ class PlaceEntity implements Entity {
     createdAt: string;
     updatedAt: string;
     tags: ReturnType<TagEntity["toObject"]>[];
+    tours: ReturnType<TourEntity["toObject"]>[];
   } {
     return {
       id: this.id as string,
@@ -139,6 +148,7 @@ class PlaceEntity implements Entity {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       tags: this.tags.map((tag) => tag.toObject()),
+      tours: this.tours.map((tour) => tour.toObject()),
     };
   }
 }

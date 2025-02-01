@@ -1,9 +1,10 @@
 import { Model, type RelationMappings } from "objection";
 
-import { BaseModel } from "../../libs/modules/model/model";
-import { DatabaseTableName } from "../../libs/modules/database/database";
-
+import { RelationName } from "~/libs/enums/relation-name.enum";
+import { BaseModel } from "~/libs/modules/model/model";
+import { DatabaseTableName } from "~/libs/modules/database/database";
 import { TagModel } from "../tags/tag.model";
+import { TourModel } from "../tours/tour.model";
 
 class PlaceModel extends BaseModel {
   public title!: string;
@@ -22,9 +23,11 @@ class PlaceModel extends BaseModel {
 
   public tags?: TagModel[];
 
+  public tours?: TourModel[];
+
   static get relationMappings(): RelationMappings {
     return {
-      tags: {
+      [RelationName.TAGS]: {
         join: {
           from: `${DatabaseTableName.PLACES}.id`,
           through: {
@@ -34,6 +37,18 @@ class PlaceModel extends BaseModel {
           to: `${DatabaseTableName.TAGS}.id`,
         },
         modelClass: TagModel,
+        relation: Model.ManyToManyRelation,
+      },
+      [RelationName.TOURS]: {
+        join: {
+          from: `${DatabaseTableName.PLACES}.id`,
+          through: {
+            from: `${DatabaseTableName.TOURS_PLACES}.placeId`,
+            to: `${DatabaseTableName.TOURS_PLACES}.tourId`,
+          },
+          to: `${DatabaseTableName.TOURS}.id`,
+        },
+        modelClass: TourModel,
         relation: Model.ManyToManyRelation,
       },
     };
