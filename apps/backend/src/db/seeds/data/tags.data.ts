@@ -1,21 +1,19 @@
-import { TagEntity } from "../../../modules/tags/tags";
+import { TagTitle } from "../enums/enums";
 
-const tags: TagEntity[] = [
-  TagEntity.initializeNew({ title: "Historical" }),
-  TagEntity.initializeNew({ title: "Cultural" }),
-  TagEntity.initializeNew({ title: "Architectural" }),
-  TagEntity.initializeNew({ title: "Medieval" }),
-  TagEntity.initializeNew({ title: "Reconstructed" }),
-  TagEntity.initializeNew({ title: "UNESCO" }),
-  TagEntity.initializeNew({ title: "Religious" }),
-  TagEntity.initializeNew({ title: "Baroque" }),
-  TagEntity.initializeNew({ title: "Art Nouveau" }),
-  TagEntity.initializeNew({ title: "Monastery" }),
-  TagEntity.initializeNew({ title: "Fortification" }),
-  TagEntity.initializeNew({ title: "Museum" }),
-  TagEntity.initializeNew({ title: "Byzantine Art" }),
-  TagEntity.initializeNew({ title: "Tourist Attraction" }),
-  TagEntity.initializeNew({ title: "Sculptures" }),
+const tags = [
+  { title: TagTitle.Historical },
+  { title: TagTitle.Architectural },
+  { title: TagTitle.Medieval },
+  { title: TagTitle.Reconstructed },
+  { title: TagTitle.UNESCO },
+  { title: TagTitle.Religious },
+  { title: TagTitle.Baroque },
+  { title: TagTitle.ArtNouveau },
+  { title: TagTitle.Monastery },
+  { title: TagTitle.Fortification },
+  { title: TagTitle.ByzantineArt },
+  { title: TagTitle.TouristAttraction },
+  { title: TagTitle.Sculptures },
 ];
 
 export { tags };
