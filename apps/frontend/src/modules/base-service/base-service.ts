@@ -44,8 +44,11 @@ class BaseService<T, N> {
     });
   }
 
-  public getAll(): Promise<Multiple<T>> {
-    return this.http.load(this.getUrl(), {
+  public getAll<P extends Record<string, string | number | boolean | null>>(
+    params?: P
+  ): Promise<Multiple<T>> {
+    const queryString = params ? this.getQueryString(params) : "";
+    return this.http.load(this.getUrl(queryString), {
       method: "GET",
       token: BaseService.token,
     });
@@ -86,6 +89,20 @@ class BaseService<T, N> {
 
   private getUrl(path = ""): string {
     return `${this.baseUrl}${this.basePath}${path}`;
+  }
+
+  private getQueryString(
+    params: Record<string, string | number | boolean | null>
+  ): string {
+    const queryParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+      if (!value) {
+        continue;
+      }
+
+      queryParams.append(key, value.toString());
+    }
+    return `?${queryParams.toString()}`;
   }
 }
 

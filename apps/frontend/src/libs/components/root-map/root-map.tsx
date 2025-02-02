@@ -4,8 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 
 import { mapOptions, tileLayers } from "./libs/constants/constants.js";
-import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
-import { actions as placesActions } from "~/modules/places/places.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { Marker } from "./libs/components/marker.js";
 
@@ -14,7 +13,6 @@ import styles from "./root-map.module.css";
 const ZOOM_DEFAULT = 16;
 
 const RootMap = () => {
-  const dispatch = useAppDispatch();
   const { places, status } = useAppSelector((state) => state.places);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -40,10 +38,6 @@ const RootMap = () => {
       };
     }
   }, []);
-
-  useEffect(() => {
-    dispatch(placesActions.loadPlaces());
-  }, [dispatch]);
 
   useEffect(() => {
     if (mapInstanceRef.current) {

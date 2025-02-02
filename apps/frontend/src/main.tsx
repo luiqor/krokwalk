@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createRoot } from "react-dom/client";
 import { Provider as StoreProvider } from "react-redux";
 
-import { App } from "./app.js";
+import { App } from "./App.jsx";
 import { themeOptions } from "./libs/constants/constants.js";
 import { store } from "./modules/store/store.js";
 
