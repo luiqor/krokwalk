@@ -5,8 +5,8 @@ import { AsyncThunkConfig } from "../store/libs/types/types.js";
 import { name as sliceName } from "./place.slice.js";
 
 type LoadPlacesParams = {
-  tours: string | null;
-  tags: string | null;
+  tours: string[];
+  tags: string[];
 };
 
 const loadPlaces = createAsyncThunk<
@@ -17,7 +17,10 @@ const loadPlaces = createAsyncThunk<
   try {
     const { placeService } = extra;
 
-    const { items } = await placeService.getAll(params);
+    const { items } = await placeService.getAll({
+      tours: params.tours,
+      tags: params.tags,
+    });
 
     return items;
   } catch (error) {

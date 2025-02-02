@@ -44,7 +44,7 @@ class BaseService<T, N> {
     });
   }
 
-  public getAll<P extends Record<string, string | number | boolean | null>>(
+  public getAll<P extends Record<string, (string | number | boolean)[]>>(
     params?: P
   ): Promise<Multiple<T>> {
     const queryString = params ? this.getQueryString(params) : "";
@@ -92,16 +92,18 @@ class BaseService<T, N> {
   }
 
   private getQueryString(
-    params: Record<string, string | number | boolean | null>
+    params: Record<string, (string | number | boolean)[]>
   ): string {
     const queryParams = new URLSearchParams();
-    for (const [key, value] of Object.entries(params)) {
-      if (!value) {
-        continue;
-      }
 
-      queryParams.append(key, value.toString());
+    for (const [key, values] of Object.entries(params)) {
+      const valueArray = Array.isArray(values) ? values : [values];
+
+      valueArray.forEach((value) => {
+        queryParams.append(key, value.toString());
+      });
     }
+
     return `?${queryParams.toString()}`;
   }
 }

@@ -14,8 +14,10 @@ const PlacesQueryParamsHandler = () => {
   const query = useQuery();
 
   useEffect(() => {
-    const tours = query.get(PlacesFilteringOptions.TOURS);
-    const tags = query.get(PlacesFilteringOptions.TAGS);
+    const tours = query.getAll(PlacesFilteringOptions.TOURS);
+    const tags = query.getAll(PlacesFilteringOptions.TAGS);
+
+    console.log("tags", tags);
 
     dispatch(placesActions.loadPlaces({ tours, tags }));
   }, [dispatch, query]);
