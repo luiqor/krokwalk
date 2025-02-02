@@ -97,9 +97,7 @@ class BaseService<T, N> {
     const queryParams = new URLSearchParams();
 
     for (const [key, values] of Object.entries(params)) {
-      const valueArray = Array.isArray(values) ? values : [values];
-
-      valueArray.forEach((value) => {
+      values.forEach((value) => {
         queryParams.append(key, value.toString());
       });
     }

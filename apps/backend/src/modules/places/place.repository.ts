@@ -12,10 +12,25 @@ class PlaceRepository {
     this.placeModel = placeModel;
   }
 
-  public async getAll(): Promise<PlaceEntity[]> {
-    const places = await this.placeModel
+  public async getAll({
+    tags,
+    tours,
+  }: {
+    tags?: string[];
+    tours?: string[];
+  }): Promise<PlaceEntity[]> {
+    let query = this.placeModel
       .query()
       .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+    if (tags && tags.length > 0) {
+      query = query.whereIn("tags.title", tags);
+    }
+
+    if (tours && tours.length > 0) {
+      query = query.whereIn("tours.title", tours);
+    }
+
+    const places = await query;
 
     return await Promise.all(
       places.map(async (place) => {
