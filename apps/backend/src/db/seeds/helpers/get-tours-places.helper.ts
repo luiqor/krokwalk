@@ -11,42 +11,42 @@ const getToursPlaces = (
   tours: TitledDbData[]
 ): TourPlace[] => {
   const tour = tours.find(
-    (tour) => tour.title === TourTitle.KyivHistoricalJourney
+    (tour) => tour.title === TourTitle.KYIV_HISTORICAL_JOURNEY
   )!;
 
   const toursPlaces = [
     {
       tour_id: tour.id,
-      place_id: places.find((place) => place.title === PlaceTitle.LyadskyGate)!
+      place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
         .id,
     },
     {
       tour_id: tour.id,
-      place_id: places.find((place) => place.title === PlaceTitle.GoldenGate)!
+      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
     },
     {
       tour_id: tour.id,
       place_id: places.find(
-        (place) => place.title === PlaceTitle.StSophiasCathedral
+        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
     },
     {
       tour_id: tour.id,
       place_id: places.find(
-        (place) => place.title === PlaceTitle.StMichaelsGoldenDomedMonastery
+        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
     },
     {
       tour_id: tour.id,
       place_id: places.find(
-        (place) => place.title === PlaceTitle.StAndrewsChurch
+        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
     },
     {
       tour_id: tour.id,
       place_id: places.find(
-        (place) => place.title === PlaceTitle.HouseWithChimeras
+        (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
       )!.id,
     },
   ];

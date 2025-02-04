@@ -1,30 +1,27 @@
 const TagTitle = {
-  Historical: "Historical",
-  Medieval: "Medieval",
-  Fortification: "Fortification",
-  Architectural: "Architectural",
-  Reconstructed: "Reconstructed",
+  HISTORICAL: "historical",
+  MEDIEVAL: "medieval",
+  FORTIFICATION: "fortification",
+  ARCHITECTURAL: "architectural",
+  RECONSTRUCTED: "reconstructed",
   UNESCO: "UNESCO",
-  Religious: "Religious",
-  ByzantineArt: "Byzantine Art",
-  Baroque: "Baroque",
-  Monastery: "Monastery",
-  TouristAttraction: "Tourist Attraction",
-  ArtNouveau: "Art Nouveau",
-  Sculptures: "Sculptures",
+  RELIGIOUS: "religious",
+  BAROQUE: "baroque",
+  MONASTERY: "monastery",
+  SCULPTURES: "sculptures",
 } as const;
 
 const PlaceTitle = {
-  LyadskyGate: "Lyadsky Gate",
-  GoldenGate: "Golden Gate",
-  StSophiasCathedral: "St. Sophia's Cathedral",
-  StMichaelsGoldenDomedMonastery: "St. Michael's Golden-Domed Monastery",
-  StAndrewsChurch: "St. Andrew's Church",
-  HouseWithChimeras: "House with Chimeras",
+  LYADSKY_GATE: "Lyadsky Gate",
+  GOLDEN_GATE: "Golden Gate",
+  ST_SOPHIAS_CATHEDRAL: "St. Sophia's Cathedral",
+  ST_MICHAELS_GOLDEN_DOMED_MONASTERY: "St. Michael's Golden-Domed Monastery",
+  ST_ANDREWS_CHURCH: "St. Andrew's Church",
+  HOUSE_WITH_CHIMERAS: "House with Chimeras",
 } as const;
 
 const TourTitle = {
-  KyivHistoricalJourney: "Echoes of the Past: Kyiv’s Timeless Journey",
+  KYIV_HISTORICAL_JOURNEY: "Echoes of the Past: Kyiv’s Timeless Journey",
 } as const;
 
 export { TagTitle, PlaceTitle, TourTitle };

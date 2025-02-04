@@ -2,7 +2,7 @@ import { PlaceTitle } from "../enums/enums";
 
 const places = [
   {
-    title: PlaceTitle.LyadskyGate,
+    title: PlaceTitle.LYADSKY_GATE,
     description: `Lach Gates (Ukrainian: Лядські ворота) at Independence Square in Kyiv is a monument built in 2001 to commemorate one of the Medieval Kyiv city gates. At the top is a sculpture of Archangel Michael which is the city's symbol.
 
 The gates were located in the former city's Polish quarter on the southeast side of Kyiv. According to Primary Chronicle, in 1240 the Lach Gates became the main fortification where Batu Khan concentrated his assault during the 1240 siege of Kyiv.
@@ -15,7 +15,7 @@ Lach gates were one of three known gates of Medieval Kyiv (Old Kyiv), the others
     lng: 30.522968,
   },
   {
-    title: PlaceTitle.GoldenGate,
+    title: PlaceTitle.GOLDEN_GATE,
     description: `The Golden Gate of Kyiv (Ukrainian: Золоті ворота, romanized: Zoloti vorota [zɔloˈti woˈrɔtɐ]) was the main gate in the 11th century fortifications of Kyiv, the capital of Kievan Rus'. It was named in imitation of the Golden Gate of Constantinople. The structure was dismantled in the Middle Ages, leaving few vestiges of its existence.
 
 In 1982, it was rebuilt completely by the Soviet authorities, though no images of the original gates have survived. The decision has been immensely controversial because there were many competing reconstructions of what the original gate might have looked like.
@@ -28,7 +28,7 @@ The rebuilt structure on the corner of Volodymyr street and Yaroslaviv Val Stree
     lng: 30.5133715,
   },
   {
-    title: PlaceTitle.StSophiasCathedral,
+    title: PlaceTitle.ST_SOPHIAS_CATHEDRAL,
     description: `Saint Sophia Cathedral (Ukrainian: Софійський собор) in Kyiv is an architectural monument of Kyivan Rus' and a UNESCO World Heritage site. The cathedral was built in the 11th century and remains one of the most iconic landmarks in the city.
 
 The cathedral features stunning mosaics and frescoes that have survived centuries and still reflect the artistic mastery of the Byzantine era. It was originally built under the rule of Yaroslav the Wise and serves as a testimony to Kyiv's historical significance as a cultural and religious center.`,
@@ -39,7 +39,7 @@ The cathedral features stunning mosaics and frescoes that have survived centurie
     lng: 30.514381,
   },
   {
-    title: PlaceTitle.StMichaelsGoldenDomedMonastery,
+    title: PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
     description: `St. Michael's Golden-Domed Monastery (Ukrainian: Михайлівський золотоверхий монастир) is a functioning monastery in Kyiv, known for its brilliant golden domes. It was originally built in the Middle Ages but was destroyed during the Soviet period in the 1930s.
 
 In the late 1990s and early 2000s, the monastery was reconstructed to its former glory. The current structure combines elements of traditional Ukrainian Baroque with modern restoration techniques. Its picturesque location and rich history make it a favorite destination for both tourists and locals.`,
@@ -50,7 +50,7 @@ In the late 1990s and early 2000s, the monastery was reconstructed to its former
     lng: 30.5230178,
   },
   {
-    title: PlaceTitle.StAndrewsChurch,
+    title: PlaceTitle.ST_ANDREWS_CHURCH,
     description: `St. Andrew's Church (Ukrainian: Андріївська церква) is an exquisite Baroque church located at the top of Andriyivskyy Descent. Designed by the Italian architect Bartolomeo Rastrelli in the mid-18th century, the church is a masterpiece of art and architecture.
 
 Its striking blue and gold exterior and panoramic view of the surrounding city make it one of the most beautiful religious structures in Kyiv. It is now a major tourist attraction and a functioning church with significant historical importance.`,
@@ -61,7 +61,7 @@ Its striking blue and gold exterior and panoramic view of the surrounding city m
     lng: 30.5179772,
   },
   {
-    title: PlaceTitle.HouseWithChimeras,
+    title: PlaceTitle.HOUSE_WITH_CHIMERAS,
     description: `The House with Chimeras (Ukrainian: Будинок з химерами) is an Art Nouveau-style building in Kyiv, famous for its elaborate and unusual decorations featuring animals and mythical creatures. Designed by architect Vladislav Horodetsky in 1902, the building was originally intended as an apartment block.
 
 Its unique facade includes intricate sculptures of elephants, dolphins, frogs, and other figures, showcasing Horodetsky's fascination with exotic wildlife. Today, it serves as the Presidential Administration's reception house and stands as a testament to Kyiv's eclectic architecture.`,
