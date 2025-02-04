@@ -1,6 +1,9 @@
-type Tags = {
+import { TagDto } from "src/libs/modules/tags/tags";
+
+type Tour = {
   id: string;
   title: string;
+  description: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -16,7 +19,8 @@ type PlaceDto = {
   elevation: number | null;
   createdAt: string;
   updatedAt: string;
-  tags: Tags[];
+  tags: TagDto[];
+  tours: Tour[];
 };
 
 export { type PlaceDto };
