@@ -3,13 +3,9 @@ import reactRefresh from "eslint-plugin-react-refresh";
 
 import baseConfig from "../../eslint.config.js";
 
-/** @typedef {import("eslint").Linter.Config} */
-let Config;
-
-/** @type {Config} */
 const reactConfig = {
   ignores: ["dist"],
-  files: ["**/*.{ts,tsx}"],
+  files: ["src/**/*.{ts,tsx}"],
   plugins: {
     "react-hooks": reactHooks,
     "react-refresh": reactRefresh,
@@ -23,7 +19,6 @@ const reactConfig = {
   },
 };
 
-/** @type {Config[]} */
 const config = [...baseConfig, reactConfig];
 
 export default config;
