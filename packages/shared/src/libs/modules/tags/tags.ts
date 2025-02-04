@@ -1,1 +1,1 @@
-export { type TagsGetAllResponseDto } from "./libs/types/types";
+export { type TagsGetAllResponseDto, type TagDto } from "./libs/types/types";

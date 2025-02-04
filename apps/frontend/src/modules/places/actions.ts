@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { PlaceDto } from "./libs/types/types.js";
-import { AsyncThunkConfig } from "../store/libs/types/types.js";
+import { type AsyncThunkConfig } from "../store/store.js";
 import { name as sliceName } from "./place.slice.js";
 
 type LoadPlacesParams = {
@@ -13,19 +13,15 @@ const loadPlaces = createAsyncThunk<
   PlaceDto[],
   LoadPlacesParams,
   AsyncThunkConfig
->(`${sliceName}/load-places`, async (params, { extra, rejectWithValue }) => {
-  try {
-    const { placeService } = extra;
+>(`${sliceName}/load-places`, async (params, { extra }) => {
+  const { placeService } = extra;
 
-    const { items } = await placeService.getAll({
-      tours: params.tours,
-      tags: params.tags,
-    });
+  const { items } = await placeService.getAll({
+    tours: params.tours,
+    tags: params.tags,
+  });
 
-    return items;
-  } catch (error) {
-    return rejectWithValue(error);
-  }
+  return items;
 });
 
 export { loadPlaces };

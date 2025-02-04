@@ -1,10 +1,7 @@
+import { type TagDto } from "./tag-dto.type";
+
 type TagsGetAllResponseDto = {
-  items: {
-    id: string;
-    title: string;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+  items: TagDto[];
 };
 
 export { type TagsGetAllResponseDto };

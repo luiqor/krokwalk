@@ -5,22 +5,20 @@ import { useAppDispatch } from "~/libs/hooks/hooks.js";
 import { actions as placesActions } from "~/modules/places/places.js";
 import { PlacesFilteringOptions } from "../enums/enums.js";
 
-const useQuery = () => {
+const useURLSearchParams = () => {
   return new URLSearchParams(useLocation().search);
 };
 
 const PlacesQueryParamsHandler = () => {
   const dispatch = useAppDispatch();
-  const query = useQuery();
+  const currentQueryParams = useURLSearchParams();
 
   useEffect(() => {
-    const tours = query.getAll(PlacesFilteringOptions.TOURS);
-    const tags = query.getAll(PlacesFilteringOptions.TAGS);
-
-    console.log("tags", tags);
+    const tours = currentQueryParams.getAll(PlacesFilteringOptions.TOURS);
+    const tags = currentQueryParams.getAll(PlacesFilteringOptions.TAGS);
 
     dispatch(placesActions.loadPlaces({ tours, tags }));
-  }, [dispatch, query]);
+  }, [dispatch, currentQueryParams]);
 
   return null;
 };
