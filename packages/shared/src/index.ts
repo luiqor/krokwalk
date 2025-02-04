@@ -5,4 +5,5 @@ export {
   type PlaceDto,
   type PlacesGetAllQueryParams,
 } from "./libs/modules/places/places";
+export { type TagsGetAllResponseDto } from "./libs/modules/tags/tags";
 export { HTTPCode } from "./libs/http/http";
