@@ -31,11 +31,4 @@ const store = configureStore({
     }).concat(errorHandlingMiddleware),
 });
 
-type AsyncThunkConfig = {
-  state: ReturnType<typeof store.getState>;
-  dispatch: typeof store.dispatch;
-  extra: typeof extraArgument;
-};
-
-export { store, extraArgument, type AsyncThunkConfig };
-export { SliceName } from "./libs/enums/enums.js";
+export { store, extraArgument };

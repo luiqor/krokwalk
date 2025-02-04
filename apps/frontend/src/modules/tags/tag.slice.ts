@@ -1,7 +1,6 @@
 import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
 
-import { SliceName } from "../store/store.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 
 import { loadTags } from "./actions.js";
 import { type TagDto } from "./libs/types/types.js";

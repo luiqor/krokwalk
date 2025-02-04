@@ -6,6 +6,7 @@ import styles from "./route-toolbar.module.css";
 import { PlacesFilterSelector } from "./libs/components/components.js";
 
 const RouteToolbar = () => {
+  // TODO: Pass useAppSelected tags to PlacesFilterSelector, reuse with routes
   return (
     <div className={styles.toolbar}>
       <form className={styles.form}>

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import { TagDto } from "./libs/types/types.js";
-import { type AsyncThunkConfig } from "../store/store.js";
 import { name as sliceName } from "./tag.slice.js";
 
 const loadTags = createAsyncThunk<TagDto[], void, AsyncThunkConfig>(

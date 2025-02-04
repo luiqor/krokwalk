@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { useAppDispatch } from "~/libs/hooks/hooks.js";
 import { actions as placesActions } from "~/modules/places/places.js";
+import { actions as tagsActions } from "~/modules/tags/tags.js";
 import { PlacesFilteringOptions } from "../enums/enums.js";
 
 const useURLSearchParams = () => {
@@ -19,6 +20,10 @@ const PlacesQueryParamsHandler = () => {
 
     dispatch(placesActions.loadPlaces({ tours, tags }));
   }, [dispatch, currentQueryParams]);
+
+  useEffect(() => {
+    dispatch(tagsActions.loadTags());
+  }, [dispatch]);
 
   return null;
 };
