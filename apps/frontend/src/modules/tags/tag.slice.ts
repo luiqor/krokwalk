@@ -24,7 +24,7 @@ const { reducer, actions, name } = createSlice({
       state.tags = action.payload;
       state.status = DataStatus.FULFILLED;
     });
-    builder.addMatcher(isPending, (state) => {
+    builder.addMatcher(isPending(loadTags), (state) => {
       state.status = DataStatus.PENDING;
     });
     builder.addMatcher(isRejected, (state) => {
