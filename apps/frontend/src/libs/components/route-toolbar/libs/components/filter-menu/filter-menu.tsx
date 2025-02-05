@@ -1,17 +1,40 @@
 import { Tag } from "@mui/icons-material";
 import { Popover, IconButton, Typography } from "@mui/material";
 
+import { TitledEntity } from "~/libs/types/types.js";
+
 import styles from "./filter-menu.module.css";
 
-const FilterMenu = ({
-  anchorEl,
-  setAnchorEl,
-}: {
+type Props = {
   anchorEl: HTMLElement | null;
   setAnchorEl: (value: HTMLElement | null) => void;
+  entityTitle: string;
+  entities: TitledEntity[];
+  selectedEntities: TitledEntity[];
+  onEntityClicked: (value: TitledEntity) => void;
+};
+
+const FilterMenu: React.FC<Props> = ({
+  anchorEl,
+  setAnchorEl,
+  entityTitle,
+  entities,
+  selectedEntities,
+  onEntityClicked,
 }) => {
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClick = (entity: TitledEntity) => {
+    onEntityClicked(entity);
+  };
+
+  const checkIsSelected = (entity: TitledEntity) => {
+    return (
+      selectedEntities.length > 0 &&
+      selectedEntities.some((selectedEntity) => selectedEntity.id === entity.id)
+    );
   };
 
   return (
@@ -28,16 +51,22 @@ const FilterMenu = ({
         },
       }}
     >
-      <h3>Select Tags</h3>
+      <h3>Select {entityTitle}</h3>
       <div className={styles.itemsWrapper}>
-        {Array.from({ length: 20 }).map((_, index) => (
+        {entities.map((entity, index) => (
           <IconButton
             key={index}
-            onClick={handleClose}
-            style={{ borderRadius: 0, flexDirection: "column" }}
+            onClick={() => handleClick(entity)}
+            style={{
+              borderRadius: 5,
+              flexDirection: "column",
+              backgroundColor: checkIsSelected(entity)
+                ? "#42a4f59c"
+                : "transparent",
+            }}
           >
             <Tag />
-            <Typography variant="caption">Label</Typography>
+            <Typography variant="caption">{entity.title}</Typography>
           </IconButton>
         ))}
       </div>

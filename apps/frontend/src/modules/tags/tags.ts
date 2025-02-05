@@ -11,3 +11,4 @@ const tagService = new TagService();
 
 export { allActions as actions, reducer };
 export { tagService };
+export { type TagDto } from "./libs/types/types.js";

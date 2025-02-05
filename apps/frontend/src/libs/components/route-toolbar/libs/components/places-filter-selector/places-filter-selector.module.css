@@ -4,3 +4,6 @@
   margin-top: 6px;
 }
 
+.content {
+  min-height: 60px;
+}

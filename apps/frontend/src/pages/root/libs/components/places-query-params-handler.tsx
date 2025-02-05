@@ -1,25 +1,20 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
-import { useAppDispatch } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useURLSearchParams } from "~/libs/hooks/hooks.js";
 import { actions as placesActions } from "~/modules/places/places.js";
 import { actions as tagsActions } from "~/modules/tags/tags.js";
 import { PlacesFilteringOptions } from "../enums/enums.js";
 
-const useURLSearchParams = () => {
-  return new URLSearchParams(useLocation().search);
-};
-
 const PlacesQueryParamsHandler = () => {
   const dispatch = useAppDispatch();
-  const currentQueryParams = useURLSearchParams();
+  const [searchParams] = useURLSearchParams();
 
   useEffect(() => {
-    const tours = currentQueryParams.getAll(PlacesFilteringOptions.TOURS);
-    const tags = currentQueryParams.getAll(PlacesFilteringOptions.TAGS);
+    const tours = searchParams.getAll(PlacesFilteringOptions.TOURS);
+    const tags = searchParams.getAll(PlacesFilteringOptions.TAGS);
 
     dispatch(placesActions.loadPlaces({ tours, tags }));
-  }, [dispatch, currentQueryParams]);
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
     dispatch(tagsActions.loadTags());

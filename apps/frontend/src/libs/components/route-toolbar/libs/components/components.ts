@@ -1,1 +1,1 @@
-export { PlacesFilterSelector } from "./places-filter-selector/places-filter-selector.jsx";
+export { TagFilterSelector } from "./tags-filter-selector/tags-filter-selector.jsx";

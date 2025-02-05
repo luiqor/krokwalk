@@ -1,11 +1,25 @@
 import { useState } from "react";
-import { Add } from "@mui/icons-material";
-import { Chip, Divider } from "@mui/material";
+import { Add, Tag } from "@mui/icons-material";
+import { Chip, Divider, IconButton, Typography } from "@mui/material";
+
+import { TitledEntity } from "~/libs/types/types.js";
 
 import styles from "./places-filter-selector.module.css";
 import { FilterMenu } from "../filter-menu/filter-menu.js";
 
-const PlacesFilterSelector = () => {
+type Props = {
+  entityTitle: string;
+  entities: TitledEntity[];
+  selectedEntities: TitledEntity[];
+  onEntityClicked: (entity: TitledEntity) => void;
+};
+
+const PlacesFilterSelector: React.FC<Props> = ({
+  entityTitle,
+  entities,
+  selectedEntities,
+  onEntityClicked,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -16,7 +30,7 @@ const PlacesFilterSelector = () => {
     <div>
       <Divider />
       <div className={styles.titleBox}>
-        <h3>Selected Tags</h3>
+        <h3>Selected {entityTitle}</h3>
         <Chip
           icon={<Add sx={{ fontSize: 16 }} />}
           color="primary"
@@ -25,9 +39,33 @@ const PlacesFilterSelector = () => {
           size="small"
           onClick={handleClick}
         />
+        <FilterMenu
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+          entityTitle={entityTitle}
+          entities={entities}
+          selectedEntities={selectedEntities}
+          onEntityClicked={onEntityClicked}
+        />
       </div>
-      <p>Selected tags will be displayed here</p>
-      <FilterMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+      <div className={styles.content}>
+        {selectedEntities.length > 0 ? (
+          <>
+            {selectedEntities.map((entity, index) => (
+              <IconButton
+                key={index}
+                style={{ borderRadius: 0, flexDirection: "column" }}
+                onClick={() => onEntityClicked(entity)}
+              >
+                <Tag />
+                <Typography variant="caption">{entity.title}</Typography>
+              </IconButton>
+            ))}
+          </>
+        ) : (
+          <p>Selected {entityTitle} will be displayed here</p>
+        )}
+      </div>
     </div>
   );
 };

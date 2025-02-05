@@ -6,4 +6,9 @@ type AsyncThunkConfig = {
   extra: typeof extraArgument;
 };
 
-export { type AsyncThunkConfig };
+type TitledEntity = {
+  title: string;
+  [key: string]: string | number | boolean;
+};
+
+export type { AsyncThunkConfig, TitledEntity };
