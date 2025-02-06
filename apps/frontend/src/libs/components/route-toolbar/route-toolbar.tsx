@@ -3,7 +3,10 @@ import { Divider, Button, TextField } from "@mui/material";
 import { LocationSelection } from "../components.js";
 
 import styles from "./route-toolbar.module.css";
-import { TagsFilterSelector } from "./libs/components/components.js";
+import {
+  TagsFilterSelector,
+  ToursFilterSelector,
+} from "./libs/components/components.js";
 
 const RouteToolbar = () => {
   return (
@@ -13,11 +16,7 @@ const RouteToolbar = () => {
           <LocationSelection />
         </div>
         <div className={styles.settingsContainer}>
-          <div>
-            <Divider />
-            <h3>Selected Tours</h3>
-            <p>Selected tours will be displayed here</p>
-          </div>
+          <ToursFilterSelector />
           <TagsFilterSelector />
           <div>
             <Divider />

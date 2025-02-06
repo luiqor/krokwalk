@@ -4,24 +4,24 @@ import { PlacesFilteringOptions } from "~/pages/root/libs/enums/enums.js";
 import { PlacesFilterSelector } from "../places-filter-selector/places-filter-selector.js";
 import { useEntityFilter } from "~/libs/hooks/use-entity-filter/use-entity-filter.js";
 
-const TagsFilterSelector: React.FC = () => {
-  const { tags, status } = useAppSelector((state) => state.tags);
+const ToursFilterSelector: React.FC = () => {
+  const { tours, status } = useAppSelector((state) => state.tours);
 
-  const { selectedEntities: selectedTags, toggleEntity: toggleTag } =
+  const { selectedEntities: selectedTours, toggleEntity: toggleTag } =
     useEntityFilter({
-      entities: tags,
+      entities: tours,
       status,
       filteringOption: PlacesFilteringOptions.TAGS,
     });
 
   return (
     <PlacesFilterSelector
-      entityTitle="tags"
-      entities={tags}
-      selectedEntities={selectedTags}
+      entityTitle="tours"
+      entities={tours}
+      selectedEntities={selectedTours}
       onEntityClicked={toggleTag}
     />
   );
 };
 
-export { TagsFilterSelector };
+export { ToursFilterSelector };
