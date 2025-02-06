@@ -15,11 +15,6 @@ const getPlacesTags = (
     {
       place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
-    },
-    {
-      place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
-        .id,
       tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
     },
     {
@@ -32,26 +27,20 @@ const getPlacesTags = (
     {
       place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
-    },
-    {
-      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
-        .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.FORTIFICATION)!.id,
     },
     {
       place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
       tag_id: tags.find((tag) => tag.title === TagTitle.RECONSTRUCTED)!.id,
     },
+    {
+      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
+        .id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
+    },
 
     // St. Sophia's Cathedral
-    {
-      place_id: places.find(
-        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-      )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.UNESCO)!.id,
-    },
     {
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
@@ -62,13 +51,13 @@ const getPlacesTags = (
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MONASTERY)!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
     },
     {
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
     },
 
     // St. Michael's Golden-Domed Monastery
@@ -82,19 +71,19 @@ const getPlacesTags = (
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MONASTERY)!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.RELIGIOUS)!.id,
+    },
+    {
+      place_id: places.find(
+        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
+      )!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
     },
     {
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
       tag_id: tags.find((tag) => tag.title === TagTitle.RECONSTRUCTED)!.id,
-    },
-    {
-      place_id: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
     },
 
     // St. Andrew's Church
@@ -108,19 +97,13 @@ const getPlacesTags = (
       place_id: places.find(
         (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
+      tag_id: tags.find((tag) => tag.title === TagTitle.RELIGIOUS)!.id,
+    },
+    {
+      place_id: places.find(
+        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
+      )!.id,
       tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
-    },
-    {
-      place_id: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MONASTERY)!.id,
-    },
-    {
-      place_id: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
     },
 
     // House with Chimeras
@@ -135,12 +118,6 @@ const getPlacesTags = (
         (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
       )!.id,
       tag_id: tags.find((tag) => tag.title === TagTitle.SCULPTURES)!.id,
-    },
-    {
-      place_id: places.find(
-        (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
-      )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.HISTORICAL)!.id,
     },
   ];
   return placesTags;

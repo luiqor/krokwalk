@@ -1,13 +1,10 @@
 const TagTitle = {
-  HISTORICAL: "historical",
   MEDIEVAL: "medieval",
   FORTIFICATION: "fortification",
   ARCHITECTURAL: "architectural",
   RECONSTRUCTED: "reconstructed",
-  UNESCO: "UNESCO",
   RELIGIOUS: "religious",
   BAROQUE: "baroque",
-  MONASTERY: "monastery",
   SCULPTURES: "sculptures",
 } as const;
 

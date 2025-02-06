@@ -22,12 +22,21 @@ class PlaceRepository {
     let query = this.placeModel
       .query()
       .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+
     if (tags && tags.length > 0) {
-      query = query.whereIn("tags.title", tags);
+      query = query.where((builder) => {
+        tags.forEach((tag) => {
+          builder.orWhere("tags.title", "ILIKE", `%${tag}%`);
+        });
+      });
     }
 
     if (tours && tours.length > 0) {
-      query = query.whereIn("tours.title", tours);
+      query = query.where((builder) => {
+        tours.forEach((tour) => {
+          builder.orWhere("tours.title", "ILIKE", `%${tour}%`);
+        });
+      });
     }
 
     const places = await query;
