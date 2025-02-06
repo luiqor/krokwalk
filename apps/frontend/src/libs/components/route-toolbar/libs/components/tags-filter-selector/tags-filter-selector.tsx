@@ -7,7 +7,7 @@ import { DataStatus } from "~/libs/enums/enums.js";
 
 import { PlacesFilterSelector } from "../places-filter-selector/places-filter-selector.js";
 
-const TagFilterSelector = () => {
+const TagsFilterSelector = () => {
   const { tags, status } = useAppSelector((state) => state.tags);
   const [currentQueryParams, setQueryParams] = useURLSearchParams();
   const [selectedTags, setSelectedTags] = useState<TitledEntity[]>([]);
@@ -57,4 +57,4 @@ const TagFilterSelector = () => {
   );
 };
 
-export { TagFilterSelector };
+export { TagsFilterSelector };

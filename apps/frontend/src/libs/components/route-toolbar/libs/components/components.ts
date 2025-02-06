@@ -1,1 +1,1 @@
-export { TagFilterSelector } from "./tags-filter-selector/tags-filter-selector.jsx";
+export { TagsFilterSelector } from "./tags-filter-selector/tags-filter-selector.jsx";
