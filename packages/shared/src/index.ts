@@ -9,4 +9,8 @@ export {
   type TagsGetAllResponseDto,
   type TagDto,
 } from "./libs/modules/tags/tags";
+export {
+  type ToursGetAllResponseDto,
+  type TourDto,
+} from "./libs/modules/tours/tours";
 export { HTTPCode } from "./libs/http/http";
