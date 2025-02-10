@@ -18,7 +18,7 @@ const PlaceTitle = {
 } as const;
 
 const TourSlug = {
-  KYIV_HISTORICAL_JOURNEY: "echoes-of-the-past-kyiv-timeless-journey",
+  KYIV_HISTORICAL_JOURNEY: "kyiv-historical-journey",
 } as const;
 
 export { TagSlug, PlaceTitle, TourSlug };
