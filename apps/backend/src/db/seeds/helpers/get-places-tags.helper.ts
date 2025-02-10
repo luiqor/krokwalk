@@ -56,6 +56,10 @@ const getPlacesTags = (
       placeId: LYADSKY_GATE,
       tagId: fortificationTagId,
     },
+    {
+      placeId: LYADSKY_GATE,
+      tagId: sculpturesTagId,
+    },
 
     // Golden Gate
     {
@@ -132,11 +136,19 @@ const getPlacesTags = (
       placeId: KYIV_TRAM,
       tagId: twentyFirstCentuaryTagId,
     },
+    {
+      placeId: KYIV_TRAM,
+      tagId: sculpturesTagId,
+    },
 
     // Kyiv Chestnut
     {
       placeId: KYIV_CHESTNUT,
       tagId: twentyFirstCentuaryTagId,
+    },
+    {
+      placeId: KYIV_CHESTNUT,
+      tagId: sculpturesTagId,
     },
 
     // Golden Gate Miniature
@@ -144,11 +156,19 @@ const getPlacesTags = (
       placeId: GOLDEN_GATE_MINIATURE,
       tagId: sculpturesTagId,
     },
+    {
+      placeId: GOLDEN_GATE_MINIATURE,
+      tagId: twentyFirstCentuaryTagId,
+    },
 
     // Heroes
     {
       placeId: HEROES,
       tagId: sculpturesTagId,
+    },
+    {
+      placeId: HEROES,
+      tagId: twentyFirstCentuaryTagId,
     },
 
     // Ghost of Kyiv
@@ -156,11 +176,19 @@ const getPlacesTags = (
       placeId: GHOST_OF_KYIV,
       tagId: sculpturesTagId,
     },
+    {
+      placeId: GHOST_OF_KYIV,
+      tagId: twentyFirstCentuaryTagId,
+    },
 
     // Palianytsia
     {
       placeId: PALIANYTSIA,
       tagId: sculpturesTagId,
+    },
+    {
+      placeId: PALIANYTSIA,
+      tagId: twentyFirstCentuaryTagId,
     },
 
     // Kyiv Chess
@@ -168,11 +196,19 @@ const getPlacesTags = (
       placeId: KYIV_CHESS,
       tagId: sculpturesTagId,
     },
+    {
+      placeId: KYIV_CHESS,
+      tagId: twentyFirstCentuaryTagId,
+    },
 
     // Kyiv Elephant
     {
       placeId: KYIV_ELEPHANT,
       tagId: sculpturesTagId,
+    },
+    {
+      placeId: KYIV_ELEPHANT,
+      tagId: twentyFirstCentuaryTagId,
     },
   ];
   return placesTags;
