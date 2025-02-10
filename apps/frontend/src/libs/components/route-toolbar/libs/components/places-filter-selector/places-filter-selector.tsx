@@ -54,7 +54,11 @@ const PlacesFilterSelector: React.FC<Props> = ({
             {selectedEntities.map((entity, index) => (
               <IconButton
                 key={index}
-                style={{ borderRadius: 0, flexDirection: "column" }}
+                style={{
+                  borderRadius: 0,
+                  flexDirection: "column",
+                  width: "100px",
+                }}
                 onClick={() => onEntityClicked(entity)}
               >
                 <Tag />

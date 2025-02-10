@@ -63,6 +63,7 @@ const FilterMenu: React.FC<Props> = ({
               backgroundColor: checkIsSelected(entity)
                 ? "#42a4f59c"
                 : "transparent",
+              width: "100px",
             }}
           >
             <Tag />
