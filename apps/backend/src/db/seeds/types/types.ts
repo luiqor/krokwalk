@@ -3,4 +3,9 @@ type TitledDbData = {
   title: string;
 };
 
-export { TitledDbData };
+type SluggedDbData = {
+  id: string;
+  slug: string;
+};
+
+export { TitledDbData, SluggedDbData };

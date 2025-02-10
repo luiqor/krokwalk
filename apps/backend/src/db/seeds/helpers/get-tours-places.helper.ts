@@ -1,51 +1,51 @@
-import { PlaceTitle, TourTitle } from "../enums/enums";
-import { TitledDbData } from "../types/types";
+import { PlaceTitle, TourSlug } from "../enums/enums";
+import { SluggedDbData, TitledDbData } from "../types/types";
 
 type TourPlace = {
-  tour_id: string;
-  place_id: string;
+  tourId: string;
+  placeId: string;
 };
 
 const getToursPlaces = (
   places: TitledDbData[],
-  tours: TitledDbData[]
+  tours: SluggedDbData[]
 ): TourPlace[] => {
   const tour = tours.find(
-    (tour) => tour.title === TourTitle.KYIV_HISTORICAL_JOURNEY
+    (tour) => tour.slug === TourSlug.KYIV_HISTORICAL_JOURNEY
   )!;
 
   const toursPlaces = [
     {
-      tour_id: tour.id,
-      place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
+      tourId: tour.id,
+      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
         .id,
     },
     {
-      tour_id: tour.id,
-      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
+      tourId: tour.id,
+      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
     },
     {
-      tour_id: tour.id,
-      place_id: places.find(
+      tourId: tour.id,
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
     },
     {
-      tour_id: tour.id,
-      place_id: places.find(
+      tourId: tour.id,
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
     },
     {
-      tour_id: tour.id,
-      place_id: places.find(
+      tourId: tour.id,
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
     },
     {
-      tour_id: tour.id,
-      place_id: places.find(
+      tourId: tour.id,
+      placeId: places.find(
         (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
       )!.id,
     },

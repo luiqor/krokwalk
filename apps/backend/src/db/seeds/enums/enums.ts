@@ -1,4 +1,4 @@
-const TagTitle = {
+const TagSlug = {
   MEDIEVAL: "medieval",
   FORTIFICATION: "fortification",
   ARCHITECTURAL: "architectural",
@@ -17,8 +17,8 @@ const PlaceTitle = {
   HOUSE_WITH_CHIMERAS: "House with Chimeras",
 } as const;
 
-const TourTitle = {
-  KYIV_HISTORICAL_JOURNEY: "Echoes of the Past: Kyiv’s Timeless Journey",
+const TourSlug = {
+  KYIV_HISTORICAL_JOURNEY: "echoes-of-the-past-kyiv-timeless-journey",
 } as const;
 
-export { TagTitle, PlaceTitle, TourTitle };
+export { TagSlug, PlaceTitle, TourSlug };

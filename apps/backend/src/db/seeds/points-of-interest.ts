@@ -9,6 +9,7 @@ import { getToursPlaces } from "./helpers/get-tours-places.helper";
 const ColumnName = {
   ID: "id",
   TITLE: "title",
+  SLUG: "slug",
 } as const;
 
 async function seed(knex: Knex): Promise<void> {
@@ -26,11 +27,11 @@ async function seed(knex: Knex): Promise<void> {
   );
   const insertedTags = await knex(DatabaseTableName.TAGS).select(
     ColumnName.ID,
-    ColumnName.TITLE
+    ColumnName.SLUG
   );
   const insertedTours = await knex(DatabaseTableName.TOURS).select(
     ColumnName.ID,
-    ColumnName.TITLE
+    ColumnName.SLUG
   );
 
   const placesTags = getPlacesTags(insertedPlaces, insertedTags);

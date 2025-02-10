@@ -5,6 +5,7 @@ const TABLE_NAME = "tours";
 const ColumnName = {
   ID: "id",
   TITLE: "title",
+  SLUG: "slug",
   DESCRIPTION: "description",
   CREATED_AT: "created_at",
   UPDATED_AT: "updated_at",
@@ -17,6 +18,7 @@ async function up(knex: Knex): Promise<void> {
       .primary()
       .defaultTo(knex.raw("uuid_generate_v4()"));
     table.string(ColumnName.TITLE).notNullable();
+    table.string(ColumnName.SLUG).notNullable();
     table.text(ColumnName.DESCRIPTION).notNullable();
     table
       .dateTime(ColumnName.CREATED_AT)

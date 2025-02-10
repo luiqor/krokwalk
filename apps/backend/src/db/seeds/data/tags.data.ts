@@ -1,13 +1,13 @@
-import { TagTitle } from "../enums/enums";
+import { TagSlug } from "../enums/enums";
 
 const tags = [
-  { title: TagTitle.ARCHITECTURAL },
-  { title: TagTitle.MEDIEVAL },
-  { title: TagTitle.RECONSTRUCTED },
-  { title: TagTitle.RELIGIOUS },
-  { title: TagTitle.BAROQUE },
-  { title: TagTitle.FORTIFICATION },
-  { title: TagTitle.SCULPTURES },
+  { title: "architectural", slug: TagSlug.ARCHITECTURAL },
+  { title: "medieval", slug: TagSlug.MEDIEVAL },
+  { title: "reconstructed", slug: TagSlug.RECONSTRUCTED },
+  { title: "religious", slug: TagSlug.RELIGIOUS },
+  { title: "baroque", slug: TagSlug.BAROQUE },
+  { title: "fortification", slug: TagSlug.FORTIFICATION },
+  { title: "sculptures", slug: TagSlug.SCULPTURES },
 ];
 
 export { tags };

@@ -1,123 +1,139 @@
-import { PlaceTitle, TagTitle } from "../enums/enums";
-import { TitledDbData } from "../types/types";
+import { PlaceTitle, TagSlug } from "../enums/enums";
+import { SluggedDbData, TitledDbData } from "../types/types";
 
 type PlaceTag = {
-  place_id: string;
-  tag_id: string;
+  placeId: string;
+  tagId: string;
 };
 
 const getPlacesTags = (
   places: TitledDbData[],
-  tags: TitledDbData[]
+  tags: SluggedDbData[]
 ): PlaceTag[] => {
+  const medievalTagId = tags.find((tag) => tag.slug === TagSlug.MEDIEVAL)!.id;
+  const reconstructedTagId = tags.find(
+    (tag) => tag.slug === TagSlug.RECONSTRUCTED
+  )!.id;
+  const religiousTagId = tags.find((tag) => tag.slug === TagSlug.RELIGIOUS)!.id;
+  const architecturalTagId = tags.find(
+    (tag) => tag.slug === TagSlug.ARCHITECTURAL
+  )!.id;
+  const baroqueTagId = tags.find((tag) => tag.slug === TagSlug.BAROQUE)!.id;
+  const fortificationTagId = tags.find(
+    (tag) => tag.slug === TagSlug.FORTIFICATION
+  )!.id;
+  const sculpturesTagId = tags.find(
+    (tag) => tag.slug === TagSlug.SCULPTURES
+  )!.id;
+
   const placesTags = [
     // Lyadsky Gate
     {
-      place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
+      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
+      tagId: medievalTagId,
     },
     {
-      place_id: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
+      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.FORTIFICATION)!.id,
+      tagId: fortificationTagId,
     },
 
     // Golden Gate
     {
-      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
+      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.FORTIFICATION)!.id,
+      tagId: fortificationTagId,
     },
     {
-      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
+      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.RECONSTRUCTED)!.id,
+      tagId: reconstructedTagId,
     },
     {
-      place_id: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
+      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
         .id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
+      tagId: medievalTagId,
     },
 
     // St. Sophia's Cathedral
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.RELIGIOUS)!.id,
+      tagId: religiousTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
+      tagId: architecturalTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.MEDIEVAL)!.id,
+      tagId: medievalTagId,
     },
 
     // St. Michael's Golden-Domed Monastery
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.BAROQUE)!.id,
+      tagId: baroqueTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.RELIGIOUS)!.id,
+      tagId: religiousTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
+      tagId: architecturalTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.RECONSTRUCTED)!.id,
+      tagId: reconstructedTagId,
     },
 
     // St. Andrew's Church
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.BAROQUE)!.id,
+      tagId: baroqueTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.RELIGIOUS)!.id,
+      tagId: religiousTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
+      tagId: architecturalTagId,
     },
 
     // House with Chimeras
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.ARCHITECTURAL)!.id,
+      tagId: architecturalTagId,
     },
     {
-      place_id: places.find(
+      placeId: places.find(
         (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
       )!.id,
-      tag_id: tags.find((tag) => tag.title === TagTitle.SCULPTURES)!.id,
+      tagId: sculpturesTagId,
     },
   ];
   return placesTags;
