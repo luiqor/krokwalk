@@ -11,7 +11,7 @@ const ToursFilterSelector: React.FC = () => {
     useEntityFilter({
       entities: tours,
       status,
-      filteringOption: PlacesFilteringOptions.TAGS,
+      filteringOption: PlacesFilteringOptions.TOURS,
     });
 
   return (

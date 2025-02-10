@@ -26,7 +26,7 @@ class PlaceRepository {
     if (tags && tags.length > 0) {
       query = query.where((builder) => {
         tags.forEach((tag) => {
-          builder.orWhere("tags.title", "ILIKE", `%${tag}%`);
+          builder.orWhere("tags.slug", "ILIKE", `%${tag}%`);
         });
       });
     }
@@ -34,7 +34,7 @@ class PlaceRepository {
     if (tours && tours.length > 0) {
       query = query.where((builder) => {
         tours.forEach((tour) => {
-          builder.orWhere("tours.title", "ILIKE", `%${tour}%`);
+          builder.orWhere("tours.slug", "ILIKE", `%${tour}%`);
         });
       });
     }
@@ -58,6 +58,7 @@ class PlaceRepository {
             return TagEntity.initialize({
               id: tag.id,
               title: tag.title,
+              slug: tag.slug,
               createdAt: tag.createdAt,
               updatedAt: tag.updatedAt,
             });
@@ -66,6 +67,7 @@ class PlaceRepository {
             return TourEntity.initialize({
               id: tour.id,
               title: tour.title,
+              slug: tour.slug,
               description: tour.description,
               createdAt: tour.createdAt,
               updatedAt: tour.updatedAt,

@@ -5,6 +5,7 @@ import { type Entity } from "~/libs/types/types";
 type TagEntityParameters = {
   id: null | string;
   title: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -14,6 +15,8 @@ class TagEntity implements Entity {
 
   private title: string;
 
+  private slug: string;
+
   private createdAt: string;
 
   private updatedAt: string;
@@ -21,11 +24,13 @@ class TagEntity implements Entity {
   private constructor({
     id,
     title,
+    slug,
     createdAt,
     updatedAt,
   }: TagEntityParameters) {
     this.id = id;
     this.title = title;
+    this.slug = slug;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -34,6 +39,7 @@ class TagEntity implements Entity {
     return new TagEntity({
       id: uuidv4(),
       title,
+      slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
@@ -42,12 +48,14 @@ class TagEntity implements Entity {
   public static initialize({
     id,
     title,
+    slug,
     createdAt,
     updatedAt,
   }: TagEntityParameters): TagEntity {
     return new TagEntity({
       id,
       title,
+      slug,
       createdAt,
       updatedAt,
     });
@@ -56,12 +64,14 @@ class TagEntity implements Entity {
   public toObject(): {
     id: string;
     title: string;
+    slug: string;
     createdAt: string;
     updatedAt: string;
   } {
     return {
       id: this.id as string,
       title: this.title,
+      slug: this.slug,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

@@ -6,9 +6,10 @@ type AsyncThunkConfig = {
   extra: typeof extraArgument;
 };
 
-type TitledEntity = {
+type UrlFriendlyEntity = {
+  slug: string;
   title: string;
   [key: string]: string | number | boolean;
 };
 
-export type { AsyncThunkConfig, TitledEntity };
+export type { AsyncThunkConfig, UrlFriendlyEntity };

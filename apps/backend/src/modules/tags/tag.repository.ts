@@ -16,6 +16,7 @@ class TagRepository {
         TagEntity.initialize({
           id: tag.id,
           title: tag.title,
+          slug: tag.slug,
           createdAt: tag.createdAt,
           updatedAt: tag.updatedAt,
         })

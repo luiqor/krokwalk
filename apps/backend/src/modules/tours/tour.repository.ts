@@ -16,6 +16,7 @@ class TourRepository {
         TourEntity.initialize({
           id: tour.id,
           title: tour.title,
+          slug: tour.slug,
           description: tour.description,
           createdAt: tour.createdAt,
           updatedAt: tour.updatedAt,

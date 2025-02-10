@@ -2,16 +2,16 @@ import { useState } from "react";
 import { Add, Tag } from "@mui/icons-material";
 import { Chip, Divider, IconButton, Typography } from "@mui/material";
 
-import { TitledEntity } from "~/libs/types/types.js";
+import { UrlFriendlyEntity } from "~/libs/types/types.js";
 
 import styles from "./places-filter-selector.module.css";
 import { FilterMenu } from "../filter-menu/filter-menu.js";
 
 type Props = {
   entityTitle: string;
-  entities: TitledEntity[];
-  selectedEntities: TitledEntity[];
-  onEntityClicked: (entity: TitledEntity) => void;
+  entities: UrlFriendlyEntity[];
+  selectedEntities: UrlFriendlyEntity[];
+  onEntityClicked: (entity: UrlFriendlyEntity) => void;
 };
 
 const PlacesFilterSelector: React.FC<Props> = ({

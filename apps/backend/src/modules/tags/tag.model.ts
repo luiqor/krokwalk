@@ -6,6 +6,8 @@ import { DatabaseTableName } from "../../libs/modules/database/database";
 class TagModel extends BaseModel {
   title!: string;
 
+  slug!: string;
+
   static get relationMappings(): RelationMappings {
     return {
       places: {

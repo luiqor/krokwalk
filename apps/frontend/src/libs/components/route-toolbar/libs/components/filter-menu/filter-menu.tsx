@@ -1,7 +1,7 @@
 import { Tag } from "@mui/icons-material";
 import { Popover, IconButton, Typography } from "@mui/material";
 
-import { TitledEntity } from "~/libs/types/types.js";
+import { UrlFriendlyEntity } from "~/libs/types/types.js";
 
 import styles from "./filter-menu.module.css";
 
@@ -9,9 +9,9 @@ type Props = {
   anchorEl: HTMLElement | null;
   setAnchorEl: (value: HTMLElement | null) => void;
   entityTitle: string;
-  entities: TitledEntity[];
-  selectedEntities: TitledEntity[];
-  onEntityClicked: (value: TitledEntity) => void;
+  entities: UrlFriendlyEntity[];
+  selectedEntities: UrlFriendlyEntity[];
+  onEntityClicked: (value: UrlFriendlyEntity) => void;
 };
 
 const FilterMenu: React.FC<Props> = ({
@@ -26,11 +26,11 @@ const FilterMenu: React.FC<Props> = ({
     setAnchorEl(null);
   };
 
-  const handleClick = (entity: TitledEntity) => {
+  const handleClick = (entity: UrlFriendlyEntity) => {
     onEntityClicked(entity);
   };
 
-  const checkIsSelected = (entity: TitledEntity) => {
+  const checkIsSelected = (entity: UrlFriendlyEntity) => {
     return (
       selectedEntities.length > 0 &&
       selectedEntities.some((selectedEntity) => selectedEntity.id === entity.id)

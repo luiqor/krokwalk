@@ -6,6 +6,8 @@ import { DatabaseTableName } from "../../libs/modules/database/database";
 class TourModel extends BaseModel {
   title!: string;
 
+  slug!: string;
+
   description!: string;
 
   static get relationMappings(): RelationMappings {
