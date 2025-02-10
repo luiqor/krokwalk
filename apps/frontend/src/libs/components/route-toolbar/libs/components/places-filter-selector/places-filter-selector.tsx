@@ -58,6 +58,7 @@ const PlacesFilterSelector: React.FC<Props> = ({
                   borderRadius: 0,
                   flexDirection: "column",
                   width: "100px",
+                  height: "100px",
                 }}
                 onClick={() => onEntityClicked(entity)}
               >
