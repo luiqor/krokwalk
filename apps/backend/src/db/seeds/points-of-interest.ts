@@ -5,6 +5,7 @@ import { DatabaseTableName } from "../../libs/modules/database/database";
 import { places, tags, tours } from "./data/data";
 import { getPlacesTags } from "./helpers/get-places-tags.helper";
 import { getToursPlaces } from "./helpers/get-tours-places.helper";
+import { getPlacesIds } from "./helpers/get-places-ids.helper";
 
 const ColumnName = {
   ID: "id",
@@ -34,8 +35,10 @@ async function seed(knex: Knex): Promise<void> {
     ColumnName.SLUG
   );
 
-  const placesTags = getPlacesTags(insertedPlaces, insertedTags);
-  const toursPlaces = getToursPlaces(insertedPlaces, insertedTours);
+  const placesIds = getPlacesIds(insertedPlaces);
+
+  const placesTags = getPlacesTags(placesIds, insertedTags);
+  const toursPlaces = getToursPlaces(placesIds, insertedTours);
 
   await knex(DatabaseTableName.PLACES_TAGS).insert(placesTags);
   await knex(DatabaseTableName.TOURS_PLACES).insert(toursPlaces);

@@ -1,5 +1,5 @@
-import { PlaceTitle, TagSlug } from "../enums/enums";
-import { SluggedDbData, TitledDbData } from "../types/types";
+import { TagSlug } from "../enums/enums";
+import { SluggedDbData } from "../types/types";
 
 type PlaceTag = {
   placeId: string;
@@ -7,7 +7,7 @@ type PlaceTag = {
 };
 
 const getPlacesTags = (
-  places: TitledDbData[],
+  placesIds: { [key: string]: string },
   tags: SluggedDbData[]
 ): PlaceTag[] => {
   const medievalTagId = tags.find((tag) => tag.slug === TagSlug.MEDIEVAL)!.id;
@@ -29,158 +29,149 @@ const getPlacesTags = (
     (tag) => tag.slug === TagSlug.TWENTYFIRST_CENTUARY
   )!.id;
 
-  const lyadskyGateId = places.find(
-    (place) => place.title === PlaceTitle.LYADSKY_GATE
-  )!.id;
-  const goldenGateId = places.find(
-    (place) => place.title === PlaceTitle.GOLDEN_GATE
-  )!.id;
-  const stSophiasCathedralId = places.find(
-    (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-  )!.id;
-  const stMichaelsGoldenDomedMonasteryId = places.find(
-    (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-  )!.id;
-  const stAndrewsChurchId = places.find(
-    (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-  )!.id;
-  const houseWithChimerasPlaceId = places.find(
-    (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
-  )!.id;
+  const {
+    LYADSKY_GATE,
+    GOLDEN_GATE,
+    ST_SOPHIAS_CATHEDRAL,
+    ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
+    ST_ANDREWS_CHURCH,
+    HOUSE_WITH_CHIMERAS,
+    KYIV_TRAM,
+    KYIV_CHESTNUT,
+    GOLDEN_GATE_MINIATURE,
+    HEROES,
+    GHOST_OF_KYIV,
+    PALIANYTSIA,
+    KYIV_CHESS,
+    KYIV_ELEPHANT,
+  } = placesIds;
 
   const placesTags = [
     // Lyadsky Gate
     {
-      placeId: lyadskyGateId,
+      placeId: LYADSKY_GATE,
       tagId: medievalTagId,
     },
     {
-      placeId: lyadskyGateId,
+      placeId: LYADSKY_GATE,
       tagId: fortificationTagId,
     },
 
     // Golden Gate
     {
-      placeId: goldenGateId,
+      placeId: GOLDEN_GATE,
       tagId: fortificationTagId,
     },
     {
-      placeId: goldenGateId,
+      placeId: GOLDEN_GATE,
       tagId: reconstructedTagId,
     },
     {
-      placeId: goldenGateId,
+      placeId: GOLDEN_GATE,
       tagId: medievalTagId,
     },
 
     // St. Sophia's Cathedral
     {
-      placeId: stSophiasCathedralId,
+      placeId: ST_SOPHIAS_CATHEDRAL,
       tagId: religiousTagId,
     },
     {
-      placeId: stSophiasCathedralId,
+      placeId: ST_SOPHIAS_CATHEDRAL,
       tagId: architecturalTagId,
     },
     {
-      placeId: stSophiasCathedralId,
+      placeId: ST_SOPHIAS_CATHEDRAL,
       tagId: medievalTagId,
     },
 
     // St. Michael's Golden-Domed Monastery
     {
-      placeId: stMichaelsGoldenDomedMonasteryId,
+      placeId: ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
       tagId: baroqueTagId,
     },
     {
-      placeId: stMichaelsGoldenDomedMonasteryId,
+      placeId: ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
       tagId: religiousTagId,
     },
     {
-      placeId: stMichaelsGoldenDomedMonasteryId,
+      placeId: ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
       tagId: architecturalTagId,
     },
     {
-      placeId: stMichaelsGoldenDomedMonasteryId,
+      placeId: ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
       tagId: reconstructedTagId,
     },
 
     // St. Andrew's Church
     {
-      placeId: stAndrewsChurchId,
+      placeId: ST_ANDREWS_CHURCH,
       tagId: baroqueTagId,
     },
     {
-      placeId: stAndrewsChurchId,
+      placeId: ST_ANDREWS_CHURCH,
       tagId: religiousTagId,
     },
     {
-      placeId: stAndrewsChurchId,
+      placeId: ST_ANDREWS_CHURCH,
       tagId: architecturalTagId,
     },
 
     // House with Chimeras
     {
-      placeId: houseWithChimerasPlaceId,
+      placeId: HOUSE_WITH_CHIMERAS,
       tagId: architecturalTagId,
     },
     {
-      placeId: houseWithChimerasPlaceId,
+      placeId: HOUSE_WITH_CHIMERAS,
       tagId: sculpturesTagId,
     },
 
     // Kyiv Tram
     {
-      placeId: places.find((place) => place.title === PlaceTitle.KYIV_TRAM)!.id,
+      placeId: KYIV_TRAM,
       tagId: twentyFirstCentuaryTagId,
     },
 
     // Kyiv Chestnut
     {
-      placeId: places.find((place) => place.title === PlaceTitle.KYIV_CHESTNUT)!
-        .id,
+      placeId: KYIV_CHESTNUT,
       tagId: twentyFirstCentuaryTagId,
     },
 
     // Golden Gate Miniature
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.GOLDEN_GATE_MINIATURE
-      )!.id,
+      placeId: GOLDEN_GATE_MINIATURE,
       tagId: sculpturesTagId,
     },
 
     // Heroes
     {
-      placeId: places.find((place) => place.title === PlaceTitle.HEROES)!.id,
+      placeId: HEROES,
       tagId: sculpturesTagId,
     },
 
     // Ghost of Kyiv
     {
-      placeId: places.find((place) => place.title === PlaceTitle.GHOST_OF_KYIV)!
-        .id,
+      placeId: GHOST_OF_KYIV,
       tagId: sculpturesTagId,
     },
 
     // Palianytsia
     {
-      placeId: places.find((place) => place.title === PlaceTitle.PALIANYTSIA)!
-        .id,
+      placeId: PALIANYTSIA,
       tagId: sculpturesTagId,
     },
 
     // Kyiv Chess
     {
-      placeId: places.find((place) => place.title === PlaceTitle.KYIV_CHESS)!
-        .id,
+      placeId: KYIV_CHESS,
       tagId: sculpturesTagId,
     },
 
     // Kyiv Elephant
     {
-      placeId: places.find((place) => place.title === PlaceTitle.KYIV_ELEPHANT)!
-        .id,
+      placeId: KYIV_ELEPHANT,
       tagId: sculpturesTagId,
     },
   ];

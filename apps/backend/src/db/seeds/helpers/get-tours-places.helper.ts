@@ -1,5 +1,5 @@
-import { PlaceTitle, TourSlug } from "../enums/enums";
-import { SluggedDbData, TitledDbData } from "../types/types";
+import { TourSlug } from "../enums/enums";
+import { SluggedDbData } from "../types/types";
 
 type TourPlace = {
   tourId: string;
@@ -7,47 +7,89 @@ type TourPlace = {
 };
 
 const getToursPlaces = (
-  places: TitledDbData[],
+  placesIds: { [key: string]: string },
   tours: SluggedDbData[]
 ): TourPlace[] => {
-  const tour = tours.find(
+  const kyivHistoricalJourneyId = tours.find(
     (tour) => tour.slug === TourSlug.KYIV_HISTORICAL_JOURNEY
-  )!;
+  )!.id;
+  const kyivMiniSculpturesId = tours.find(
+    (tour) => tour.slug === TourSlug.KYIV_MINI_SCULPTURES
+  )!.id;
+
+  const {
+    LYADSKY_GATE,
+    GOLDEN_GATE,
+    ST_SOPHIAS_CATHEDRAL,
+    ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
+    ST_ANDREWS_CHURCH,
+    HOUSE_WITH_CHIMERAS,
+    KYIV_TRAM,
+    KYIV_CHESTNUT,
+    GOLDEN_GATE_MINIATURE,
+    HEROES,
+    GHOST_OF_KYIV,
+    PALIANYTSIA,
+    KYIV_CHESS,
+    KYIV_ELEPHANT,
+  } = placesIds;
 
   const toursPlaces = [
     {
-      tourId: tour.id,
-      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
-        .id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: LYADSKY_GATE,
     },
     {
-      tourId: tour.id,
-      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
-        .id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: GOLDEN_GATE,
     },
     {
-      tourId: tour.id,
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-      )!.id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: ST_SOPHIAS_CATHEDRAL,
     },
     {
-      tourId: tour.id,
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: ST_MICHAELS_GOLDEN_DOMED_MONASTERY,
     },
     {
-      tourId: tour.id,
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: ST_ANDREWS_CHURCH,
     },
     {
-      tourId: tour.id,
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
-      )!.id,
+      tourId: kyivHistoricalJourneyId,
+      placeId: HOUSE_WITH_CHIMERAS,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: KYIV_TRAM,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: KYIV_CHESTNUT,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: GOLDEN_GATE_MINIATURE,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: HEROES,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: GHOST_OF_KYIV,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: PALIANYTSIA,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: KYIV_CHESS,
+    },
+    {
+      tourId: kyivMiniSculpturesId,
+      placeId: KYIV_ELEPHANT,
     },
   ];
 

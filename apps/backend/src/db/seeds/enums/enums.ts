@@ -28,6 +28,7 @@ const PlaceTitle = {
 
 const TourSlug = {
   KYIV_HISTORICAL_JOURNEY: "kyiv-historical-journey",
+  KYIV_MINI_SCULPTURES: "kyiv-mini-sculptures",
 } as const;
 
 export { TagSlug, PlaceTitle, TourSlug };
