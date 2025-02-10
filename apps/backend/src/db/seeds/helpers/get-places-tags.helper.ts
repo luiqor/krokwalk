@@ -25,114 +25,162 @@ const getPlacesTags = (
   const sculpturesTagId = tags.find(
     (tag) => tag.slug === TagSlug.SCULPTURES
   )!.id;
+  const twentyFirstCentuaryTagId = tags.find(
+    (tag) => tag.slug === TagSlug.TWENTYFIRST_CENTUARY
+  )!.id;
+
+  const lyadskyGateId = places.find(
+    (place) => place.title === PlaceTitle.LYADSKY_GATE
+  )!.id;
+  const goldenGateId = places.find(
+    (place) => place.title === PlaceTitle.GOLDEN_GATE
+  )!.id;
+  const stSophiasCathedralId = places.find(
+    (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
+  )!.id;
+  const stMichaelsGoldenDomedMonasteryId = places.find(
+    (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
+  )!.id;
+  const stAndrewsChurchId = places.find(
+    (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
+  )!.id;
+  const houseWithChimerasPlaceId = places.find(
+    (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
+  )!.id;
 
   const placesTags = [
     // Lyadsky Gate
     {
-      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
-        .id,
+      placeId: lyadskyGateId,
       tagId: medievalTagId,
     },
     {
-      placeId: places.find((place) => place.title === PlaceTitle.LYADSKY_GATE)!
-        .id,
+      placeId: lyadskyGateId,
       tagId: fortificationTagId,
     },
 
     // Golden Gate
     {
-      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
-        .id,
+      placeId: goldenGateId,
       tagId: fortificationTagId,
     },
     {
-      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
-        .id,
+      placeId: goldenGateId,
       tagId: reconstructedTagId,
     },
     {
-      placeId: places.find((place) => place.title === PlaceTitle.GOLDEN_GATE)!
-        .id,
+      placeId: goldenGateId,
       tagId: medievalTagId,
     },
 
     // St. Sophia's Cathedral
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-      )!.id,
+      placeId: stSophiasCathedralId,
       tagId: religiousTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-      )!.id,
+      placeId: stSophiasCathedralId,
       tagId: architecturalTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_SOPHIAS_CATHEDRAL
-      )!.id,
+      placeId: stSophiasCathedralId,
       tagId: medievalTagId,
     },
 
     // St. Michael's Golden-Domed Monastery
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
+      placeId: stMichaelsGoldenDomedMonasteryId,
       tagId: baroqueTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
+      placeId: stMichaelsGoldenDomedMonasteryId,
       tagId: religiousTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
+      placeId: stMichaelsGoldenDomedMonasteryId,
       tagId: architecturalTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_MICHAELS_GOLDEN_DOMED_MONASTERY
-      )!.id,
+      placeId: stMichaelsGoldenDomedMonasteryId,
       tagId: reconstructedTagId,
     },
 
     // St. Andrew's Church
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
+      placeId: stAndrewsChurchId,
       tagId: baroqueTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
+      placeId: stAndrewsChurchId,
       tagId: religiousTagId,
     },
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.ST_ANDREWS_CHURCH
-      )!.id,
+      placeId: stAndrewsChurchId,
       tagId: architecturalTagId,
     },
 
     // House with Chimeras
     {
-      placeId: places.find(
-        (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
-      )!.id,
+      placeId: houseWithChimerasPlaceId,
       tagId: architecturalTagId,
     },
     {
+      placeId: houseWithChimerasPlaceId,
+      tagId: sculpturesTagId,
+    },
+
+    // Kyiv Tram
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.KYIV_TRAM)!.id,
+      tagId: twentyFirstCentuaryTagId,
+    },
+
+    // Kyiv Chestnut
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.KYIV_CHESTNUT)!
+        .id,
+      tagId: twentyFirstCentuaryTagId,
+    },
+
+    // Golden Gate Miniature
+    {
       placeId: places.find(
-        (place) => place.title === PlaceTitle.HOUSE_WITH_CHIMERAS
+        (place) => place.title === PlaceTitle.GOLDEN_GATE_MINIATURE
       )!.id,
+      tagId: sculpturesTagId,
+    },
+
+    // Heroes
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.HEROES)!.id,
+      tagId: sculpturesTagId,
+    },
+
+    // Ghost of Kyiv
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.GHOST_OF_KYIV)!
+        .id,
+      tagId: sculpturesTagId,
+    },
+
+    // Palianytsia
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.PALIANYTSIA)!
+        .id,
+      tagId: sculpturesTagId,
+    },
+
+    // Kyiv Chess
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.KYIV_CHESS)!
+        .id,
+      tagId: sculpturesTagId,
+    },
+
+    // Kyiv Elephant
+    {
+      placeId: places.find((place) => place.title === PlaceTitle.KYIV_ELEPHANT)!
+        .id,
       tagId: sculpturesTagId,
     },
   ];

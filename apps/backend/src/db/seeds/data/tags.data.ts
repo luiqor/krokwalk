@@ -8,6 +8,7 @@ const tags = [
   { title: "baroque", slug: TagSlug.BAROQUE },
   { title: "fortification", slug: TagSlug.FORTIFICATION },
   { title: "sculptures", slug: TagSlug.SCULPTURES },
+  { title: "21st centuary", slug: TagSlug.TWENTYFIRST_CENTUARY },
 ];
 
 export { tags };

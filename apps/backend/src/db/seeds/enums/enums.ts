@@ -6,6 +6,7 @@ const TagSlug = {
   RELIGIOUS: "religious",
   BAROQUE: "baroque",
   SCULPTURES: "sculptures",
+  TWENTYFIRST_CENTUARY: "21st-centuary",
 } as const;
 
 const PlaceTitle = {
@@ -15,6 +16,14 @@ const PlaceTitle = {
   ST_MICHAELS_GOLDEN_DOMED_MONASTERY: "St. Michael's Golden-Domed Monastery",
   ST_ANDREWS_CHURCH: "St. Andrew's Church",
   HOUSE_WITH_CHIMERAS: "House with Chimeras",
+  KYIV_TRAM: "Kyiv Tram",
+  KYIV_CHESTNUT: "Kyiv Chestnut",
+  GOLDEN_GATE_MINIATURE: "Golden Gate Miniature",
+  HEROES: "Heroes",
+  GHOST_OF_KYIV: "Ghost of Kyiv",
+  PALIANYTSIA: "Palianytsia",
+  KYIV_CHESS: "Kyiv Chess",
+  KYIV_ELEPHANT: "Kyiv Elephant",
 } as const;
 
 const TourSlug = {

@@ -71,6 +71,79 @@ Its unique facade includes intricate sculptures of elephants, dolphins, frogs, a
     lat: 50.4450683,
     lng: 30.5286211,
   },
+  // Mini-sculptures
+  {
+    title: PlaceTitle.KYIV_TRAM,
+    description: `A tribute to Kyiv’s first electric tram, which began operating in 1892 and was the first of its kind in the Russian Empire. The miniature tram sculpture is a reminder of the city's transportation heritage.`,
+    address: "Solarity, 1A, Sportyvna Square Gulliver",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66de0bb9791e65abbf5964ab_optimized",
+    lat: 50.454319,
+    lng: 30.524135,
+  },
+  {
+    title: PlaceTitle.KYIV_CHESTNUT,
+    description: `The Kyiv Chestnut symbolizes the city's iconic chestnut trees, which have been associated with the Ukrainian capital since the 19th century. Every spring, Kyiv streets are filled with their blossoms, making it a beloved local symbol.`,
+    address: "12 Khreshchatyk St",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66dca5ed791e65abbf568143_optimized",
+    lat: 50.448954,
+    lng: 30.519137,
+  },
+  {
+    title: PlaceTitle.GOLDEN_GATE_MINIATURE,
+    description: `A small bronze model of Kyiv's Golden Gate (Золоті ворота), one of the medieval city’s key fortifications, originally built in the 11th century. The full-sized gate has been partially reconstructed and remains a historical landmark.`,
+    address: "40 Volodymyrska St",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66e0a08c280eb75c87c7d85d_optimized",
+    lat: 50.447282,
+    lng: 30.513493,
+  },
+  {
+    title: PlaceTitle.HEROES,
+    description: `This miniature sculpture is dedicated to the heroes who defended Ukraine. It symbolizes courage, resilience, and patriotism, honoring those who fight for the country's independence.`,
+    address: "Volodymyrska Hill, Kyiv",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66e34a0ed922e488e598235e_optimized",
+    lat: 50.4536,
+    lng: 30.527,
+  },
+  {
+    title: PlaceTitle.GHOST_OF_KYIV,
+    description: `A tribute to the legendary "Ghost of Kyiv," an anonymous Ukrainian fighter pilot rumored to have shot down multiple enemy aircraft during the defense of Kyiv in 2022. The sculpture represents the spirit of resistance and bravery.`,
+    address: "Maidan Nezalezhnosti, Kyiv",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66e1574d99ca512dad0408db_optimized",
+    lat: 50.4501,
+    lng: 30.5234,
+  },
+  {
+    title: PlaceTitle.PALIANYTSIA,
+    description: `This sculpture features a traditional Ukrainian bread called "Palianytsia." It has become a symbol of national identity, as its pronunciation distinguishes native speakers from outsiders.`,
+    address: "Andriivskyi Descent, Kyiv",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66e2ba3082f714aee5129630_optimized",
+    lat: 50.4599,
+    lng: 30.517,
+  },
+  {
+    title: PlaceTitle.KYIV_CHESS,
+    description: `A miniature chessboard sculpture representing Kyiv's rich chess-playing culture. The city has hosted numerous chess tournaments, and this artwork celebrates the intellectual sport loved by many locals.`,
+    address: "Taras Shevchenko Park, Kyiv",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66e0a8b3280eb75c87c7eed3_optimized",
+    lat: 50.4438,
+    lng: 30.5186,
+  },
+  {
+    title: PlaceTitle.KYIV_ELEPHANT,
+    description: `The Kyiv Elephant sculpture is a fun and whimsical representation of an elephant, symbolizing wisdom, strength, and kindness. It serves as a reminder of the animals in Kyiv’s historical zoo and the city's love for nature.`,
+    address: "Pechersk District, Kyiv",
+    thumbnailLink:
+      "https://res2.weblium.site/res/66cd8c1495b35d7bd5eb275f/66ddbe8a791e65abbf589c26_optimized",
+    lat: 50.4363,
+    lng: 30.553,
+  },
 ];
 
 export { places };
