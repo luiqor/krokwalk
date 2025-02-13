@@ -113,6 +113,11 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
     setIsTracking(true);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    alert("Please use the map to set the starting point.");
+  };
+
   return (
     <Timeline
       sx={{
@@ -140,6 +145,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
             label="Starting point"
             fullWidth
             size="small"
+            onKeyDown={handleKeyDown}
             slotProps={{
               input: {
                 endAdornment: (
@@ -153,6 +159,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
                     </span>
                   </InputAdornment>
                 ),
+                readOnly: true,
               },
             }}
           />

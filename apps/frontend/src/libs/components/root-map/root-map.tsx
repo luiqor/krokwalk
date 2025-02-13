@@ -13,6 +13,7 @@ import {
 } from "~/modules/location/location.js";
 
 import styles from "./root-map.module.css";
+import { PersonPinCircle } from "@mui/icons-material";
 
 const ZOOM_DEFAULT = 16;
 
@@ -69,7 +70,15 @@ const RootMap = () => {
 
     const { latitude, longitude } = startingPoint;
 
-    const marker = L.marker([latitude, longitude]);
+    const marker = L.marker([latitude, longitude], {
+      icon: L.divIcon({
+        html: ReactDOMServer.renderToString(
+          <PersonPinCircle style={{ fontSize: 50 }} />
+        ),
+        className: styles.marker,
+        iconAnchor: [20, 40],
+      }),
+    });
     marker.addTo(mapInstanceRef.current!);
 
     return () => {
