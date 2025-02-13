@@ -13,3 +13,4 @@ type UrlFriendlyEntity = {
 };
 
 export type { AsyncThunkConfig, UrlFriendlyEntity };
+export { type GeoCoordinates } from "./geo-coordinates.type.js";

@@ -44,8 +44,8 @@ erDiagram
         datetime updated_at
     }
 
-    TOURS_PLACES }o--|| PLACES : "place_id"
     TOURS_PLACES }o--|| TOURS : "tour_id"
+    TOURS_PLACES }o--|| PLACES : "place_id"
     TOURS_PLACES {
         uuid id PK
         uuid place_id FK

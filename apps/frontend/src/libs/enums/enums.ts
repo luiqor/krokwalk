@@ -1,6 +1,7 @@
 const SliceName = {
   PLACES: "places",
   TAGS: "tags",
+  LOCATION: "location",
 } as const;
 
 export { SliceName };

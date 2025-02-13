@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 
 import { mapOptions, tileLayers } from "./libs/constants/constants.js";
-import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { Marker } from "./libs/components/marker.js";
+import {
+  actions as locationAction,
+  StartingPoint,
+} from "~/modules/location/location.js";
 
 import styles from "./root-map.module.css";
 
@@ -14,10 +18,10 @@ const ZOOM_DEFAULT = 16;
 
 const RootMap = () => {
   const { places, status } = useAppSelector((state) => state.places);
+  const { startingPoint } = useAppSelector((state) => state.location);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
-  const [startingPointMarker, setStartingPointMarker] =
-    useState<L.Marker | null>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -46,19 +50,32 @@ const RootMap = () => {
     }
 
     mapInstanceRef.current.on("click", (e: L.LeafletMouseEvent) => {
-      const { lat, lng } = e.latlng;
+      const { lat: selectedLatitude, lng: selectedLongitude } = e.latlng;
 
-      const marker = L.marker([lat, lng]);
-      marker.addTo(mapInstanceRef.current!);
-
-      setStartingPointMarker((prev) => {
-        if (prev) {
-          mapInstanceRef.current!.removeLayer(prev);
-        }
-        return marker;
-      });
+      dispatch(
+        locationAction.setStartingPoint({
+          latitude: selectedLatitude,
+          longitude: selectedLongitude,
+          startingPointType: StartingPoint.SELECTED,
+        })
+      );
     });
-  }, [startingPointMarker]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!mapInstanceRef.current || !startingPoint) {
+      return;
+    }
+
+    const { latitude, longitude } = startingPoint;
+
+    const marker = L.marker([latitude, longitude]);
+    marker.addTo(mapInstanceRef.current!);
+
+    return () => {
+      mapInstanceRef.current!.removeLayer(marker);
+    };
+  }, [startingPoint]);
 
   useEffect(() => {
     if (!mapInstanceRef.current || status !== DataStatus.FULFILLED) {

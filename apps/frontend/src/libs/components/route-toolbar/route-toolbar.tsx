@@ -7,13 +7,31 @@ import {
   TagsFilterSelector,
   ToursFilterSelector,
 } from "./libs/components/components.js";
+import { useAppForm } from "~/libs/hooks/hooks.js";
+
+type RouteToolbarForm = {
+  startingPoint: string;
+  endPoint: string;
+  maxTime: number;
+  tags: string[];
+  tours: string[];
+};
 
 const RouteToolbar = () => {
+  const { setValue, register } = useAppForm<RouteToolbarForm>({
+    defaultValues: {
+      startingPoint: "",
+      maxTime: 0,
+      tags: [],
+      tours: [],
+    },
+  });
+
   return (
     <div className={styles.toolbar}>
       <form className={styles.form}>
         <div className={styles.locationSelectionContainer}>
-          <LocationSelection />
+          <LocationSelection onSetValue={setValue} onRegister={register} />
         </div>
         <div className={styles.settingsContainer}>
           <ToursFilterSelector />
