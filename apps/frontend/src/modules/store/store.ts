@@ -1,9 +1,10 @@
-import { configureStore, Middleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
 import { placeService, reducer as placesReducer } from "../places/places.js";
 import { tagService, reducer as tagsReducer } from "../tags/tags.js";
 import { tourService, reducer as toursReducer } from "../tours/tours.js";
 import { reducer as locationReducer } from "../location/location.js";
+import { errorHandlingMiddleware } from "./libs/middlewares/middlewares.js";
 
 const reducers = {
   places: placesReducer,
@@ -16,14 +17,6 @@ const extraArgument = {
   placeService,
   tagService,
   tourService,
-};
-
-const errorHandlingMiddleware: Middleware = () => (next) => (action) => {
-  try {
-    return next(action);
-  } catch (error) {
-    console.error("Exception caught:", error);
-  }
 };
 
 const store = configureStore({

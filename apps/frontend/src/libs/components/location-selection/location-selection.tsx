@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { InputAdornment, TextField } from "@mui/material";
 import {
   Timeline,
@@ -10,14 +12,14 @@ import {
 import { Place, LocationSearching, MyLocation } from "@mui/icons-material";
 import { timelineItemClasses } from "@mui/lab/TimelineItem";
 
-import styles from "./location-selection.module.css";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import {
   actions as locationAction,
   StartingPoint,
 } from "~/modules/location/location.js";
+import { notification } from "~/modules/notification/notification.js";
+
+import styles from "./location-selection.module.css";
 
 type RouteToolbarForm = {
   startingPoint: string;
@@ -115,7 +117,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault();
-    alert("Please use the map to set the starting point.");
+    notification.info("Please select a location on the map");
   };
 
   return (
