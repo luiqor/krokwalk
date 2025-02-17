@@ -1,7 +1,7 @@
-import { Tag } from "@mui/icons-material";
 import { Popover, IconButton, Typography } from "@mui/material";
 
 import { UrlFriendlyEntity } from "~/libs/types/types.js";
+import { Icon } from "~/libs/components/components.js";
 
 import styles from "./filter-menu.module.css";
 
@@ -66,7 +66,7 @@ const FilterMenu: React.FC<Props> = ({
               width: "100px",
             }}
           >
-            <Tag />
+            <Icon name="tag" />
             <Typography variant="caption">{entity.title}</Typography>
           </IconButton>
         ))}

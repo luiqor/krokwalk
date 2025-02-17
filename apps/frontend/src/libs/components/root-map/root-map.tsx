@@ -12,9 +12,9 @@ import {
   SelectionMode,
   StartingPoint,
 } from "~/modules/location/location.js";
+import { Icon } from "../components.js";
 
 import styles from "./root-map.module.css";
-import { PersonPinCircle, Place } from "@mui/icons-material";
 import { GeoCoordinates } from "~/libs/types/geo-coordinates.type.js";
 
 const ZOOM_DEFAULT = 16;
@@ -114,7 +114,7 @@ const RootMap = () => {
 
     const marker = addMarker(
       startingPoint,
-      <PersonPinCircle style={{ fontSize: 50 }} />
+      <Icon name="startingPoint" fontSize={50} />
     );
 
     return () => {
@@ -131,7 +131,7 @@ const RootMap = () => {
 
     const marker = addMarker(
       destinationPoint,
-      <Place style={{ fontSize: 50 }} />
+      <Icon name="destinationPoint" fontSize={50} />
     );
 
     return () => {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Add, Tag } from "@mui/icons-material";
 import { Chip, Divider, IconButton, Typography } from "@mui/material";
 
 import { UrlFriendlyEntity } from "~/libs/types/types.js";
+import { Icon } from "~/libs/components/components.js";
 
 import styles from "./places-filter-selector.module.css";
 import { FilterMenu } from "../filter-menu/filter-menu.js";
@@ -32,7 +32,7 @@ const PlacesFilterSelector: React.FC<Props> = ({
       <div className={styles.titleBox}>
         <h3>Selected {entityTitle}</h3>
         <Chip
-          icon={<Add sx={{ fontSize: 16 }} />}
+          icon={<Icon name="plus" fontSize={16} />}
           color="primary"
           variant="outlined"
           label="Add"
@@ -62,7 +62,7 @@ const PlacesFilterSelector: React.FC<Props> = ({
                 }}
                 onClick={() => onEntityClicked(entity)}
               >
-                <Tag />
+                <Icon name="tag" />
                 <Typography variant="caption">{entity.title}</Typography>
               </IconButton>
             ))}

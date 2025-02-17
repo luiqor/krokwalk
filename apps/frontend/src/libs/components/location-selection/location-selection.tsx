@@ -9,7 +9,6 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
-import { Place, LocationSearching, MyLocation } from "@mui/icons-material";
 import { timelineItemClasses } from "@mui/lab/TimelineItem";
 
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
@@ -19,6 +18,7 @@ import {
   StartingPoint,
 } from "~/modules/location/location.js";
 import { notification } from "~/modules/notification/notification.js";
+import { Icon } from "~/libs/components/components.js";
 
 import styles from "./location-selection.module.css";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
@@ -157,7 +157,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
         <TimelineSeparator>
           <TimelineDot color="inherit">
             <div className={styles.iconWrapper}>
-              <LocationSearching sx={{ fontSize: 16 }} />
+              <Icon name="untrackedMyLocation" fontSize={16} />
             </div>
           </TimelineDot>
           <TimelineConnector className={styles.dottedLine} />
@@ -184,9 +184,9 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
                   <InputAdornment position="end">
                     <span onClick={handleToggleTracking}>
                       {startingPointType === StartingPoint.CURRENT ? (
-                        <MyLocation sx={{ fontSize: 20 }} />
+                        <Icon name="trackedMyLocation" fontSize={16} />
                       ) : (
-                        <LocationSearching sx={{ fontSize: 20 }} />
+                        <Icon name="untrackedMyLocation" fontSize={20} />
                       )}
                     </span>
                   </InputAdornment>
@@ -203,7 +203,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
         <TimelineSeparator>
           <TimelineDot color="inherit">
             <div className={styles.iconWrapper}>
-              <Place />
+              <Icon name="place" />
             </div>
           </TimelineDot>
         </TimelineSeparator>
