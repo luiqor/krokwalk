@@ -111,7 +111,9 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
     }
   }, [startingPoint, startingPointType]);
 
-  const handleToggleTracking = () => {
+  const handleToggleTracking = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+
     if (isTracking) {
       setIsTracking(false);
 
