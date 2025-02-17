@@ -1,0 +1,15 @@
+.form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+.locationSelectionContainer {
+  height: 150px;
+}

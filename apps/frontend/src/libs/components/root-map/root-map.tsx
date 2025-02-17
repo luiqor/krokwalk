@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -9,17 +9,21 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { Marker } from "./libs/components/marker.js";
 import {
   actions as locationAction,
+  SelectionMode,
   StartingPoint,
 } from "~/modules/location/location.js";
 
 import styles from "./root-map.module.css";
-import { PersonPinCircle } from "@mui/icons-material";
+import { PersonPinCircle, Place } from "@mui/icons-material";
+import { GeoCoordinates } from "~/libs/types/geo-coordinates.type.js";
 
 const ZOOM_DEFAULT = 16;
 
 const RootMap = () => {
   const { places, status } = useAppSelector((state) => state.places);
-  const { startingPoint } = useAppSelector((state) => state.location);
+  const { startingPoint, destinationPoint, selectionMode } = useAppSelector(
+    (state) => state.location
+  );
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const dispatch = useAppDispatch();
@@ -50,41 +54,92 @@ const RootMap = () => {
       return;
     }
 
-    mapInstanceRef.current.on("click", (e: L.LeafletMouseEvent) => {
+    const handleMapClick = (e: L.LeafletMouseEvent) => {
       const { lat: selectedLatitude, lng: selectedLongitude } = e.latlng;
 
-      dispatch(
-        locationAction.setStartingPoint({
-          latitude: selectedLatitude,
-          longitude: selectedLongitude,
-          startingPointType: StartingPoint.SELECTED,
-        })
-      );
+      if (selectionMode === SelectionMode.STARTING_POINT) {
+        console.log("Starting point selected");
+        dispatch(
+          locationAction.setStartingPoint({
+            latitude: selectedLatitude,
+            longitude: selectedLongitude,
+            startingPointType: StartingPoint.SELECTED,
+          })
+        );
+      }
+
+      if (selectionMode === SelectionMode.DESTINATION_POINT) {
+        dispatch(
+          locationAction.setDestinationPoint({
+            latitude: selectedLatitude,
+            longitude: selectedLongitude,
+          })
+        );
+      }
+
+      dispatch(locationAction.setSelectionMode(null));
+    };
+
+    if (selectionMode !== null) {
+      mapInstanceRef.current.on("click", handleMapClick);
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.off("click", handleMapClick);
+      }
+    };
+  }, [dispatch, selectionMode]);
+
+  const addMarker = (point: GeoCoordinates, icon: ReactNode) => {
+    const { latitude, longitude } = point;
+
+    const marker = L.marker([latitude, longitude], {
+      icon: L.divIcon({
+        html: ReactDOMServer.renderToString(icon),
+        className: styles.marker,
+        iconAnchor: [20, 40],
+      }),
     });
-  }, [dispatch]);
+
+    marker.addTo(mapInstanceRef.current!);
+
+    return marker;
+  };
 
   useEffect(() => {
     if (!mapInstanceRef.current || !startingPoint) {
       return;
     }
 
-    const { latitude, longitude } = startingPoint;
-
-    const marker = L.marker([latitude, longitude], {
-      icon: L.divIcon({
-        html: ReactDOMServer.renderToString(
-          <PersonPinCircle style={{ fontSize: 50 }} />
-        ),
-        className: styles.marker,
-        iconAnchor: [20, 40],
-      }),
-    });
-    marker.addTo(mapInstanceRef.current!);
+    const marker = addMarker(
+      startingPoint,
+      <PersonPinCircle style={{ fontSize: 50 }} />
+    );
 
     return () => {
-      mapInstanceRef.current!.removeLayer(marker);
+      if (marker) {
+        mapInstanceRef.current!.removeLayer(marker);
+      }
     };
-  }, [startingPoint]);
+  }, [startingPoint, dispatch]);
+
+  useEffect(() => {
+    if (!mapInstanceRef.current || !destinationPoint) {
+      return;
+    }
+
+    const marker = addMarker(
+      destinationPoint,
+      <Place style={{ fontSize: 50 }} />
+    );
+
+    return () => {
+      if (marker) {
+        mapInstanceRef.current!.removeLayer(marker);
+      }
+    };
+  }, [destinationPoint]);
 
   useEffect(() => {
     if (!mapInstanceRef.current || status !== DataStatus.FULFILLED) {

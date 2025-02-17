@@ -8,14 +8,23 @@ const StartingPoint = {
   SELECTED: "SELECTED",
 } as const;
 
+const SelectionMode = {
+  STARTING_POINT: "STARTING_POINT",
+  DESTINATION_POINT: "DESTINATION_POINT",
+} as const;
+
 type State = {
+  selectionMode: (typeof SelectionMode)[keyof typeof SelectionMode] | null;
   startingPoint: GeoCoordinates | null;
   startingPointType: (typeof StartingPoint)[keyof typeof StartingPoint] | null;
+  destinationPoint: GeoCoordinates | null;
 };
 
 const initialState: State = {
+  selectionMode: null,
   startingPoint: null,
   startingPointType: null,
+  destinationPoint: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -42,7 +51,32 @@ const { reducer, actions, name } = createSlice({
       state.startingPoint = null;
       state.startingPointType = null;
     },
+    setDestinationPoint: (
+      state,
+      action: {
+        payload: {
+          latitude: number;
+          longitude: number;
+        };
+      }
+    ) => {
+      state.destinationPoint = {
+        latitude: action.payload.latitude,
+        longitude: action.payload.longitude,
+      };
+    },
+    removeDestinationPoint: (state) => {
+      state.destinationPoint = null;
+    },
+    setSelectionMode: (
+      state,
+      action: {
+        payload: (typeof SelectionMode)[keyof typeof SelectionMode] | null;
+      }
+    ) => {
+      state.selectionMode = action.payload;
+    },
   },
 });
 
-export { reducer, name, actions, StartingPoint };
+export { reducer, name, actions, StartingPoint, SelectionMode };

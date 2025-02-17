@@ -15,15 +15,18 @@ import { timelineItemClasses } from "@mui/lab/TimelineItem";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import {
   actions as locationAction,
+  SelectionMode,
   StartingPoint,
 } from "~/modules/location/location.js";
 import { notification } from "~/modules/notification/notification.js";
 
 import styles from "./location-selection.module.css";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 type RouteToolbarForm = {
   startingPoint: string;
   endPoint: string;
+  destinationPoint: string;
   maxTime: number;
   tags: string[];
   tours: string[];
@@ -37,9 +40,8 @@ type Props = {
 const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
   const [isTracking, setIsTracking] = useState<boolean>(false);
 
-  const { startingPoint, startingPointType } = useAppSelector(
-    (state) => state.location
-  );
+  const { startingPoint, startingPointType, destinationPoint, selectionMode } =
+    useAppSelector((state) => state.location);
   const dispatch = useAppDispatch();
   const watchIdRef = useRef<number | null>(null);
 
@@ -60,7 +62,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
         );
       },
       (error) => {
-        console.log("Error tracking location:", error);
+        notification.error(error.message);
       },
       {
         enableHighAccuracy: true,
@@ -89,6 +91,17 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
   }, [startingPoint, onSetValue]);
 
   useEffect(() => {
+    if (!destinationPoint) {
+      return;
+    }
+
+    onSetValue(
+      "destinationPoint",
+      `${destinationPoint.latitude}, ${destinationPoint.longitude}`
+    );
+  }, [destinationPoint, onSetValue]);
+
+  useEffect(() => {
     if (!startingPoint) {
       return;
     }
@@ -115,7 +128,15 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
     setIsTracking(true);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleStartingPointSelect = () => {
+    dispatch(locationAction.setSelectionMode(SelectionMode.STARTING_POINT));
+  };
+
+  const handleDestinationPointSelect = () => {
+    dispatch(locationAction.setSelectionMode(SelectionMode.DESTINATION_POINT));
+  };
+
+  const handleKeyDown = (event: React.SyntheticEvent) => {
     event.preventDefault();
     notification.info("Please select a location on the map");
   };
@@ -141,12 +162,19 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
         </TimelineSeparator>
         <TimelineContent sx={{ paddingRight: 0 }}>
           <TextField
+            className={getValidClassNames(
+              styles.textField,
+              selectionMode === SelectionMode.STARTING_POINT &&
+                styles.selectedTextField
+            )}
             {...onRegister("startingPoint")}
-            focused={Boolean(startingPoint)}
+            focused={selectionMode === SelectionMode.STARTING_POINT}
             required
+            autoComplete="off"
             label="Starting point"
             fullWidth
             size="small"
+            onClick={handleStartingPointSelect}
             onKeyDown={handleKeyDown}
             slotProps={{
               input: {
@@ -161,7 +189,9 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
                     </span>
                   </InputAdornment>
                 ),
-                readOnly: true,
+              },
+              inputLabel: {
+                shrink: Boolean(startingPoint),
               },
             }}
           />
@@ -176,7 +206,27 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
           </TimelineDot>
         </TimelineSeparator>
         <TimelineContent sx={{ paddingRight: 0 }}>
-          <TextField required label="Destination" fullWidth size="small" />
+          <TextField
+            className={getValidClassNames(
+              styles.textField,
+              selectionMode === SelectionMode.DESTINATION_POINT &&
+                styles.selectedTextField
+            )}
+            {...onRegister("destinationPoint")}
+            focused={selectionMode === SelectionMode.DESTINATION_POINT}
+            required
+            autoComplete="off"
+            label="Destination"
+            fullWidth
+            size="small"
+            onClick={handleDestinationPointSelect}
+            onKeyDown={handleKeyDown}
+            slotProps={{
+              inputLabel: {
+                shrink: Boolean(startingPoint),
+              },
+            }}
+          />
         </TimelineContent>
       </TimelineItem>
     </Timeline>

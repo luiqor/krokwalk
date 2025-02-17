@@ -15,3 +15,12 @@
 .separator {
   padding-top: 20px;
 }
+
+.textField {
+  background-color: var(--color-white);
+  border-radius: 5px;
+}
+
+.selectedTextField {
+  z-index: 3;
+}
