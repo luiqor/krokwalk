@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { GeoCoordinates } from "~/libs/types/types.js";
 import { SliceName } from "~/libs/enums/enums.js";
 
+import { Screen } from "./libs/enums/enums.js";
+
 const StartingPoint = {
   CURRENT: "CURRENT",
   SELECTED: "SELECTED",
@@ -18,6 +20,7 @@ type State = {
   startingPoint: GeoCoordinates | null;
   startingPointType: (typeof StartingPoint)[keyof typeof StartingPoint] | null;
   destinationPoint: GeoCoordinates | null;
+  screen: (typeof Screen)[keyof typeof Screen];
 };
 
 const initialState: State = {
@@ -25,6 +28,7 @@ const initialState: State = {
   startingPoint: null,
   startingPointType: null,
   destinationPoint: null,
+  screen: Screen.FILTERING,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -76,7 +80,15 @@ const { reducer, actions, name } = createSlice({
     ) => {
       state.selectionMode = action.payload;
     },
+    setScreen(
+      state,
+      action: {
+        payload: (typeof Screen)[keyof typeof Screen];
+      }
+    ) {
+      state.screen = action.payload;
+    },
   },
 });
 
-export { reducer, name, actions, StartingPoint, SelectionMode };
+export { reducer, name, actions, StartingPoint, SelectionMode, Screen };

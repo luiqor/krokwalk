@@ -1,21 +1,31 @@
 import { memo } from "react";
-import { Divider, Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 
+import {
+  actions as locationAction,
+  Screen,
+} from "~/modules/location/location.js";
 import { LocationSelection } from "~/libs/components/components.js";
 import { TagsFilterSelector, ToursFilterSelector } from "../components.js";
-import { useAppForm } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useAppForm } from "~/libs/hooks/hooks.js";
 import { TripDetailsProps } from "../../types/types.js";
 
 import styles from "./route-form.module.css";
 
 const RouteForm: React.FC = memo(() => {
-  const { setValue, register } = useAppForm<TripDetailsProps>({
+  const dispatch = useAppDispatch();
+  const { setValue, register, handleSubmit } = useAppForm<TripDetailsProps>({
     defaultValues: {
       startingPoint: "",
       destinationPoint: "",
       tags: [],
       tours: [],
     },
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+    dispatch(locationAction.setScreen(Screen.CONSTRAINTS));
   });
 
   return (
@@ -26,17 +36,14 @@ const RouteForm: React.FC = memo(() => {
       <div className={styles.settingsContainer}>
         <ToursFilterSelector onSetValue={setValue} />
         <TagsFilterSelector onSetValue={setValue} />
-        <div>
-          <Divider />
-          <h3>Select settings</h3>
-          <TextField
-            label="Provide maximum time for a walk"
-            size="small"
-            fullWidth
-          />
-        </div>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          Submit
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={onSubmit}
+        >
+          Proceed
         </Button>
       </div>
     </form>

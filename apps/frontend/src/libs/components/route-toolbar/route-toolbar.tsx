@@ -1,15 +1,30 @@
-import { RouteForm } from "./libs/components/components.js";
+import { ConstraintsForm, RouteForm } from "./libs/components/components.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { Screen } from "~/modules/location/location.js";
 
 import styles from "./route-toolbar.module.css";
 
 const RouteToolbar: React.FC = () => {
-  const { selectionMode } = useAppSelector((state) => state.location);
+  const { selectionMode, screen } = useAppSelector((state) => state.location);
+
+  const getScreen = (
+    step: (typeof Screen)[keyof typeof Screen]
+  ): React.ReactNode => {
+    switch (step) {
+      case Screen.FILTERING: {
+        return <RouteForm />;
+      }
+
+      case Screen.CONSTRAINTS: {
+        return <ConstraintsForm />;
+      }
+    }
+  };
 
   return (
     <div className={styles.toolbar}>
       {selectionMode && <div className={styles.mask} />}
-      <RouteForm />
+      {getScreen(screen)}
     </div>
   );
 };
