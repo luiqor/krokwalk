@@ -4,24 +4,15 @@ import { Divider, Button, TextField } from "@mui/material";
 import { LocationSelection } from "~/libs/components/components.js";
 import { TagsFilterSelector, ToursFilterSelector } from "../components.js";
 import { useAppForm } from "~/libs/hooks/hooks.js";
+import { TripDetailsProps } from "../../types/types.js";
 
 import styles from "./route-form.module.css";
 
-type RouteToolbarForm = {
-  startingPoint: string;
-  endPoint: string;
-  destinationPoint: string;
-  maxTime: number;
-  tags: string[];
-  tours: string[];
-};
-
 const RouteForm: React.FC = memo(() => {
-  const { setValue, register } = useAppForm<RouteToolbarForm>({
+  const { setValue, register } = useAppForm<TripDetailsProps>({
     defaultValues: {
       startingPoint: "",
       destinationPoint: "",
-      maxTime: 0,
       tags: [],
       tours: [],
     },
@@ -33,8 +24,8 @@ const RouteForm: React.FC = memo(() => {
         <LocationSelection onSetValue={setValue} onRegister={register} />
       </div>
       <div className={styles.settingsContainer}>
-        <ToursFilterSelector />
-        <TagsFilterSelector />
+        <ToursFilterSelector onSetValue={setValue} />
+        <TagsFilterSelector onSetValue={setValue} />
         <div>
           <Divider />
           <h3>Select settings</h3>

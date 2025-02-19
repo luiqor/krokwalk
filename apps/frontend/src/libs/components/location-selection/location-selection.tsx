@@ -22,19 +22,11 @@ import { Icon } from "~/libs/components/components.js";
 
 import styles from "./location-selection.module.css";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-
-type RouteToolbarForm = {
-  startingPoint: string;
-  endPoint: string;
-  destinationPoint: string;
-  maxTime: number;
-  tags: string[];
-  tours: string[];
-};
+import { TripDetailsProps } from "../route-toolbar/libs/types/types.js";
 
 type Props = {
-  onSetValue: UseFormSetValue<RouteToolbarForm>;
-  onRegister: UseFormRegister<RouteToolbarForm>;
+  onSetValue: UseFormSetValue<TripDetailsProps>;
+  onRegister: UseFormRegister<TripDetailsProps>;
 };
 
 const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
@@ -184,7 +176,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
                   <InputAdornment position="end">
                     <span onClick={handleToggleTracking}>
                       {startingPointType === StartingPoint.CURRENT ? (
-                        <Icon name="trackedMyLocation" fontSize={16} />
+                        <Icon name="trackedMyLocation" fontSize={20} />
                       ) : (
                         <Icon name="untrackedMyLocation" fontSize={20} />
                       )}
@@ -225,7 +217,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
             onKeyDown={handleKeyDown}
             slotProps={{
               inputLabel: {
-                shrink: Boolean(startingPoint),
+                shrink: Boolean(destinationPoint),
               },
             }}
           />
