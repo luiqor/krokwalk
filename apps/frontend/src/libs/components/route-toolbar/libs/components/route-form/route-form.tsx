@@ -1,3 +1,4 @@
+import { getConstraintsValidationSchema } from "shared";
 import { memo } from "react";
 import { Button } from "@mui/material";
 
@@ -21,6 +22,7 @@ const RouteForm: React.FC = memo(() => {
       tags: [],
       tours: [],
     },
+    validationSchema: getConstraintsValidationSchema,
   });
 
   const onSubmit = handleSubmit((data) => {

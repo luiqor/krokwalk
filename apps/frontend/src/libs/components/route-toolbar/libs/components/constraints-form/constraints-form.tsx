@@ -1,3 +1,4 @@
+import { getConstraintsValidationSchema } from "shared";
 import { memo } from "react";
 import { Button, TextField } from "@mui/material";
 
@@ -14,6 +15,7 @@ const ConstraintsForm: React.FC = memo(() => {
     defaultValues: {
       maxDuration: 0,
     },
+    validationSchema: getConstraintsValidationSchema,
   });
 
   return (
