@@ -5,11 +5,11 @@ import { BaseController } from "../../libs/modules/controller/base-controller";
 import { TourService } from "./tour.service";
 
 class TourController extends BaseController {
-  private TourEntityService: TourService;
+  private service: TourService;
 
-  constructor(TourEntityService: TourService) {
+  constructor(service: TourService) {
     super();
-    this.TourEntityService = TourEntityService;
+    this.service = service;
     this.initializeRoutes();
   }
 
@@ -18,7 +18,7 @@ class TourController extends BaseController {
   }
 
   private async getAllTours(req: Request, res: Response): Promise<void> {
-    const tours = await this.TourEntityService.getAll();
+    const tours = await this.service.getAll();
     res.status(200).send(tours);
   }
 }

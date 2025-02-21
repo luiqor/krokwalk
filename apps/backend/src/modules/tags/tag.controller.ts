@@ -4,11 +4,11 @@ import { BaseController } from "../../libs/modules/controller/base-controller";
 import { TagService } from "./tag.service";
 
 class TagController extends BaseController {
-  private tagService: TagService;
+  private service: TagService;
 
-  constructor(tagService: TagService) {
+  constructor(service: TagService) {
     super();
-    this.tagService = tagService;
+    this.service = service;
     this.initializeRoutes();
   }
 
@@ -17,7 +17,7 @@ class TagController extends BaseController {
   }
 
   private async getAllTags(req: Request, res: Response): Promise<void> {
-    const tags = await this.tagService.getAll();
+    const tags = await this.service.getAll();
     res.status(200).send(tags);
   }
 }

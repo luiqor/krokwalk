@@ -1,15 +1,17 @@
+import type { Repository } from "~/libs/types/types";
+
 import { TourEntity } from "./tour.entity";
 import { TourModel } from "./tour.model";
 
-class TourRepository {
-  private tourModel: typeof TourModel;
+class TourRepository implements Repository {
+  private model: typeof TourModel;
 
-  public constructor(tourModel: typeof TourModel) {
-    this.tourModel = tourModel;
+  public constructor(model: typeof TourModel) {
+    this.model = model;
   }
 
   public async getAll() {
-    const tours = await this.tourModel.query();
+    const tours = await this.model.query();
 
     return await Promise.all(
       tours.map(async (tour) =>

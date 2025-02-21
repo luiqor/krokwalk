@@ -6,11 +6,11 @@ import { PlaceService } from "./place.service";
 import { type PlacesGetAllQueryParams } from "./libs/types/types";
 
 class PlaceController extends BaseController {
-  private placeService: PlaceService;
+  private service: PlaceService;
 
-  constructor(placeService: PlaceService) {
+  constructor(service: PlaceService) {
     super();
-    this.placeService = placeService;
+    this.service = service;
     this.initializeRoutes();
   }
 
@@ -19,7 +19,7 @@ class PlaceController extends BaseController {
   }
 
   private async getAllPlaces(req: Request, res: Response): Promise<void> {
-    const places = await this.placeService.getAll(
+    const places = await this.service.getAll(
       req.query as PlacesGetAllQueryParams
     );
     res.status(200).send(places);

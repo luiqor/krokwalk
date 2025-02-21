@@ -1,3 +1,5 @@
+import type { Service } from "~/libs/types/types";
+
 import { PlaceRepository } from "./place.repository";
 import {
   type PlacesGetAllQueryParams,
@@ -12,18 +14,18 @@ const ensureArray = <T>(value: T | T[] | null | undefined): T[] => {
   return value ? [value] : [];
 };
 
-class PlaceService {
-  private placeRepository: PlaceRepository;
+class PlaceService implements Service {
+  private repository: PlaceRepository;
 
-  public constructor(placeRepository: PlaceRepository) {
-    this.placeRepository = placeRepository;
+  public constructor(repository: PlaceRepository) {
+    this.repository = repository;
   }
 
   public async getAll({
     tags,
     tours,
   }: PlacesGetAllQueryParams): Promise<PlacesGetAllResponseDto> {
-    const placeEntities = await this.placeRepository.getAll({
+    const placeEntities = await this.repository.getAll({
       tags: ensureArray(tags),
       tours: ensureArray(tours),
     });

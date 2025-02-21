@@ -1,15 +1,17 @@
+import type { Repository } from "~/libs/types/types";
+
 import { TagEntity } from "./tag.entity";
 import { TagModel } from "./tag.model";
 
-class TagRepository {
-  private tagModel: typeof TagModel;
+class TagRepository implements Repository {
+  private model: TagModel;
 
-  public constructor(tagModel: typeof TagModel) {
-    this.tagModel = tagModel;
+  public constructor(model: TagModel) {
+    this.model = model;
   }
 
   public async getAll() {
-    const tags = await this.tagModel.query();
+    const tags = await this.model.query();
 
     return await Promise.all(
       tags.map(async (tag) =>

@@ -1,3 +1,4 @@
+import type { Repository } from "~/libs/types/types";
 import { RelationName } from "../../libs/enums/enums";
 
 import { PlaceEntity } from "./place.entity";
@@ -5,11 +6,11 @@ import { PlaceModel } from "./place.model";
 import { TagEntity } from "../tags/tag.entity";
 import { TourEntity } from "../tours/tour.entity";
 
-class PlaceRepository {
-  private placeModel: typeof PlaceModel;
+class PlaceRepository implements Repository {
+  private model: typeof PlaceModel;
 
-  public constructor(placeModel: typeof PlaceModel) {
-    this.placeModel = placeModel;
+  public constructor(model: typeof PlaceModel) {
+    this.model = model;
   }
 
   public async getAll({
@@ -19,7 +20,7 @@ class PlaceRepository {
     tags?: string[];
     tours?: string[];
   }): Promise<PlaceEntity[]> {
-    let query = this.placeModel
+    let query = this.model
       .query()
       .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
 
