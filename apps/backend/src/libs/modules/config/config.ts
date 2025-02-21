@@ -12,6 +12,9 @@ const config = {
     DIALECT: process.env.DB_DIALECT,
     CONNECTION_STRING: process.env.DB_CONNECTION_STRING,
   },
+  OSRM: {
+    URL: String(process.env.OSRM_URL),
+  },
 };
 
 type Config = typeof config;

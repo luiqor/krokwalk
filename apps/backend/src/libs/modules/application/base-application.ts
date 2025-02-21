@@ -66,8 +66,8 @@ class BaseApplication {
 
         res.status(500).send(
           new HTTPError({
-            message: "Internal Server Error",
             status: 500,
+            message: "Internal Server Error",
             cause: err,
           })
         );

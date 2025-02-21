@@ -5,6 +5,7 @@ import { BaseApplicationApi } from "./base-application-api";
 import { placeRouter } from "~/modules/places/places";
 import { tagRouter } from "~/modules/tags/tags";
 import { tourRouter } from "~/modules/tours/tours";
+import { tripRouter } from "~/modules/trips/trips";
 
 const routes = [
   { path: APIPath.HEALTH, router: healthRouter },
@@ -19,6 +20,10 @@ const routes = [
   {
     path: APIPath.TOURS,
     router: tourRouter,
+  },
+  {
+    path: APIPath.TRIPS,
+    router: tripRouter,
   },
 ];
 

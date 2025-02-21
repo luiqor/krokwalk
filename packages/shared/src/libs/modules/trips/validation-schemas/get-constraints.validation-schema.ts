@@ -7,7 +7,7 @@ const TripsValidationMessage = {
 
 const coordinateSchema = z.string().refine(
   (value) => {
-    const [latitude, longitude] = value.split(", ").map(Number);
+    const [latitude, longitude] = value.split(",").map(Number);
     return (
       !isNaN(latitude) &&
       !isNaN(longitude) &&

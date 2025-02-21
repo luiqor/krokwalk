@@ -4,9 +4,9 @@ import { TagEntity } from "./tag.entity";
 import { TagModel } from "./tag.model";
 
 class TagRepository implements Repository {
-  private model: TagModel;
+  private model: typeof TagModel;
 
-  public constructor(model: TagModel) {
+  public constructor(model: typeof TagModel) {
     this.model = model;
   }
 

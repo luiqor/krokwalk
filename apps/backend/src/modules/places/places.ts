@@ -9,4 +9,5 @@ const placeController = new PlaceController(placeService);
 
 const placeRouter = placeController.router;
 
-export { placeRouter };
+export { placeRouter, placeService, type PlaceService };
+export type { PlacesGetAllQueryParams } from "./libs/types/types";

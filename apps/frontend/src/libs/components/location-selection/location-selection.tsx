@@ -78,7 +78,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
 
     onSetValue(
       "startingPoint",
-      `${startingPoint.latitude}, ${startingPoint.longitude}`
+      `${startingPoint.latitude},${startingPoint.longitude}`
     );
   }, [startingPoint, onSetValue]);
 
@@ -89,7 +89,7 @@ const LocationSelection: React.FC<Props> = ({ onSetValue, onRegister }) => {
 
     onSetValue(
       "destinationPoint",
-      `${destinationPoint.latitude}, ${destinationPoint.longitude}`
+      `${destinationPoint.latitude},${destinationPoint.longitude}`
     );
   }, [destinationPoint, onSetValue]);
 

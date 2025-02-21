@@ -3,6 +3,7 @@ const APIPath = {
   PLACES: "/places",
   TAGS: "/tags",
   TOURS: "/tours",
+  TRIPS: "/trips",
 } as const;
 
 export { APIPath };
