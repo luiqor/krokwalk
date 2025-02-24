@@ -22,13 +22,11 @@ const coordinateSchema = z.string().refine(
   }
 );
 
-const getConstraintsValidationSchema = z
-  .object({
-    startingPoint: coordinateSchema,
-    destinationPoint: coordinateSchema,
-    tags: z.array(z.string()),
-    tours: z.array(z.string()),
-  })
-  .required();
+const getConstraintsValidationSchema = z.object({
+  startingPoint: coordinateSchema,
+  destinationPoint: coordinateSchema,
+  tags: z.union([z.string(), z.array(z.string())]).optional(),
+  tours: z.union([z.string(), z.array(z.string())]).optional(),
+});
 
 export { getConstraintsValidationSchema };

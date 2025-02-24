@@ -1,5 +1,4 @@
 import { Router, Handler } from "express";
-
 import { RouterHandler } from "../types/router-handler";
 import { handleAsyncronically } from "./libs/helpers/helpers";
 
@@ -11,20 +10,20 @@ abstract class BaseController implements RouterHandler {
     this.initializeRoutes();
   }
 
-  protected get(path: string, handler: Handler) {
-    this.router.get(path, handleAsyncronically(handler));
+  protected get(path: string, ...handlers: Handler[]) {
+    this.router.get(path, ...handlers.map(handleAsyncronically));
   }
 
-  protected post(path: string, handler: Handler) {
-    this.router.post(path, handleAsyncronically(handler));
+  protected post(path: string, ...handlers: Handler[]) {
+    this.router.post(path, ...handlers.map(handleAsyncronically));
   }
 
-  protected patch(path: string, handler: Handler) {
-    this.router.patch(path, handleAsyncronically(handler));
+  protected patch(path: string, ...handlers: Handler[]) {
+    this.router.patch(path, ...handlers.map(handleAsyncronically));
   }
 
-  protected delete(path: string, handler: Handler) {
-    this.router.delete(path, handleAsyncronically(handler));
+  protected delete(path: string, ...handlers: Handler[]) {
+    this.router.delete(path, ...handlers.map(handleAsyncronically));
   }
 
   abstract initializeRoutes(): void;
