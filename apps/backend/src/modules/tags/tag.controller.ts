@@ -15,9 +15,7 @@ class TagController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get(TagsApiPath.ROOT, (req: Request, res: Response) =>
-      this.getAllTags(req, res)
-    );
+    this.get(TagsApiPath.ROOT, this.getAllTags.bind(this));
   }
 
   private async getAllTags(req: Request, res: Response): Promise<void> {

@@ -15,9 +15,7 @@ class TourController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get(ToursApiPath.ROOT, (req: Request, res: Response) =>
-      this.getAllTours(req, res)
-    );
+    this.get(ToursApiPath.ROOT, this.getAllTours.bind(this));
   }
 
   private async getAllTours(req: Request, res: Response): Promise<void> {

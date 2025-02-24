@@ -21,7 +21,7 @@ class TripController extends BaseController {
     this.get(
       TripsApiPath.WALK_TIME,
       validateQueryParams(getConstraintsValidationSchema),
-      (req: Request, res: Response) => this.getWalkTime(req, res)
+      this.getWalkTime.bind(this)
     );
   }
 

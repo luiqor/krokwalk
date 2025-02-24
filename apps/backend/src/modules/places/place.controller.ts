@@ -16,9 +16,7 @@ class PlaceController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get(PlacesApiPath.ROOT, (req: Request, res: Response) =>
-      this.getAllPlaces(req, res)
-    );
+    this.get(PlacesApiPath.ROOT, this.getAllPlaces.bind(this));
   }
 
   private async getAllPlaces(req: Request, res: Response): Promise<void> {
