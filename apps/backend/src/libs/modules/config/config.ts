@@ -15,6 +15,10 @@ const config = {
   OSRM: {
     URL: String(process.env.OSRM_URL),
   },
+  GEO_APIFY: {
+    URL: String(process.env.GEO_APIFY_URL),
+    API_KEY: String(process.env.GEO_APIFY_API_KEY),
+  },
 };
 
 type Config = typeof config;

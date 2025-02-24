@@ -1,12 +1,12 @@
-import type { Osrm } from "~/libs/modules/osrm/osrm";
+import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
 import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
 
 class TripService {
-  private osrm: Osrm;
+  private geoApify: GeoApify;
   private placesService: PlaceService;
 
-  public constructor(osrm: Osrm, placesService: PlaceService) {
-    this.osrm = osrm;
+  public constructor(geoApify: GeoApify, placesService: PlaceService) {
+    this.geoApify = geoApify;
     this.placesService = placesService;
   }
 
@@ -21,19 +21,23 @@ class TripService {
   } & PlacesGetAllQueryParams): Promise<{
     minimumTime: number;
   }> {
+    const startingPointCoordinates = startingPoint.split(",").map(Number);
+    const destinationPointCoordinates = destinationPoint.split(",").map(Number);
     const places = await this.placesService.getAll({ tags, tours });
 
-    const placesCoordinates = places.items.map(
-      (place) => `${place.lat},${place.lng}`
-    );
+    const placesCoordinates = places.items.map((place) => [
+      place.lat,
+      place.lng,
+    ]);
 
-    console.log(placesCoordinates);
+    const coordinates = [
+      startingPointCoordinates,
+      ...placesCoordinates,
+      destinationPointCoordinates,
+    ];
 
-    const coordinates = [startingPoint, ...placesCoordinates, destinationPoint];
-
-    const timeMatrixResponse = await this.osrm.getTimeMatrix(coordinates);
-    const timeMatrix = timeMatrixResponse.durations;
-    console.log(timeMatrixResponse);
+    const timeMatrixResponse = await this.geoApify.getTimeMatrix(coordinates);
+    const timeMatrix = timeMatrixResponse.sources_to_targets;
 
     const startingPointIndex = 0;
     const destinationRowIndex = timeMatrixResponse.sources.length - 1;
@@ -41,10 +45,12 @@ class TripService {
     const lastRow = timeMatrix[destinationRowIndex];
     const summsWithIndexes = startingPointRow
       .slice(1, -1)
-      .map((time, index) => ({
+      .map((target, index) => ({
         index,
-        sum: time + lastRow[index],
+        sum: target.time + lastRow[index].time,
       }));
+
+    console.log(summsWithIndexes);
 
     const closestPlacesTravelTimes = summsWithIndexes
       .sort((a, b) => a.sum - b.sum)
@@ -62,12 +68,9 @@ class TripService {
 
     const travelTimesBetweenClosestPlaces: number[] = [];
 
-    for (let i = 0; i < closestPlacesIndices.length; i++) {
-      for (let j = i + 1; j < closestPlacesIndices.length; j++) {
-        const fromIndex = closestPlacesIndices[i];
-        const toIndex = closestPlacesIndices[j];
-        const travelTime = timeMatrix[fromIndex][toIndex];
-
+    for (const [i, fromIndex] of closestPlacesIndices.entries()) {
+      for (const toIndex of closestPlacesIndices.slice(i + 1)) {
+        const travelTime = timeMatrix[fromIndex][toIndex].time;
         travelTimesBetweenClosestPlaces.push(travelTime);
       }
     }
