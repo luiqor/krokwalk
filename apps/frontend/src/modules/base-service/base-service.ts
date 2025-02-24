@@ -15,14 +15,14 @@ type Multiple<T> = {
   items: T[];
 };
 
-class BaseService<T, N> {
-  private static token: string | null = null;
+class BaseService<T = unknown, N = unknown> {
+  protected static token: string | null = null;
 
-  private baseUrl: string = ENV.API;
+  protected baseUrl: string = ENV.API;
 
-  private basePath: string;
+  protected basePath: string;
 
-  private http: HTTPService;
+  protected http: HTTPService;
 
   constructor({ basePath, http }: Constructor) {
     this.basePath = basePath;
@@ -87,19 +87,26 @@ class BaseService<T, N> {
     });
   }
 
-  private getUrl(path = ""): string {
+  protected getUrl(path = ""): string {
     return `${this.baseUrl}${this.basePath}${path}`;
   }
 
-  private getQueryString(
-    params: Record<string, (string | number | boolean)[]>
+  protected getQueryString(
+    params: Record<
+      string,
+      (string | number | boolean)[] | string | number | boolean
+    >
   ): string {
     const queryParams = new URLSearchParams();
 
     for (const [key, values] of Object.entries(params)) {
-      values.forEach((value) => {
-        queryParams.append(key, value.toString());
-      });
+      if (Array.isArray(values)) {
+        values.forEach((value) => {
+          queryParams.append(key, value.toString());
+        });
+      } else {
+        queryParams.append(key, values.toString());
+      }
     }
 
     return `?${queryParams.toString()}`;

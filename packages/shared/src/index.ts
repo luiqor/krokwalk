@@ -19,6 +19,8 @@ export {
 export {
   getConstraintsValidationSchema,
   TripsApiPath,
+  type GetWalkTimeParams,
+  type GetWalkTimeDto,
 } from "./libs/modules/trips/trips";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";
