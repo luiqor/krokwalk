@@ -1,1 +1,1 @@
-export { HTTPCode } from "./libs/enums/enums";
+export { HTTPCode, HTTPErrorMessage } from "./libs/enums/enums";

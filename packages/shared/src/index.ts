@@ -14,5 +14,5 @@ export {
   type TourDto,
 } from "./libs/modules/tours/tours";
 export { getConstraintsValidationSchema } from "./libs/modules/trips/trips";
-export { HTTPCode } from "./libs/http/http";
+export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";

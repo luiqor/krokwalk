@@ -1,5 +1,14 @@
+import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
 import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
+
+const AVERAGE_NUMBER_OF_PLACES_TO_VISIT = 3;
+
+const MINIMUM_NUMBER_OF_PLACES_REQUIRED = 1;
+
+const calculateAverage = (items: number[]): number => {
+  return items.reduce((sum, item) => sum + item, 0) / items.length;
+};
 
 class TripService {
   private geoApify: GeoApify;
@@ -10,22 +19,53 @@ class TripService {
     this.placesService = placesService;
   }
 
-  public async getTimeMatrix({
-    startingPoint,
-    destinationPoint,
-    tags,
-    tours,
+  private filterClosestPlaces({
+    startingPointCoordinates,
+    destinationPointCoordinates,
+    places,
   }: {
-    startingPoint: string;
-    destinationPoint: string;
-  } & PlacesGetAllQueryParams): Promise<{
-    minimumTime: number;
-  }> {
-    const startingPointCoordinates = startingPoint.split(",").map(Number);
-    const destinationPointCoordinates = destinationPoint.split(",").map(Number);
-    const places = await this.placesService.getAll({ tags, tours });
+    startingPointCoordinates: number[];
+    destinationPointCoordinates: number[];
+    places: { items: { lat: number; lng: number }[] };
+  }): { lat: number; lng: number }[] {
+    const distanceBufferInDegrees = 0.05;
+    const minLat =
+      Math.min(startingPointCoordinates[0], destinationPointCoordinates[0]) -
+      distanceBufferInDegrees;
+    const maxLat =
+      Math.max(startingPointCoordinates[0], destinationPointCoordinates[0]) +
+      distanceBufferInDegrees;
+    const minLng =
+      Math.min(startingPointCoordinates[1], destinationPointCoordinates[1]) -
+      distanceBufferInDegrees;
+    const maxLng =
+      Math.max(startingPointCoordinates[1], destinationPointCoordinates[1]) +
+      distanceBufferInDegrees;
 
-    const placesCoordinates = places.items.map((place) => [
+    return places.items.filter((place) => {
+      return (
+        place.lat >= minLat &&
+        place.lat <= maxLat &&
+        place.lng >= minLng &&
+        place.lng <= maxLng
+      );
+    });
+  }
+
+  private async getTimeMatrix({
+    startingPointCoordinates,
+    destinationPointCoordinates,
+    filteredPlaces,
+  }: {
+    startingPointCoordinates: number[];
+    destinationPointCoordinates: number[];
+    filteredPlaces: { lat: number; lng: number }[];
+  }): Promise<{
+    timeMatrix: { time: number }[][];
+    startingPointRow: { time: number }[];
+    lastRow: { time: number }[];
+  }> {
+    const placesCoordinates = filteredPlaces.map((place) => [
       place.lat,
       place.lng,
     ]);
@@ -43,41 +83,102 @@ class TripService {
     const destinationRowIndex = timeMatrixResponse.sources.length - 1;
     const startingPointRow = timeMatrix[startingPointIndex];
     const lastRow = timeMatrix[destinationRowIndex];
-    const summsWithIndexes = startingPointRow
+
+    return {
+      timeMatrix,
+      startingPointRow,
+      lastRow,
+    };
+  }
+
+  private getTravelTimesBetweenPlaces({
+    placesIndices: closestPlacesIndices,
+    durationMatrix: timeMatrix,
+  }: {
+    placesIndices: number[];
+    durationMatrix: { time: number }[][];
+  }): number[] {
+    const travelTimesBetweenClosestPlaces: number[] = [];
+
+    for (const [i, sourceIndex] of closestPlacesIndices.entries()) {
+      for (const destinationIndex of closestPlacesIndices.slice(i + 1)) {
+        const travelTime = timeMatrix[sourceIndex][destinationIndex].time;
+        travelTimesBetweenClosestPlaces.push(travelTime);
+      }
+    }
+
+    return travelTimesBetweenClosestPlaces;
+  }
+
+  private destructureSumsAndIndicies(
+    places: { index: number; sum: number }[]
+  ): { sums: number[]; indices: number[] } {
+    const sums = [];
+    const indices = [];
+
+    for (const item of places) {
+      sums.push(item.sum);
+      indices.push(item.index);
+    }
+
+    return { sums, indices };
+  }
+
+  public async getWalkTime({
+    startingPoint,
+    destinationPoint,
+    tags,
+    tours,
+  }: {
+    startingPoint: string;
+    destinationPoint: string;
+  } & PlacesGetAllQueryParams): Promise<{
+    minimumTime: number;
+  }> {
+    const startingPointCoordinates = startingPoint.split(",").map(Number);
+    const destinationPointCoordinates = destinationPoint.split(",").map(Number);
+    const placesOnTheWay = this.filterClosestPlaces({
+      startingPointCoordinates,
+      destinationPointCoordinates,
+      places: await this.placesService.getAll({ tags, tours }),
+    });
+
+    if (placesOnTheWay.length < MINIMUM_NUMBER_OF_PLACES_REQUIRED) {
+      throw new HTTPError({
+        status: HTTPCode.BAD_REQUEST,
+        message: HTTPErrorMessage.TRIPS.NOT_ENOUGH_PLACES,
+      });
+    }
+
+    const { timeMatrix, startingPointRow, lastRow } = await this.getTimeMatrix({
+      startingPointCoordinates,
+      destinationPointCoordinates,
+      filteredPlaces: placesOnTheWay,
+    });
+    const startToEndWalkDuration = startingPointRow
       .slice(1, -1)
       .map((target, index) => ({
         index,
         sum: target.time + lastRow[index].time,
       }));
 
-    console.log(summsWithIndexes);
-
-    const closestPlacesTravelTimes = summsWithIndexes
+    const closestPlacesTravelTimes = startToEndWalkDuration
       .sort((a, b) => a.sum - b.sum)
-      .slice(0, 3);
+      .slice(0, AVERAGE_NUMBER_OF_PLACES_TO_VISIT);
 
-    console.log(closestPlacesTravelTimes);
+    const { sums: closestPlacesSums, indices: closestPlacesIndices } =
+      this.destructureSumsAndIndicies(closestPlacesTravelTimes);
 
-    const averageTimeToClosestPlaces =
-      closestPlacesTravelTimes.reduce((sum, item) => sum + item.sum, 0) /
-      closestPlacesTravelTimes.length;
+    const averageTimeToClosestPlaces = calculateAverage(closestPlacesSums);
 
-    const closestPlacesIndices = closestPlacesTravelTimes.map(
-      (item) => item.index
+    const travelTimesBetweenClosestPlaces = this.getTravelTimesBetweenPlaces({
+      placesIndices: closestPlacesIndices,
+      durationMatrix: timeMatrix,
+    });
+
+    const averageTravelTimeBetweenClosestPlaces = calculateAverage(
+      travelTimesBetweenClosestPlaces
     );
-
-    const travelTimesBetweenClosestPlaces: number[] = [];
-
-    for (const [i, fromIndex] of closestPlacesIndices.entries()) {
-      for (const toIndex of closestPlacesIndices.slice(i + 1)) {
-        const travelTime = timeMatrix[fromIndex][toIndex].time;
-        travelTimesBetweenClosestPlaces.push(travelTime);
-      }
-    }
-
-    const averageTravelTimeBetweenClosestPlaces =
-      travelTimesBetweenClosestPlaces.reduce((sum, time) => sum + time, 0) /
-      travelTimesBetweenClosestPlaces.length;
 
     return {
       minimumTime:

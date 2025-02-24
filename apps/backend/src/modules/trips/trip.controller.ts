@@ -15,18 +15,16 @@ class TripController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get("/", (req: Request, res: Response) =>
-      this.getTimeMatrix(req, res)
-    );
+    this.get("/", (req: Request, res: Response) => this.getWalkTime(req, res));
   }
 
-  private async getTimeMatrix(req: Request, res: Response): Promise<void> {
+  private async getWalkTime(req: Request, res: Response): Promise<void> {
     const placesQueryParams = {
       tags: req.query.tags,
       tours: req.query.tours,
     } as PlacesGetAllQueryParams;
 
-    const tags = await this.service.getTimeMatrix({
+    const tags = await this.service.getWalkTime({
       startingPoint: req.query.startingPoint as string,
       destinationPoint: req.query.destinationPoint as string,
       ...placesQueryParams,

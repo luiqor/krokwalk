@@ -1,2 +1,2 @@
 export { HTTPError } from "./exceptions/exceptions";
-export { HTTPCode } from "shared";
+export { HTTPCode, HTTPErrorMessage } from "shared";
