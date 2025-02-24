@@ -31,13 +31,13 @@ class TripController extends BaseController {
       tours: req.query.tours,
     } as PlacesGetAllQueryParams;
 
-    const tags = await this.service.getWalkTime({
+    const walkTime = await this.service.getWalkTime({
       startingPoint: req.query.startingPoint as string,
       destinationPoint: req.query.destinationPoint as string,
       ...placesQueryParams,
     });
 
-    res.status(200).send(tags);
+    res.status(200).send(walkTime);
   }
 }
 

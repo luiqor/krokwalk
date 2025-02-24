@@ -133,7 +133,7 @@ class TripService {
     startingPoint: string;
     destinationPoint: string;
   } & PlacesGetAllQueryParams): Promise<{
-    minimumTime: number;
+    minimumWalkTime: number;
   }> {
     const startingPointCoordinates = startingPoint.split(",").map(Number);
     const destinationPointCoordinates = destinationPoint.split(",").map(Number);
@@ -181,7 +181,7 @@ class TripService {
     );
 
     return {
-      minimumTime:
+      minimumWalkTime:
         averageTimeToClosestPlaces + averageTravelTimeBetweenClosestPlaces,
     };
   }

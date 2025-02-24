@@ -6,6 +6,7 @@ import {
   actions as locationAction,
   Screen,
 } from "~/modules/location/location.js";
+import { actions as tripsActions } from "~/modules/trips/trips.js";
 import { LocationSelection } from "~/libs/components/components.js";
 import { TagsFilterSelector, ToursFilterSelector } from "../components.js";
 import { useAppDispatch, useAppForm } from "~/libs/hooks/hooks.js";
@@ -26,7 +27,7 @@ const RouteForm: React.FC = memo(() => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    dispatch(tripsActions.loadMinimumWalkTime(data));
     dispatch(locationAction.setScreen(Screen.CONSTRAINTS));
   });
 

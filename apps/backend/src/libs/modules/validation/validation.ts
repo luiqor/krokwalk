@@ -6,8 +6,6 @@ import { z } from "zod";
 const validateQueryParams = (schema: z.ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.query);
-
       schema.parse(req.query);
       next();
     } catch (error) {

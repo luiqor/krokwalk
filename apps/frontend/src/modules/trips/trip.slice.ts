@@ -19,6 +19,10 @@ const { reducer, actions, name } = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadMinimumWalkTime.fulfilled, (state, action) => {
+      console.log(
+        "action.payload.minimumWalkTime",
+        action.payload.minimumWalkTime
+      );
       state.minimumWalkTime = action.payload.minimumWalkTime;
       state.status = DataStatus.FULFILLED;
     });

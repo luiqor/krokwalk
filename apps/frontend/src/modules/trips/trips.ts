@@ -11,3 +11,4 @@ const tripService = new TripService();
 
 export { allActions as actions, reducer };
 export { tripService };
+export type { GetWalkTimeParams } from "./libs/types/types.js";
