@@ -1,0 +1,1 @@
+export { ToursApiPath } from "shared";

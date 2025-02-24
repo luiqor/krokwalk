@@ -1,4 +1,3 @@
-import { getConstraintsValidationSchema } from "shared";
 import { Request, Response } from "express";
 
 import { BaseController } from "../../libs/modules/controller/base-controller";
@@ -6,6 +5,8 @@ import { type PlacesGetAllQueryParams } from "../places/places";
 
 import { TripService } from "./trip.service";
 import { validateQueryParams } from "~/libs/modules/validation/validation";
+import { TripsApiPath } from "./libs/enums/enums";
+import { getConstraintsValidationSchema } from "./libs/validation-schemas/validation-schemas";
 
 class TripController extends BaseController {
   private service: TripService;
@@ -18,7 +19,7 @@ class TripController extends BaseController {
 
   public initializeRoutes() {
     this.get(
-      "/",
+      TripsApiPath.WALK_TIME,
       validateQueryParams(getConstraintsValidationSchema),
       (req: Request, res: Response) => this.getWalkTime(req, res)
     );

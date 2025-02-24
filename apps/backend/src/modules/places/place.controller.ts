@@ -4,6 +4,7 @@ import { BaseController } from "../../libs/modules/controller/base-controller";
 
 import { PlaceService } from "./place.service";
 import { type PlacesGetAllQueryParams } from "./libs/types/types";
+import { PlacesApiPath } from "./libs/enums/enums";
 
 class PlaceController extends BaseController {
   private service: PlaceService;
@@ -15,7 +16,9 @@ class PlaceController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get("/", (req: Request, res: Response) => this.getAllPlaces(req, res));
+    this.get(PlacesApiPath.ROOT, (req: Request, res: Response) =>
+      this.getAllPlaces(req, res)
+    );
   }
 
   private async getAllPlaces(req: Request, res: Response): Promise<void> {

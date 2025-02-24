@@ -1,0 +1,1 @@
+export { TripsApiPath } from "shared";

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { BaseController } from "../../libs/modules/controller/base-controller";
 
 import { TourService } from "./tour.service";
+import { ToursApiPath } from "./libs/enums/enums";
 
 class TourController extends BaseController {
   private service: TourService;
@@ -14,7 +15,9 @@ class TourController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get("/", (req: Request, res: Response) => this.getAllTours(req, res));
+    this.get(ToursApiPath.ROOT, (req: Request, res: Response) =>
+      this.getAllTours(req, res)
+    );
   }
 
   private async getAllTours(req: Request, res: Response): Promise<void> {

@@ -1,0 +1,1 @@
+export { TagsApiPath } from "shared";

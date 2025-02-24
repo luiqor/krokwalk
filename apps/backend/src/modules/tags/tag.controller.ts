@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { BaseController } from "../../libs/modules/controller/base-controller";
 import { TagService } from "./tag.service";
 
+import { TagsApiPath } from "./libs/enums/enums";
+
 class TagController extends BaseController {
   private service: TagService;
 
@@ -13,7 +15,9 @@ class TagController extends BaseController {
   }
 
   public initializeRoutes() {
-    this.get("/", (req: Request, res: Response) => this.getAllTags(req, res));
+    this.get(TagsApiPath.ROOT, (req: Request, res: Response) =>
+      this.getAllTags(req, res)
+    );
   }
 
   private async getAllTags(req: Request, res: Response): Promise<void> {
