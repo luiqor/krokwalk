@@ -4,12 +4,12 @@ import { loadMinimumWalkTime } from "./actions.js";
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 
 type State = {
-  minimumWalkTime: number | null;
+  minimumWalkSeconds: number | null;
   status: (typeof DataStatus)[keyof typeof DataStatus];
 };
 
 const initialState: State = {
-  minimumWalkTime: null,
+  minimumWalkSeconds: null,
   status: DataStatus.IDLE,
 };
 
@@ -19,11 +19,7 @@ const { reducer, actions, name } = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadMinimumWalkTime.fulfilled, (state, action) => {
-      console.log(
-        "action.payload.minimumWalkTime",
-        action.payload.minimumWalkTime
-      );
-      state.minimumWalkTime = action.payload.minimumWalkTime;
+      state.minimumWalkSeconds = action.payload.minimumWalkTime;
       state.status = DataStatus.FULFILLED;
     });
     builder.addMatcher(isPending, (state) => {

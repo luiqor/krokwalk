@@ -25,12 +25,43 @@ type Props = {
 };
 
 const TimeDurationPicker: React.FC<Props> = ({
-  initialDuration = { hours: 0, minutes: 0 },
+  initialDuration = { hours: 8, minutes: 0 },
   minHours = 0,
   minMinutes = 0,
-  maxHours = 5,
+  maxHours = 8,
   onChange,
 }) => {
+  const validateMinimumDuration = (
+    duration: Duration,
+    minHours: number,
+    minMinutes: number
+  ): Duration => {
+    const { hours, minutes } = duration;
+
+    const roundToNearestFive = (minutes: number) => {
+      return Math.ceil(minutes / 5) * 5;
+    };
+
+    if (hours > minHours) {
+      return {
+        hours,
+        minutes: roundToNearestFive(minutes),
+      };
+    }
+
+    if (hours === minHours) {
+      return {
+        hours,
+        minutes: Math.max(roundToNearestFive(minutes), minMinutes),
+      };
+    }
+
+    return {
+      hours: minHours,
+      minutes: roundToNearestFive(minMinutes),
+    };
+  };
+
   const validatedInitialDuration = validateMinimumDuration(
     initialDuration,
     minHours,
@@ -46,30 +77,6 @@ const TimeDurationPicker: React.FC<Props> = ({
       );
     }
   }, [initialDuration, minHours, minMinutes]);
-
-  function validateMinimumDuration(
-    duration: Duration,
-    minHours: number,
-    minMinutes: number
-  ): Duration {
-    const { hours, minutes } = duration;
-
-    if (hours > minHours) {
-      return duration;
-    }
-
-    if (hours === minHours) {
-      return {
-        hours,
-        minutes: Math.max(minutes, minMinutes),
-      };
-    }
-
-    return {
-      hours: minHours,
-      minutes: minMinutes,
-    };
-  }
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
