@@ -5,6 +5,7 @@ type IconName =
   | "plus"
   | "place"
   | "untrackedMyLocation"
-  | "trackedMyLocation";
+  | "trackedMyLocation"
+  | "clock";
 
 export { type IconName };

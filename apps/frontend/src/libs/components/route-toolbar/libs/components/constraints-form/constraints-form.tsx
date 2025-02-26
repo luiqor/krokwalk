@@ -1,8 +1,10 @@
+import React from "react";
 import { getConstraintsValidationSchema } from "shared";
-import { memo } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 
 import { useAppForm } from "~/libs/hooks/hooks.js";
+
+import { TimeDurationPicker } from "./libs/components/components.js";
 
 import styles from "./constraints-form.module.css";
 
@@ -10,7 +12,12 @@ type ConstraintsProps = {
   maxDuration: number;
 };
 
-const ConstraintsForm: React.FC = memo(() => {
+type Props = {
+  minHours: number;
+  minMinutes: number;
+};
+
+const ConstraintsForm: React.FC<Props> = ({ minHours, minMinutes }) => {
   useAppForm<ConstraintsProps>({
     defaultValues: {
       maxDuration: 0,
@@ -22,10 +29,10 @@ const ConstraintsForm: React.FC = memo(() => {
     <form className={styles.form}>
       <div className={styles.contentBox}>
         <h3>Select constraints</h3>
-        <TextField
-          label="Provide maximum time for a walk"
-          size="small"
-          fullWidth
+        <TimeDurationPicker
+          initialDuration={{ hours: 1, minutes: 2 }}
+          minHours={minHours}
+          minMinutes={minMinutes}
         />
       </div>
       <Button type="submit" variant="contained" color="primary" fullWidth>
@@ -33,6 +40,6 @@ const ConstraintsForm: React.FC = memo(() => {
       </Button>
     </form>
   );
-});
+};
 
 export { ConstraintsForm };

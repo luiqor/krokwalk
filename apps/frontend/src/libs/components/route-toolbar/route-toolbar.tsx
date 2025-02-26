@@ -16,7 +16,7 @@ const RouteToolbar: React.FC = () => {
       }
 
       case Screen.CONSTRAINTS: {
-        return <ConstraintsForm />;
+        return <ConstraintsForm minHours={1} minMinutes={5} />;
       }
     }
   };

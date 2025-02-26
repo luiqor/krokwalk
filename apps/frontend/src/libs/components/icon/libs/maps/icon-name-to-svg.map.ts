@@ -1,4 +1,5 @@
 import {
+  AccessTime,
   Add,
   LocationSearching,
   MyLocation,
@@ -17,6 +18,7 @@ const iconNameToSvg: Record<IconName, SvgIconComponent> = {
   place: Place,
   untrackedMyLocation: LocationSearching,
   trackedMyLocation: MyLocation,
+  clock: AccessTime,
 };
 
 export { iconNameToSvg };
