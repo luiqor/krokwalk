@@ -19,13 +19,13 @@ type Duration = {
 type Props = {
   minHours?: number;
   minMinutes?: number;
-  initialDuration?: Duration;
+  initialDuration: Duration;
   onChange?: (duration: Duration) => void;
   maxHours?: number;
 };
 
 const TimeDurationPicker: React.FC<Props> = ({
-  initialDuration = { hours: 8, minutes: 0 },
+  initialDuration,
   minHours = 0,
   minMinutes = 0,
   maxHours = 8,
@@ -143,10 +143,6 @@ const TimeDurationPicker: React.FC<Props> = ({
       if (i >= minuteMin) {
         minutes.push(i);
       }
-    }
-
-    if (59 >= minuteMin) {
-      minutes.push(59);
     }
 
     return minutes;

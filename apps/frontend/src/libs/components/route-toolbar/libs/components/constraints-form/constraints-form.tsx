@@ -29,7 +29,14 @@ const ConstraintsForm: React.FC<Props> = ({ minHours, minMinutes }) => {
     <form className={styles.form}>
       <div className={styles.contentBox}>
         <h3>Select constraints</h3>
-        <TimeDurationPicker minHours={minHours} minMinutes={minMinutes} />
+        <TimeDurationPicker
+          minHours={minHours}
+          minMinutes={minMinutes}
+          initialDuration={{
+            hours: 8,
+            minutes: 55,
+          }}
+        />
       </div>
       <Button type="submit" variant="contained" color="primary" fullWidth>
         Submit

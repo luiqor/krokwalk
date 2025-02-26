@@ -1,3 +1,5 @@
+import { CircularProgress } from "@mui/material";
+
 import { ConstraintsForm, RouteForm } from "./libs/components/components.js";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import {
@@ -28,7 +30,7 @@ const RouteToolbar: React.FC = () => {
 
       case Screen.CONSTRAINTS: {
         if (status === "pending") {
-          return <div>Loading...</div>;
+          return <CircularProgress />;
         }
 
         if (status === "fulfilled" && minimumWalkSeconds !== null) {
