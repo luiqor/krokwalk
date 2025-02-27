@@ -15,6 +15,14 @@ class TourService implements Service {
 
     return { items: tourEntities.map((entity) => entity.toObject()) };
   }
+
+  public async getManyBySlugs(
+    slugs: string[]
+  ): Promise<ToursGetAllResponseDto> {
+    const tourEntities = await this.repository.getManyBySlugs(slugs);
+
+    return { items: tourEntities.map((entity) => entity.toObject()) };
+  }
 }
 
 export { TourService };

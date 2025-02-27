@@ -15,6 +15,12 @@ class TagService implements Service {
 
     return { items: tagEntities.map((entity) => entity.toObject()) };
   }
+
+  public async getManyBuSlugs(slugs: string[]): Promise<TagsGetAllResponseDto> {
+    const tagEntities = await this.repository.getManyBySlugs(slugs);
+
+    return { items: tagEntities.map((entity) => entity.toObject()) };
+  }
 }
 
 export { TagService };

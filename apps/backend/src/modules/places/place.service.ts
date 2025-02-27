@@ -1,4 +1,5 @@
 import type { Service } from "~/libs/types/types";
+import { ensureArray } from "~/libs/helpers/helpers";
 
 import { PlaceRepository } from "./place.repository";
 import {
@@ -6,13 +7,7 @@ import {
   type PlacesGetAllResponseDto,
 } from "./libs/types/types";
 
-const ensureArray = <T>(value: T | T[] | null | undefined): T[] => {
-  if (Array.isArray(value)) {
-    return value;
-  }
 
-  return value ? [value] : [];
-};
 
 class PlaceService implements Service {
   private repository: PlaceRepository;

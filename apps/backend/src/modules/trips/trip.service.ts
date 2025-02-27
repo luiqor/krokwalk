@@ -1,6 +1,11 @@
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
 import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
+import type { TagService } from "../tags/tags";
+import type { TourService } from "../tours/tours";
+
+import type { GetWalkTimeDto } from "./libs/types/types";
+import { ensureArray } from "~/libs/helpers/helpers";
 
 const AVERAGE_NUMBER_OF_PLACES_TO_VISIT = 3;
 
@@ -10,13 +15,29 @@ const calculateAverage = (items: number[]): number => {
   return items.reduce((sum, item) => sum + item, 0) / items.length;
 };
 
+type Constructor = {
+  geoApify: GeoApify;
+  placesService: PlaceService;
+  tagService: TagService;
+  tourService: TourService;
+};
+
 class TripService {
   private geoApify: GeoApify;
-  private placesService: PlaceService;
+  private placeService: PlaceService;
+  private tagService: TagService;
+  private tourService: TourService;
 
-  public constructor(geoApify: GeoApify, placesService: PlaceService) {
+  public constructor({
+    geoApify,
+    placesService,
+    tagService,
+    tourService,
+  }: Constructor) {
     this.geoApify = geoApify;
-    this.placesService = placesService;
+    this.placeService = placesService;
+    this.tagService = tagService;
+    this.tourService = tourService;
   }
 
   private filterClosestPlaces({
@@ -132,15 +153,13 @@ class TripService {
   }: {
     startingPoint: string;
     destinationPoint: string;
-  } & PlacesGetAllQueryParams): Promise<{
-    minimumWalkTime: number;
-  }> {
+  } & PlacesGetAllQueryParams): Promise<GetWalkTimeDto> {
     const startingPointCoordinates = startingPoint.split(",").map(Number);
     const destinationPointCoordinates = destinationPoint.split(",").map(Number);
     const placesOnTheWay = this.filterClosestPlaces({
       startingPointCoordinates,
       destinationPointCoordinates,
-      places: await this.placesService.getAll({ tags, tours }),
+      places: await this.placeService.getAll({ tags, tours }),
     });
 
     if (placesOnTheWay.length < MINIMUM_NUMBER_OF_PLACES_REQUIRED) {
@@ -176,13 +195,23 @@ class TripService {
       durationMatrix: timeMatrix,
     });
 
-    const averageTravelTimeBetweenClosestPlaces = calculateAverage(
-      travelTimesBetweenClosestPlaces
+    const accumulatedTimeBetweenClosestPlaces =
+      travelTimesBetweenClosestPlaces.reduce((sum, time) => sum + time, 0);
+
+    const selectedTags = await this.tagService.getManyBuSlugs(
+      ensureArray(tags)
+    );
+    const selectedTours = await this.tourService.getManyBySlugs(
+      ensureArray(tours)
     );
 
     return {
-      minimumWalkTime:
-        averageTimeToClosestPlaces + averageTravelTimeBetweenClosestPlaces,
+      minimumWalkSeconds:
+        averageTimeToClosestPlaces + accumulatedTimeBetweenClosestPlaces,
+      tags: selectedTags.items,
+      tours: selectedTours.items,
+      startingPoint,
+      destinationPoint,
     };
   }
 }

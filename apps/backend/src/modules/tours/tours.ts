@@ -9,5 +9,5 @@ const tourController = new TourController(tourService);
 
 const tourRouter = tourController.router;
 
-export { tourRouter };
+export { tourRouter, tourService, type TourService };
 export { type TourEntity } from "./tour.entity";

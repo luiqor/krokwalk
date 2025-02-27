@@ -25,6 +25,22 @@ class TagRepository implements Repository {
       )
     );
   }
+
+  public async getManyBySlugs(slugs: string[]) {
+    const tags = await this.model.query().whereIn("slug", slugs);
+
+    return await Promise.all(
+      tags.map(async (tag) =>
+        TagEntity.initialize({
+          id: tag.id,
+          title: tag.title,
+          slug: tag.slug,
+          createdAt: tag.createdAt,
+          updatedAt: tag.updatedAt,
+        })
+      )
+    );
+  }
 }
 
 export { TagRepository };

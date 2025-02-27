@@ -9,5 +9,5 @@ const tagController = new TagController(tagService);
 
 const tagRouter = tagController.router;
 
-export { tagRouter };
+export { tagRouter, tagService, type TagService };
 export { type TagEntity } from "./tag.entity";
