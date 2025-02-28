@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { GeoCoordinates } from "~/libs/types/types.js";
+import type { GeoPoint } from "~/libs/types/types.js";
 import { SliceName } from "~/libs/enums/enums.js";
 
 import { Screen } from "./libs/enums/enums.js";
@@ -17,9 +17,9 @@ const SelectionMode = {
 
 type State = {
   selectionMode: (typeof SelectionMode)[keyof typeof SelectionMode] | null;
-  startingPoint: GeoCoordinates | null;
+  startingPoint: GeoPoint | null;
   startingPointType: (typeof StartingPoint)[keyof typeof StartingPoint] | null;
-  destinationPoint: GeoCoordinates | null;
+  destinationPoint: GeoPoint | null;
   screen: (typeof Screen)[keyof typeof Screen];
 };
 

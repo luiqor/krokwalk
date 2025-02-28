@@ -15,7 +15,7 @@ import {
 import { Icon } from "../components.js";
 
 import styles from "./root-map.module.css";
-import { GeoCoordinates } from "~/libs/types/geo-coordinates.type.js";
+import type { GeoPoint } from "~/libs/types/types.js";
 
 const ZOOM_DEFAULT = 16;
 
@@ -91,7 +91,7 @@ const RootMap = () => {
     };
   }, [dispatch, selectionMode]);
 
-  const addMarker = (point: GeoCoordinates, icon: ReactNode) => {
+  const addMarker = (point: GeoPoint, icon: ReactNode) => {
     const { latitude, longitude } = point;
 
     const marker = L.marker([latitude, longitude], {

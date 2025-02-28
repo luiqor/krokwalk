@@ -1,2 +1,2 @@
 export { coordinateValidationSchema } from "shared";
-export { tripValidationSchema } from "./trip.validation-schema.js";
+export { submitTripDataValidationSchema } from "./submit-trip.validation-schema.js";

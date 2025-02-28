@@ -3,17 +3,10 @@ type Duration = {
   minutes: number;
 };
 
-type PriorityData = {
-  priorityTags: string[];
-  priorityTours: string[];
-};
-
 type ConstraintsFormData = {
   duration: Duration;
-} & PriorityData;
+  prioritizedTags: string[];
+  prioritizedTours: string[];
+};
 
-type ConstraintsSubmitData = {
-  maximumWalkDuration: number;
-} & PriorityData;
-
-export type { Duration, ConstraintsFormData, ConstraintsSubmitData };
+export type { Duration, ConstraintsFormData };

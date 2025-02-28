@@ -4,9 +4,15 @@ import { BaseController } from "../../libs/modules/controller/base-controller";
 import { type PlacesGetAllQueryParams } from "../places/places";
 
 import { TripService } from "./trip.service";
-import { validateQueryParams } from "~/libs/modules/validation/validation";
+import {
+  validateQueryParams,
+  validateRequestBody,
+} from "~/libs/modules/validation/validation";
 import { TripsApiPath } from "./libs/enums/enums";
-import { getConstraintsValidationSchema } from "./libs/validation-schemas/validation-schemas";
+import {
+  createTripValidationSchema,
+  getConstraintsValidationSchema,
+} from "./libs/validation-schemas/validation-schemas";
 
 class TripController extends BaseController {
   private service: TripService;
@@ -23,6 +29,12 @@ class TripController extends BaseController {
       validateQueryParams(getConstraintsValidationSchema),
       this.getWalkTime.bind(this)
     );
+
+    this.post(
+      TripsApiPath.ROOT,
+      validateRequestBody(createTripValidationSchema),
+      this.createTrip.bind(this)
+    );
   }
 
   private async getWalkTime(req: Request, res: Response): Promise<void> {
@@ -38,6 +50,12 @@ class TripController extends BaseController {
     });
 
     res.status(200).send(walkTime);
+  }
+
+  private async createTrip(req: Request, res: Response): Promise<void> {
+    const trip = await this.service.createTrip(req.body);
+
+    res.status(201).send(trip);
   }
 }
 

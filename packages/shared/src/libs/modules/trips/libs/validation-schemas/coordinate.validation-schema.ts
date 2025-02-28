@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const TripsValidationMessage = {
   INVALID_COORDINATES_FORMAT:
-    "Invalid coordinates format. Expected format: 'latitude, longitude'",
+    "Invalid coordinates format. Expected format: 'latitude,longitude'",
 } as const;
 
 const coordinateValidationSchema = z.string().refine(

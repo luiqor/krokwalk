@@ -19,9 +19,12 @@ export {
 export {
   getConstraintsValidationSchema,
   coordinateValidationSchema,
+  geoPointValidationSchema,
   TripsApiPath,
   type GetWalkTimeParams,
   type GetWalkTimeDto,
+  type CreateTripDto,
+  type GeoPoint,
 } from "./libs/modules/trips/trips";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";

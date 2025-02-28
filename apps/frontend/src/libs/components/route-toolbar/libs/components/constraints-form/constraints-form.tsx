@@ -14,23 +14,23 @@ import {
   Screen,
   actions as locationAction,
 } from "~/modules/location/location.js";
+import { CreateTripDto, actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./constraints-form.module.css";
-import { tripValidationSchema } from "~/modules/trips/trips.js";
+import { submitTripDataValidationSchema } from "~/modules/trips/trips.js";
 import {
   convertHoursAndMinutesToSeconds,
   convertSecondsToHoursAndMinutes,
 } from "./libs/helpers/helpers.js";
-import type {
-  ConstraintsFormData,
-  ConstraintsSubmitData,
-  Duration,
-} from "./libs/types/types.js";
+import type { ConstraintsFormData, Duration } from "./libs/types/types.js";
 
 const ConstraintsForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { minimumWalkSeconds, tagsFiltered, toursFiltered } = useAppSelector(
+  const { minimumWalkSeconds, filteredTags, filteredTours } = useAppSelector(
     (state) => state.trips
+  );
+  const { startingPoint, destinationPoint } = useAppSelector(
+    (state) => state.location
   );
 
   const { handleSubmit, setValue, watch } = useAppForm<ConstraintsFormData>({
@@ -39,15 +39,15 @@ const ConstraintsForm: React.FC = () => {
         hours: 8,
         minutes: 55,
       },
-      priorityTags: [],
-      priorityTours: [],
+      prioritizedTags: [],
+      prioritizedTours: [],
     },
-    validationSchema: tripValidationSchema,
+    validationSchema: submitTripDataValidationSchema,
   });
 
   const duration = watch("duration");
-  const priorityTags = watch("priorityTags");
-  const priorityTours = watch("priorityTours");
+  const prioritizedTags = watch("prioritizedTags");
+  const prioritizedTours = watch("prioritizedTours");
 
   useEffect(() => {
     if (minimumWalkSeconds !== null) {
@@ -67,11 +67,11 @@ const ConstraintsForm: React.FC = () => {
   };
 
   const handleTagsChange = (tags: string[]) => {
-    setValue("priorityTags", tags);
+    setValue("prioritizedTags", tags);
   };
 
   const handleToursChange = (tours: string[]) => {
-    setValue("priorityTours", tours);
+    setValue("prioritizedTours", tours);
   };
 
   const processFormSubmission = (data: ConstraintsFormData) => {
@@ -80,14 +80,18 @@ const ConstraintsForm: React.FC = () => {
       data.duration.minutes
     );
 
-    const formData: ConstraintsSubmitData = {
-      maximumWalkDuration: durationInSeconds,
-      priorityTags: data.priorityTags,
-      priorityTours: data.priorityTours,
+    const formData: CreateTripDto = {
+      maximumWalkSeconds: durationInSeconds,
+      prioritizedTags: data.prioritizedTags,
+      prioritizedTours: data.prioritizedTours,
+      startingPoint: startingPoint!,
+      destinationPoint: destinationPoint!,
+      filteredTags: filteredTags.map((tag) => tag.slug),
+      filteredTours: filteredTours.map((tour) => tour.slug),
     };
 
-    console.log("Form submitted:", formData);
-    // TODO: dispatch
+    dispatch(tripAction.createTrip(formData));
+    // TODO: redirect to the next screens
   };
 
   const onSubmit = handleSubmit(processFormSubmission);
@@ -114,24 +118,24 @@ const ConstraintsForm: React.FC = () => {
 
         <Divider className={styles.divider} />
 
-        {tagsFiltered && tagsFiltered.length > 0 && (
+        {filteredTags && filteredTags.length > 0 && (
           <>
             <PrioritySelector
               title="Select Priority Tags"
-              items={tagsFiltered}
+              items={filteredTags}
               onChange={handleTagsChange}
-              initialSelection={priorityTags}
+              initialSelection={prioritizedTags}
             />
             <Divider className={styles.divider} />
           </>
         )}
 
-        {toursFiltered && toursFiltered.length > 0 && (
+        {filteredTours && filteredTours.length > 0 && (
           <PrioritySelector
             title="Select Priority Tours"
-            items={toursFiltered}
+            items={filteredTours}
             onChange={handleToursChange}
-            initialSelection={priorityTours}
+            initialSelection={prioritizedTours}
           />
         )}
       </div>

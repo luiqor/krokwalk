@@ -4,7 +4,7 @@ import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
 import type { TagService } from "../tags/tags";
 import type { TourService } from "../tours/tours";
 
-import type { GetWalkTimeDto } from "./libs/types/types";
+import type { CreateTripDto, GetWalkTimeDto } from "./libs/types/types";
 import { ensureArray } from "~/libs/helpers/helpers";
 
 const AVERAGE_NUMBER_OF_PLACES_TO_VISIT = 3;
@@ -198,12 +198,13 @@ class TripService {
     const accumulatedTimeBetweenClosestPlaces =
       travelTimesBetweenClosestPlaces.reduce((sum, time) => sum + time, 0);
 
-    const selectedTags = await this.tagService.getManyBuSlugs(
-      ensureArray(tags)
-    );
-    const selectedTours = await this.tourService.getManyBySlugs(
-      ensureArray(tours)
-    );
+    const selectedTags = tags
+      ? await this.tagService.getManyBuSlugs(ensureArray(tags))
+      : await this.tagService.getAll();
+
+    const selectedTours = tours
+      ? await this.tourService.getManyBySlugs(ensureArray(tours))
+      : await this.tourService.getAll();
 
     return {
       minimumWalkSeconds:
@@ -212,6 +213,30 @@ class TripService {
       tours: selectedTours.items,
       startingPoint,
       destinationPoint,
+    };
+  }
+
+  public async createTrip({
+    startingPoint,
+    destinationPoint,
+    filteredTags,
+    filteredTours,
+    maximumWalkSeconds,
+    prioritizedTags,
+    prioritizedTours,
+  }: CreateTripDto): Promise<{ response: string }> {
+    console.log("Creating trip with the following data:", {
+      startingPoint,
+      destinationPoint,
+      filteredTags,
+      filteredTours,
+      maximumWalkSeconds,
+      prioritizedTags,
+      prioritizedTours,
+    });
+
+    return {
+      response: "Trip created",
     };
   }
 }

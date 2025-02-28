@@ -1,26 +1,35 @@
-import { HTTPCode } from "~/libs/http/http";
 import { Request, Response, NextFunction } from "express";
+import { HTTPCode } from "~/libs/http/http";
 import { HTTPError } from "shared";
-import { z } from "zod";
+import { z, ZodError } from "zod";
+
+const validate = (data: unknown, schema: z.ZodSchema) => {
+  try {
+    schema.parse(data);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const errorMessages = error.errors.map((err) => err.message);
+      throw new HTTPError({
+        status: HTTPCode.BAD_REQUEST,
+        message: errorMessages.join(", "),
+      });
+    }
+    throw error;
+  }
+};
 
 const validateQueryParams = (schema: z.ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    try {
-      schema.parse(req.query);
-      next();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessages = error.errors.map((error) => error.message);
-
-        throw new HTTPError({
-          status: HTTPCode.BAD_REQUEST,
-          message: errorMessages.join(", "),
-        });
-      }
-
-      next(error);
-    }
+    validate(req.query, schema);
+    next();
   };
 };
 
-export { validateQueryParams };
+const validateRequestBody = (schema: z.ZodSchema) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    validate(req.body, schema);
+    next();
+  };
+};
+
+export { validateQueryParams, validateRequestBody };

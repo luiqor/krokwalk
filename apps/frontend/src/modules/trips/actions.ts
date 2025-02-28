@@ -3,7 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 
 import { name as sliceName } from "./trip.slice.js";
-import type { GetWalkTimeDto, GetWalkTimeParams } from "./libs/types/types.js";
+import type {
+  CreateTripDto,
+  GetWalkTimeDto,
+  GetWalkTimeParams,
+} from "./libs/types/types.js";
 
 const loadMinimumWalkTime = createAsyncThunk<
   GetWalkTimeDto,
@@ -20,4 +24,14 @@ const loadMinimumWalkTime = createAsyncThunk<
   });
 });
 
-export { loadMinimumWalkTime };
+const createTrip = createAsyncThunk<void, CreateTripDto, AsyncThunkConfig>(
+  `${sliceName}/create-trip`,
+  async (params, { extra }) => {
+    const { tripService } = extra;
+
+    await tripService.create(params);
+    // TODO: return trip
+  }
+);
+
+export { loadMinimumWalkTime, createTrip };
