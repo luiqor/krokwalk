@@ -7,8 +7,8 @@ import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 
 type State = {
   minimumWalkSeconds: number | null;
-  tags: TagDto[];
-  tours: TourDto[];
+  tagsFiltered: TagDto[];
+  toursFiltered: TourDto[];
   startingPoint: string | null;
   destinationPoint: string | null;
   status: (typeof DataStatus)[keyof typeof DataStatus];
@@ -16,8 +16,8 @@ type State = {
 
 const initialState: State = {
   minimumWalkSeconds: null,
-  tags: [],
-  tours: [],
+  tagsFiltered: [],
+  toursFiltered: [],
   startingPoint: null,
   destinationPoint: null,
   status: DataStatus.IDLE,
@@ -38,8 +38,8 @@ const { reducer, actions, name } = createSlice({
       } = action.payload;
 
       state.minimumWalkSeconds = minimumWalkSeconds;
-      state.tags = tags;
-      state.tours = tours;
+      state.tagsFiltered = tags;
+      state.toursFiltered = tours;
       state.startingPoint = startingPoint;
       state.destinationPoint = destinationPoint;
       state.status = DataStatus.FULFILLED;

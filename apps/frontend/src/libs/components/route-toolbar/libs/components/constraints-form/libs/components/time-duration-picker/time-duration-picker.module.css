@@ -1,0 +1,18 @@
+.durationPicker {
+  position: relative;
+}
+
+.menuContent {
+  padding: 8px;
+  min-width: 200px;
+}
+
+.columnHeader {
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.timeColumn {
+  max-height: 200px;
+  overflow-y: auto;
+}

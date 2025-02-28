@@ -17,7 +17,7 @@ const calculateAverage = (items: number[]): number => {
 
 type Constructor = {
   geoApify: GeoApify;
-  placesService: PlaceService;
+  placeService: PlaceService;
   tagService: TagService;
   tourService: TourService;
 };
@@ -30,12 +30,12 @@ class TripService {
 
   public constructor({
     geoApify,
-    placesService,
+    placeService,
     tagService,
     tourService,
   }: Constructor) {
     this.geoApify = geoApify;
-    this.placeService = placesService;
+    this.placeService = placeService;
     this.tagService = tagService;
     this.tourService = tourService;
   }

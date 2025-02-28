@@ -1,0 +1,63 @@
+.selectionContainer {
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.sectionTitle {
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.selectionPaper {
+  padding: 16px;
+  background-color: #f5f5f5;
+  overflow-y: auto;
+  max-height: calc(200px - 40px); /* Account for margins and padding */
+}
+
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  margin: 4px;
+  cursor: pointer;
+}
+
+.selectedChip {
+  background-color: #1976d2;
+  color: white;
+}
+
+.priorityList {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #e3f2fd;
+  border-radius: 4px;
+}
+
+.priorityItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.priorityItem:last-child {
+  border-bottom: none;
+}
+
+.priorityControls {
+  display: flex;
+  gap: 8px;
+}
+
+.emptyMessage {
+  color: #757575;
+  text-align: center;
+  padding: 16px;
+}

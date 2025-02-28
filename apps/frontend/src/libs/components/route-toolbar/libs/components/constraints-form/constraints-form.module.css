@@ -10,3 +10,20 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.sectionTitle {
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.sectionContainer {
+  margin-bottom: 32px;
+}
+
+.divider {
+  margin: 24px 0;
+}
+
+.submitButton {
+  margin-top: 24px;
+}

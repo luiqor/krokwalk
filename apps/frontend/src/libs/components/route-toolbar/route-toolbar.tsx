@@ -9,17 +9,10 @@ import {
 
 import styles from "./route-toolbar.module.css";
 
-const convertSecondsToHoursAndMinutes = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return { hours, minutes: remainingMinutes };
-};
-
 const RouteToolbar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectionMode, screen } = useAppSelector((state) => state.location);
-  const { minimumWalkSeconds, status } = useAppSelector((state) => state.trips);
+  const { status } = useAppSelector((state) => state.trips);
   const getScreen = (
     screen: (typeof Screen)[keyof typeof Screen]
   ): React.ReactNode => {
@@ -33,11 +26,8 @@ const RouteToolbar: React.FC = () => {
           return <CircularProgress />;
         }
 
-        if (status === "fulfilled" && minimumWalkSeconds !== null) {
-          const { hours, minutes } =
-            convertSecondsToHoursAndMinutes(minimumWalkSeconds);
-
-          return <ConstraintsForm minHours={hours} minMinutes={minutes} />;
+        if (status === "fulfilled") {
+          return <ConstraintsForm />;
         }
 
         dispatch(locationAction.setScreen(Screen.FILTERING));

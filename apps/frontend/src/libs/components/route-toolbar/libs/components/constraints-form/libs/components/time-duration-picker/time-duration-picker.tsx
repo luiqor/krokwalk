@@ -10,11 +10,7 @@ import {
 import { Icon } from "~/libs/components/components.js";
 
 import styles from "./time-duration-picker.module.css";
-
-type Duration = {
-  hours: number;
-  minutes: number;
-};
+import { Duration } from "../../types/types.js";
 
 type Props = {
   minHours?: number;

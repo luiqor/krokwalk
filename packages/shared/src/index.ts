@@ -18,6 +18,7 @@ export {
 } from "./libs/modules/tours/tours";
 export {
   getConstraintsValidationSchema,
+  coordinateValidationSchema,
   TripsApiPath,
   type GetWalkTimeParams,
   type GetWalkTimeDto,

@@ -25,7 +25,8 @@
     "react-redux": "9.2.0",
     "react-toastify": "11.0.3",
     "redux-thunk": "3.1.0",
-    "shared": "*"
+    "shared": "*",
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "@mui/types": "7.2.21",

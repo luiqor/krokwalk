@@ -9,6 +9,6 @@ const allActions = {
 
 const tripService = new TripService();
 
-export { allActions as actions, reducer };
-export { tripService };
+export { allActions as actions, reducer, tripService };
 export type { GetWalkTimeParams } from "./libs/types/types.js";
+export { tripValidationSchema } from "./libs/validation-schemas/trip.validation-schema.js";

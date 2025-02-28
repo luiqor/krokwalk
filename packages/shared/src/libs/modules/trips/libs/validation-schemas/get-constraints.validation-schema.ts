@@ -1,30 +1,10 @@
 import { z } from "zod";
 
-const TripsValidationMessage = {
-  INVALID_COORDINATES_FORMAT:
-    "Invalid coordinates format. Expected format: 'latitude, longitude'",
-} as const;
-
-const coordinateSchema = z.string().refine(
-  (value) => {
-    const [latitude, longitude] = value.split(",").map(Number);
-    return (
-      !isNaN(latitude) &&
-      !isNaN(longitude) &&
-      latitude >= -90 &&
-      latitude <= 90 &&
-      longitude >= -180 &&
-      longitude <= 180
-    );
-  },
-  {
-    message: TripsValidationMessage.INVALID_COORDINATES_FORMAT,
-  }
-);
+import { coordinateValidationSchema } from "./coordinate.validation-schema";
 
 const getConstraintsValidationSchema = z.object({
-  startingPoint: coordinateSchema,
-  destinationPoint: coordinateSchema,
+  startingPoint: coordinateValidationSchema,
+  destinationPoint: coordinateValidationSchema,
   tags: z.union([z.string(), z.array(z.string())]).optional(),
   tours: z.union([z.string(), z.array(z.string())]).optional(),
 });
