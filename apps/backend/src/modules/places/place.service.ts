@@ -6,7 +6,7 @@ import { PlaceRepository } from "./place.repository";
 import type {
   PlacesGetAllQueryParams,
   PlacesGetAllResponseDto,
-  PlaceDto,
+  GetPlaceByIdDto,
 } from "./libs/types/types";
 
 class PlaceService implements Service {
@@ -28,7 +28,7 @@ class PlaceService implements Service {
     return { items: placeEntities.map((entity) => entity.toObject()) };
   }
 
-  public async getById(id: string): Promise<PlaceDto | null> {
+  public async getById(id: string): Promise<GetPlaceByIdDto | null> {
     const placeEntity = await this.repository.getById(id);
 
     if (!placeEntity) {

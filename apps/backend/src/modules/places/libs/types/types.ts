@@ -3,4 +3,5 @@ export type {
   PlacesGetAllResponseDto,
   PlacesGetAllQueryParams,
   PlaceDto,
+  GetPlaceByIdDto,
 } from "shared";

@@ -4,6 +4,7 @@ export {
   type PlacesGetAllResponseDto,
   type PlaceDto,
   type PlacesGetAllQueryParams,
+  type GetPlaceByIdDto,
   PlacesApiPath,
 } from "./libs/modules/places/places";
 export {

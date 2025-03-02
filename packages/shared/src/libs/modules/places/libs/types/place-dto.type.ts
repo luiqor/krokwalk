@@ -1,12 +1,5 @@
-import { TagDto } from "src/libs/modules/tags/tags";
-
-type Tour = {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import type { TagDto } from "src/libs/modules/tags/tags";
+import type { TourDto } from "src/libs/modules/tours/tours";
 
 type PlaceDto = {
   id: string;
@@ -20,7 +13,7 @@ type PlaceDto = {
   createdAt: string;
   updatedAt: string;
   tags: TagDto[];
-  tours: Tour[];
+  tours: TourDto[];
 };
 
-export { type PlaceDto };
+export type { PlaceDto };
