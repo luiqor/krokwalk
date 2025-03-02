@@ -17,6 +17,7 @@ class PlaceController extends BaseController {
 
   public initializeRoutes() {
     this.get(PlacesApiPath.ROOT, this.getAllPlaces.bind(this));
+    this.get(PlacesApiPath.ID, this.getPlaceById.bind(this));
   }
 
   private async getAllPlaces(req: Request, res: Response): Promise<void> {
@@ -24,6 +25,11 @@ class PlaceController extends BaseController {
       req.query as PlacesGetAllQueryParams
     );
     res.status(200).send(places);
+  }
+
+  private async getPlaceById(req: Request, res: Response): Promise<void> {
+    const place = await this.service.getById(req.params.id);
+    res.status(200).send(place);
   }
 }
 

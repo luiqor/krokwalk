@@ -20,9 +20,7 @@ class PlaceRepository implements Repository {
     tags?: string[];
     tours?: string[];
   }): Promise<PlaceEntity[]> {
-    let query = this.model
-      .query()
-      .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+    let query = this.model.query();
 
     if (tags && tags.length > 0) {
       query = query.where((builder) => {
@@ -55,28 +53,54 @@ class PlaceRepository implements Repository {
           elevation: place.elevation ?? null,
           createdAt: place.createdAt,
           updatedAt: place.updatedAt,
-          tags: place.tags!.map((tag) => {
-            return TagEntity.initialize({
-              id: tag.id,
-              title: tag.title,
-              slug: tag.slug,
-              createdAt: tag.createdAt,
-              updatedAt: tag.updatedAt,
-            });
-          }),
-          tours: place.tours!.map((tour) => {
-            return TourEntity.initialize({
-              id: tour.id,
-              title: tour.title,
-              slug: tour.slug,
-              description: tour.description,
-              createdAt: tour.createdAt,
-              updatedAt: tour.updatedAt,
-            });
-          }),
+          tags: [],
+          tours: [],
         });
       })
     );
+  }
+
+  public async getById(id: string): Promise<PlaceEntity | null> {
+    const place = await this.model
+      .query()
+      .findById(id)
+      .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+
+    if (!place) {
+      return null;
+    }
+
+    return PlaceEntity.initialize({
+      id: place.id,
+      title: place.title,
+      description: place.description,
+      address: place.address,
+      thumbnailLink: place.thumbnailLink,
+      lat: place.lat,
+      lng: place.lng,
+      elevation: place.elevation ?? null,
+      createdAt: place.createdAt,
+      updatedAt: place.updatedAt,
+      tags: place.tags!.map((tag) => {
+        return TagEntity.initialize({
+          id: tag.id,
+          title: tag.title,
+          slug: tag.slug,
+          createdAt: tag.createdAt,
+          updatedAt: tag.updatedAt,
+        });
+      }),
+      tours: place.tours!.map((tour) => {
+        return TourEntity.initialize({
+          id: tour.id,
+          title: tour.title,
+          slug: tour.slug,
+          description: tour.description,
+          createdAt: tour.createdAt,
+          updatedAt: tour.updatedAt,
+        });
+      }),
+    });
   }
 }
 

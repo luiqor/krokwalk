@@ -133,6 +133,32 @@ class PlaceEntity implements Entity {
     elevation: number | null;
     createdAt: string;
     updatedAt: string;
+  } {
+    return {
+      id: this.id as string,
+      title: this.title,
+      description: this.description,
+      address: this.address,
+      thumbnailLink: this.thumbnailLink,
+      lat: this.lat,
+      lng: this.lng,
+      elevation: this.elevation,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  public toDetailedObject(): {
+    id: string;
+    title: string;
+    description: string;
+    address: string;
+    thumbnailLink: string;
+    lat: number;
+    lng: number;
+    elevation: number | null;
+    createdAt: string;
+    updatedAt: string;
     tags: ReturnType<TagEntity["toObject"]>[];
     tours: ReturnType<TourEntity["toObject"]>[];
   } {

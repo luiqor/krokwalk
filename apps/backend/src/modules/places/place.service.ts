@@ -1,13 +1,13 @@
 import type { Service } from "~/libs/types/types";
 import { ensureArray } from "~/libs/helpers/helpers";
+import { HTTPError, HTTPCode, HTTPErrorMessage } from "~/libs/http/http";
 
 import { PlaceRepository } from "./place.repository";
-import {
-  type PlacesGetAllQueryParams,
-  type PlacesGetAllResponseDto,
+import type {
+  PlacesGetAllQueryParams,
+  PlacesGetAllResponseDto,
+  PlaceDto,
 } from "./libs/types/types";
-
-
 
 class PlaceService implements Service {
   private repository: PlaceRepository;
@@ -26,6 +26,19 @@ class PlaceService implements Service {
     });
 
     return { items: placeEntities.map((entity) => entity.toObject()) };
+  }
+
+  public async getById(id: string): Promise<PlaceDto | null> {
+    const placeEntity = await this.repository.getById(id);
+
+    if (!placeEntity) {
+      throw new HTTPError({
+        status: HTTPCode.NOT_FOUND,
+        message: HTTPErrorMessage.NOT_FOUND,
+      });
+    }
+
+    return placeEntity.toDetailedObject();
   }
 }
 
