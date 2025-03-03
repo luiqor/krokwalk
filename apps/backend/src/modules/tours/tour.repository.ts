@@ -2,6 +2,8 @@ import type { Repository } from "~/libs/types/types";
 
 import { TourEntity } from "./tour.entity";
 import { TourModel } from "./tour.model";
+import { RelationName } from "~/libs/enums/relation-name.enum";
+import { PlaceEntity } from "../places/place.entity";
 
 class TourRepository implements Repository {
   private model: typeof TourModel;
@@ -45,19 +47,36 @@ class TourRepository implements Repository {
   }
 
   public async getById(id: string) {
-    const tour = await this.model.query().findById(id);
+    const tour = await this.model
+      .query()
+      .findById(id)
+      .withGraphJoined(RelationName.PLACES);
 
     if (!tour) {
       return null;
     }
 
-    return TourEntity.initialize({
+    return TourEntity.initializeDetailed({
       id: tour.id,
       title: tour.title,
       slug: tour.slug,
       description: tour.description,
       createdAt: tour.createdAt,
       updatedAt: tour.updatedAt,
+      places: tour.places!.map((place) => {
+        return PlaceEntity.initialize({
+          id: place.id,
+          title: place.title,
+          description: place.description,
+          address: place.address,
+          thumbnailLink: place.thumbnailLink,
+          lat: place.lat,
+          lng: place.lng,
+          elevation: place.elevation ?? null,
+          createdAt: place.createdAt,
+          updatedAt: place.updatedAt,
+        });
+      }),
     });
   }
 }

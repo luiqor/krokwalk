@@ -2,6 +2,7 @@ import { Model, type RelationMappings } from "objection";
 
 import { BaseModel } from "../../libs/modules/model/model";
 import { DatabaseTableName } from "../../libs/modules/database/database";
+import { PlaceModel } from "../places/place.model";
 
 class TourModel extends BaseModel {
   title!: string;
@@ -9,6 +10,8 @@ class TourModel extends BaseModel {
   slug!: string;
 
   description!: string;
+
+  places!: PlaceModel[];
 
   static get relationMappings(): RelationMappings {
     return {
@@ -21,7 +24,7 @@ class TourModel extends BaseModel {
           },
           to: `${DatabaseTableName.PLACES}.id`,
         },
-        modelClass: TourModel,
+        modelClass: PlaceModel,
         relation: Model.ManyToManyRelation,
       },
     };

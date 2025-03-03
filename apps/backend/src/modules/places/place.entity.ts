@@ -103,6 +103,34 @@ class PlaceEntity implements Entity {
     elevation,
     createdAt,
     updatedAt,
+  }: Omit<PlacesEntityParameters, "tags" | "tours">): PlaceEntity {
+    return new PlaceEntity({
+      id,
+      title,
+      description,
+      address,
+      thumbnailLink,
+      lat,
+      lng,
+      elevation,
+      createdAt,
+      updatedAt,
+      tags: [],
+      tours: [],
+    });
+  }
+
+  public static initializeDetailed({
+    id,
+    title,
+    description,
+    address,
+    thumbnailLink,
+    lat,
+    lng,
+    elevation,
+    createdAt,
+    updatedAt,
     tags,
     tours,
   }: PlacesEntityParameters): PlaceEntity {

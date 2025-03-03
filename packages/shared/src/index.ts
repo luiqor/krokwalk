@@ -15,6 +15,7 @@ export {
 export {
   type ToursGetAllResponseDto,
   type TourDto,
+  type GetTourByIdDto,
   ToursApiPath,
 } from "./libs/modules/tours/tours";
 export {

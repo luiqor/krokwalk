@@ -11,3 +11,4 @@ const placeRouter = placeController.router;
 
 export { placeRouter, placeService, type PlaceService };
 export type { PlacesGetAllQueryParams } from "./libs/types/types";
+export { PlaceEntity } from "./place.entity";

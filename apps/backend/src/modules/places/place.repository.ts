@@ -55,8 +55,6 @@ class PlaceRepository implements Repository {
           elevation: place.elevation ?? null,
           createdAt: place.createdAt,
           updatedAt: place.updatedAt,
-          tags: [],
-          tours: [],
         });
       })
     );
@@ -72,7 +70,7 @@ class PlaceRepository implements Repository {
       return null;
     }
 
-    return PlaceEntity.initialize({
+    return PlaceEntity.initializeDetailed({
       id: place.id,
       title: place.title,
       description: place.description,

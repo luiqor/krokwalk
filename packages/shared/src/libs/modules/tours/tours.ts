@@ -1,2 +1,6 @@
-export type { ToursGetAllResponseDto, TourDto } from "./libs/types/types";
+export type {
+  ToursGetAllResponseDto,
+  TourDto,
+  GetTourByIdDto,
+} from "./libs/types/types";
 export { ToursApiPath } from "./libs/enums/enums";

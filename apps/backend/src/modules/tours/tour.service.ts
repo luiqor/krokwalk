@@ -1,7 +1,10 @@
 import type { Service } from "~/libs/types/types";
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 
-import type { ToursGetAllResponseDto } from "./libs/types/types";
+import type {
+  GetTourByIdDto,
+  ToursGetAllResponseDto,
+} from "./libs/types/types";
 import { TourRepository } from "./tour.repository";
 
 class TourService implements Service {
@@ -25,7 +28,7 @@ class TourService implements Service {
     return { items: tourEntities.map((entity) => entity.toObject()) };
   }
 
-  public async getById(id: string) {
+  public async getById(id: string): Promise<GetTourByIdDto> {
     const tourEntity = await this.repository.getById(id);
 
     if (!tourEntity) {
@@ -35,7 +38,7 @@ class TourService implements Service {
       });
     }
 
-    return tourEntity.toObject();
+    return tourEntity.toDetailedObject();
   }
 }
 

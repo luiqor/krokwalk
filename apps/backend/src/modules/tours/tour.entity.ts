@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { type Entity } from "~/libs/types/types";
+import { PlaceEntity } from "../places/places";
 
 type TourEntityParameters = {
   id: null | string;
@@ -9,6 +10,7 @@ type TourEntityParameters = {
   description: string;
   createdAt: string;
   updatedAt: string;
+  places: PlaceEntity[];
 };
 
 class TourEntity implements Entity {
@@ -24,6 +26,8 @@ class TourEntity implements Entity {
 
   private updatedAt: string;
 
+  private places: PlaceEntity[];
+
   private constructor({
     id,
     title,
@@ -31,6 +35,7 @@ class TourEntity implements Entity {
     description,
     createdAt,
     updatedAt,
+    places,
   }: TourEntityParameters) {
     this.id = id;
     this.title = title;
@@ -38,6 +43,7 @@ class TourEntity implements Entity {
     this.description = description;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.places = places;
   }
 
   public static initializeNew({
@@ -56,6 +62,7 @@ class TourEntity implements Entity {
       description,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      places: [],
     });
   }
 
@@ -66,6 +73,26 @@ class TourEntity implements Entity {
     description,
     createdAt,
     updatedAt,
+  }: Omit<TourEntityParameters, "places">): TourEntity {
+    return new TourEntity({
+      id,
+      title,
+      slug,
+      description,
+      createdAt,
+      updatedAt,
+      places: [],
+    });
+  }
+
+  public static initializeDetailed({
+    id,
+    title,
+    slug,
+    description,
+    createdAt,
+    updatedAt,
+    places,
   }: TourEntityParameters): TourEntity {
     return new TourEntity({
       id,
@@ -74,6 +101,7 @@ class TourEntity implements Entity {
       description,
       createdAt,
       updatedAt,
+      places,
     });
   }
 
@@ -92,6 +120,26 @@ class TourEntity implements Entity {
       description: this.description,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+    };
+  }
+
+  public toDetailedObject(): {
+    id: string;
+    title: string;
+    slug: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    places: ReturnType<PlaceEntity["toObject"]>[];
+  } {
+    return {
+      id: this.id as string,
+      title: this.title,
+      slug: this.slug,
+      description: this.description,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      places: this.places.map((place) => place.toObject()),
     };
   }
 }
