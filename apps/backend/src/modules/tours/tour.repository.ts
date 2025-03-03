@@ -43,6 +43,23 @@ class TourRepository implements Repository {
       )
     );
   }
+
+  public async getById(id: string) {
+    const tour = await this.model.query().findById(id);
+
+    if (!tour) {
+      return null;
+    }
+
+    return TourEntity.initialize({
+      id: tour.id,
+      title: tour.title,
+      slug: tour.slug,
+      description: tour.description,
+      createdAt: tour.createdAt,
+      updatedAt: tour.updatedAt,
+    });
+  }
 }
 
 export { TourRepository };

@@ -2,17 +2,18 @@ import { Request, Response } from "express";
 
 import { BaseController } from "../../libs/modules/controller/base-controller";
 import { type PlacesGetAllQueryParams } from "../places/places";
-
-import { TripService } from "./trip.service";
 import {
   validateQueryParams,
   validateRequestBody,
 } from "~/libs/modules/validation/validation";
-import { TripsApiPath } from "./libs/enums/enums";
+import { HTTPCode } from "~/libs/http/http";
+
 import {
   createTripValidationSchema,
   getConstraintsValidationSchema,
 } from "./libs/validation-schemas/validation-schemas";
+import { TripService } from "./trip.service";
+import { TripsApiPath } from "./libs/enums/enums";
 
 class TripController extends BaseController {
   private service: TripService;
@@ -49,13 +50,13 @@ class TripController extends BaseController {
       ...placesQueryParams,
     });
 
-    res.status(200).send(walkTime);
+    res.status(HTTPCode.OK).send(walkTime);
   }
 
   private async createTrip(req: Request, res: Response): Promise<void> {
     const trip = await this.service.createTrip(req.body);
 
-    res.status(201).send(trip);
+    res.status(HTTPCode.CREATED).send(trip);
   }
 }
 

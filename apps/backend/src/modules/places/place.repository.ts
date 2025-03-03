@@ -20,7 +20,9 @@ class PlaceRepository implements Repository {
     tags?: string[];
     tours?: string[];
   }): Promise<PlaceEntity[]> {
-    let query = this.model.query();
+    let query = this.model
+      .query()
+      .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
 
     if (tags && tags.length > 0) {
       query = query.where((builder) => {

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import { BaseController } from "../../libs/modules/controller/base-controller";
 import { TagService } from "./tag.service";
+import { HTTPCode } from "~/libs/http/http";
 
 import { TagsApiPath } from "./libs/enums/enums";
 
@@ -20,7 +21,7 @@ class TagController extends BaseController {
 
   private async getAllTags(req: Request, res: Response): Promise<void> {
     const tags = await this.service.getAll();
-    res.status(200).send(tags);
+    res.status(HTTPCode.OK).send(tags);
   }
 }
 
