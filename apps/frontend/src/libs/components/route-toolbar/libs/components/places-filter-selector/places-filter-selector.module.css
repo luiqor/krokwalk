@@ -7,3 +7,16 @@
 .content {
   min-height: 100px;
 }
+
+.imageBox {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.image {
+  filter: opacity(0.6) grayscale(30%);
+  height: 80px;
+}

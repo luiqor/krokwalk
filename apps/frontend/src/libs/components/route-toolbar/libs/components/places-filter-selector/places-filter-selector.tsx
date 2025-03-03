@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Chip, Divider, IconButton, Typography } from "@mui/material";
+import mapchikRuns from "~/assets/images/mapchik-runs.svg";
 
 import { UrlFriendlyEntity } from "~/libs/types/types.js";
 import { Icon } from "~/libs/components/components.js";
@@ -68,7 +69,16 @@ const PlacesFilterSelector: React.FC<Props> = ({
             ))}
           </>
         ) : (
-          <p>Selected {entityTitle} will be displayed here</p>
+          <>
+            <p>Selected {entityTitle} will be displayed here</p>
+            <div className={styles.imageBox}>
+              <img
+                src={mapchikRuns}
+                alt="funny character runs"
+                className={styles.image}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
