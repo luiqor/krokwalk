@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { CircularProgress } from "@mui/material";
 
 import { ConstraintsForm, RouteForm } from "./libs/components/components.js";
@@ -6,17 +7,16 @@ import {
 	Screen,
 	actions as locationAction,
 } from "~/modules/location/location.js";
+import { IconElement } from "~/libs/components/components.js";
 
 import styles from "./route-toolbar.module.css";
-import IconElement from "~/libs/components/icon/icon-element.tsx";
-import { useRef, useState } from "react";
 
 const RouteToolbar: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { selectionMode, screen } = useAppSelector((state) => state.location);
 	const { status } = useAppSelector((state) => state.trips);
 	const [toolbarState, setToolbarState] = useState<boolean>(true);
-	const buttonRef = useRef<HTMLButtonElement>(null);
+	const iconElementRef = useRef<SVGSVGElement>(null);
 	const toolbarRef = useRef<HTMLDivElement>(null);
 	const getScreen = (
 		screen: (typeof Screen)[keyof typeof Screen]
@@ -41,13 +41,16 @@ const RouteToolbar: React.FC = () => {
 	};
 
 	const handleTollbar = (): void => {
-		if (buttonRef.current) {
-			setToolbarState(!toolbarState);
-			const svgElement = buttonRef.current.querySelector("svg");
-			svgElement.classList.toggle(styles.arrowSvgActive, toolbarState);
-			toolbarRef.current.classList.toggle(styles.toolbarActive, toolbarState);
-			console.log(toolbarState);
+		if (!iconElementRef.current || !toolbarRef.current) {
+			return;
 		}
+
+		setToolbarState(!toolbarState);
+		iconElementRef.current.classList.toggle(
+			styles.arrowSvgActive,
+			toolbarState
+		);
+		toolbarRef.current.classList.toggle(styles.toolbarActive, toolbarState);
 	};
 
 	return (
@@ -58,9 +61,9 @@ const RouteToolbar: React.FC = () => {
 			<button
 				className={styles.svgBlock}
 				onClick={handleTollbar}
-				ref={buttonRef}
 			>
 				<IconElement
+					ref={iconElementRef}
 					svgData={{
 						addClass: styles.arrowSvg,
 						name: "arrow",
