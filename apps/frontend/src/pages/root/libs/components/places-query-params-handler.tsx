@@ -32,3 +32,4 @@ const PlacesQueryParamsHandler = () => {
 };
 
 export { PlacesQueryParamsHandler };
+''

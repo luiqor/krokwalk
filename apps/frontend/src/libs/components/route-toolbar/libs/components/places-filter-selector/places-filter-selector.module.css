@@ -17,6 +17,7 @@
 }
 
 .image {
+  padding: 10px;
   filter: opacity(0.6) grayscale(30%);
-  height: 80px;
+  height: 90px;
 }

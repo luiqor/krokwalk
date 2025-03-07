@@ -1,8 +1,75 @@
-.toolbar {
-  width: 500px;
-  border-right: 1px solid var(--color-gray);
-  padding: 30px 40px;
-  position: relative;
+  .toolbar {
+    width: 25%;
+    border-right: 1px solid var(--color-gray);
+    padding: 30px 40px;
+    position: relative;
+  }
+
+@media (max-width: 1440px) {
+  .toolbar {
+    width: 35%;
+  }
+}
+
+@media (max-width: 1140px) {
+  .toolbar {
+    position: absolute;
+    width: 50%;
+    padding: 30px 20px;
+    left: -50%;
+    z-index: 9999;
+    background: var(--color-white);
+    height: 100%;
+    transition: left 0.8s ease-in-out;
+  }::-webkit-scrollbar {
+     display: none;
+   }
+
+  .toolbarActive {
+    left: 0;
+   }
+}
+
+.toolbarMain {
+  height: 100%;
+  overflow-y: auto;
+}
+
+@media (max-width: 575px) {
+  .toolbar {
+    width: 90%;
+    left: -90%;
+  }
+
+  .toolbarActive {
+    left: 0;
+  }
+}
+
+  .svgBlock {
+    display: none;
+  }
+
+@media (max-width: 1140px) {
+  .svgBlock {
+    border: 0;
+    display: block;
+    padding: 20px 12px;
+    background-color: var(--color-white);
+    position: absolute;
+    top: 11%;
+    right: -39px;
+    z-index: 9999;
+    clip-path: polygon( 98.667% 30.267%,98.667% 68.958%,98.667% 68.958%,98.496% 70.739%,97.998% 72.46%,97.19% 74.103%,96.091% 75.653%,94.72% 77.092%,93.096% 78.402%,91.236% 79.566%,89.161% 80.568%,86.889% 81.39%,84.438% 82.015%,1.333% 99.091%,1.333% 0.909%,84.196% 17.162%,84.196% 17.162%,86.683% 17.773%,88.991% 18.587%,91.1% 19.585%,92.991% 20.75%,94.645% 22.065%,96.041% 23.512%,97.16% 25.073%,97.984% 26.731%,98.493% 28.468%,98.667% 30.267% );
+  }
+}
+
+.arrowSvg {
+  transition: transform 0.8s ease-in-out;
+}
+
+.arrowSvgActive {
+  transform: rotate(-180deg);
 }
 
 .mask {
