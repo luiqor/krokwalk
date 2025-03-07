@@ -1,35 +1,38 @@
 {
-  "name": "krokwalk",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "",
-  "engines": {
-    "node": "18.x.x",
-    "npm": "9.x.x"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:frontend": "npm run dev -w frontend",
-    "dev:backend": "npm run dev -w backend",
-    "dev": "concurrently -k \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "build:shared": "npm run build -w shared"
-  },
-  "keywords": [],
-  "author": "@luiqor",
-  "license": "ISC",
-  "private": "true",
-  "workspaces": [
-    "packages/shared",
-    "apps/backend",
-    "apps/frontend"
-  ],
-  "devDependencies": {
-    "@eslint/js": "9.18.0",
-    "@types/node": "22.10.5",
-    "concurrently": "9.1.2",
-    "eslint": "9.18.0",
-    "globals": "15.14.0",
-    "tsc-alias": "1.8.10",
-    "typescript-eslint": "8.19.1"
-  }
+	"name": "krokwalk",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "",
+	"engines": {
+		"node": "18.x.x",
+		"npm": "9.x.x"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev:frontend": "npm run dev -w frontend",
+		"dev:backend": "npm run dev -w backend",
+		"dev": "concurrently -k \"npm run dev:backend\" \"npm run dev:frontend\"",
+		"build:shared": "npm run build -w shared"
+	},
+	"keywords": [],
+	"author": "@luiqor",
+	"license": "ISC",
+	"private": "true",
+	"workspaces": [
+		"packages/shared",
+		"apps/backend",
+		"apps/frontend"
+	],
+	"devDependencies": {
+		"@eslint/js": "9.18.0",
+		"@types/node": "22.10.5",
+		"concurrently": "9.1.2",
+		"eslint": "9.18.0",
+		"globals": "15.14.0",
+		"tsc-alias": "1.8.10",
+		"typescript-eslint": "8.19.1"
+	},
+	"dependencies": {
+		"prettier": "3.5.3"
+	}
 }
