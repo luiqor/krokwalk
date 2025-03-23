@@ -315,6 +315,7 @@ class TripService {
 			tours: place.tours.map((tour) => tour.slug),
 			lat: place.lat,
 			lng: place.lng,
+			thumbnailLink: place.thumbnailLink,
 			priority: 0,
 		}));
 

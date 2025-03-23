@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import { CircularProgress } from "@mui/material";
 
-import { ConstraintsForm, RouteForm } from "./libs/components/components.js";
+import {
+	ConstraintsForm,
+	RouteForm,
+	CurrentTrip,
+} from "./libs/components/components.js";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import {
 	Screen,
@@ -18,6 +22,21 @@ const RouteToolbar: React.FC = () => {
 	const [toolbarState, setToolbarState] = useState<boolean>(true);
 	const iconElementRef = useRef<SVGSVGElement>(null);
 	const toolbarRef = useRef<HTMLDivElement>(null);
+
+	const renderScreenBasedOnStatus = (
+		component: React.JSX.Element
+	): React.JSX.Element | undefined => {
+		if (status === "pending") {
+			return <CircularProgress />;
+		}
+
+		if (status === "fulfilled") {
+			return component;
+		}
+
+		dispatch(locationAction.setScreen(Screen.FILTERING));
+	};
+
 	const getScreen = (
 		screen: (typeof Screen)[keyof typeof Screen]
 	): React.ReactNode => {
@@ -27,20 +46,16 @@ const RouteToolbar: React.FC = () => {
 			}
 
 			case Screen.CONSTRAINTS: {
-				if (status === "pending") {
-					return <CircularProgress />;
-				}
+				return renderScreenBasedOnStatus(<ConstraintsForm />);
+			}
 
-				if (status === "fulfilled") {
-					return <ConstraintsForm />;
-				}
-
-				dispatch(locationAction.setScreen(Screen.FILTERING));
+			case Screen.MY_TRIP: {
+				return renderScreenBasedOnStatus(<CurrentTrip />);
 			}
 		}
 	};
 
-	const handleTollbar = (): void => {
+	const handleToolbar = (): void => {
 		if (!iconElementRef.current || !toolbarRef.current) {
 			return;
 		}
@@ -60,7 +75,7 @@ const RouteToolbar: React.FC = () => {
 		>
 			<button
 				className={styles.svgBlock}
-				onClick={handleTollbar}
+				onClick={handleToolbar}
 			>
 				<IconElement
 					ref={iconElementRef}

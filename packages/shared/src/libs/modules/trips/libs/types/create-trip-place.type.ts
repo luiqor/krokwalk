@@ -7,6 +7,7 @@ type CreateTripPlace = {
 	index: number;
 	tags: string[];
 	tours: string[];
+	thumbnailLink: string;
 };
 
 export type { CreateTripPlace };

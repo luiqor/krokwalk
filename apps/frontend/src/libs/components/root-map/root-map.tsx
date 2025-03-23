@@ -234,7 +234,7 @@ const RootMap = () => {
 				return null;
 			},
 			waypoints: [startWaypoint, ...waypoints, endWaypoint],
-			show: false,
+			// show: false,
 			lineOptions: {
 				styles: [{ color: themeOptions.palette.primary.main, weight: 3 }],
 			},
