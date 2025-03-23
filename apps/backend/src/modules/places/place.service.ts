@@ -40,6 +40,16 @@ class PlaceService implements Service {
 
     return placeEntity.toDetailedObject();
   }
+
+  public async getManyByCoordinates(
+    coordinates: [number, number][]
+  ): Promise<GetPlaceByIdDto[]> {
+    const placeEntities = await this.repository.getManyByCoordinates(
+      coordinates
+    );
+
+    return placeEntities.map((entity) => entity.toDetailedObject());
+  }
 }
 
 export { PlaceService };

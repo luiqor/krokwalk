@@ -3,13 +3,18 @@ import { TripService } from "./trip.service.js";
 import { actions, reducer } from "./trip.slice.js";
 
 const allActions = {
-  ...actions,
-  createTrip,
-  loadMinimumWalkTime,
+	...actions,
+	createTrip,
+	loadMinimumWalkTime,
 };
 
 const tripService = new TripService();
 
 export { allActions as actions, reducer, tripService };
-export type { GetWalkTimeParams, CreateTripDto } from "./libs/types/types.js";
+export type {
+	GetWalkTimeParams,
+	CreateTripBodyDto,
+	CreateTripResDto,
+	CreateTripPlace,
+} from "./libs/types/types.js";
 export { submitTripDataValidationSchema } from "./libs/validation-schemas/validation-schemas.js";

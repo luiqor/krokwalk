@@ -102,6 +102,58 @@ class PlaceRepository implements Repository {
       }),
     });
   }
+
+  public async getManyByCoordinates(
+    coordinates: [number, number][]
+  ): Promise<PlaceEntity[]> {
+    const places = await this.model
+      .query()
+      .whereIn(
+        "lat",
+        coordinates.map((coordinate) => coordinate[0])
+      )
+      .whereIn(
+        "lng",
+        coordinates.map((coordinate) => coordinate[1])
+      )
+      .withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+
+    return Promise.all(
+      places.map(async (place) => {
+        return PlaceEntity.initializeDetailed({
+          id: place.id,
+          title: place.title,
+          description: place.description,
+          address: place.address,
+          thumbnailLink: place.thumbnailLink,
+          lat: place.lat,
+          lng: place.lng,
+          elevation: place.elevation ?? null,
+          createdAt: place.createdAt,
+          updatedAt: place.updatedAt,
+          tags: place.tags!.map((tag) => {
+            return TagEntity.initialize({
+              id: tag.id,
+              title: tag.title,
+              slug: tag.slug,
+              createdAt: tag.createdAt,
+              updatedAt: tag.updatedAt,
+            });
+          }),
+          tours: place.tours!.map((tour) => {
+            return TourEntity.initialize({
+              id: tour.id,
+              title: tour.title,
+              slug: tour.slug,
+              description: tour.description,
+              createdAt: tour.createdAt,
+              updatedAt: tour.updatedAt,
+            });
+          }),
+        });
+      })
+    );
+  }
 }
 
 export { PlaceRepository };

@@ -14,7 +14,7 @@ import {
   Screen,
   actions as locationAction,
 } from "~/modules/location/location.js";
-import { CreateTripDto, actions as tripAction } from "~/modules/trips/trips.js";
+import { CreateTripBodyDto, actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./constraints-form.module.css";
 import { submitTripDataValidationSchema } from "~/modules/trips/trips.js";
@@ -80,7 +80,7 @@ const ConstraintsForm: React.FC = () => {
       data.duration.minutes
     );
 
-    const formData: CreateTripDto = {
+    const formData: CreateTripBodyDto = {
       maximumWalkSeconds: durationInSeconds,
       prioritizedTags: data.prioritizedTags,
       prioritizedTours: data.prioritizedTours,
