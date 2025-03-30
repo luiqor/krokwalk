@@ -29,6 +29,7 @@ const IconTitle = {
 	START_END: "start-end",
 	WAYPOINT: "waypoint",
 	START_END_WAYPOINT: "start-end-waypoint",
+	CURRENT_POSITION: "current-position",
 } as const;
 
 const RootMap = () => {
@@ -43,6 +44,7 @@ const RootMap = () => {
 	} = useAppSelector((state) => state.trips);
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const mapInstanceRef = useRef<L.Map | null>(null);
+	const userMarkerRef = useRef<L.Marker | null>(null);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -53,17 +55,103 @@ const RootMap = () => {
 		const map = L.map(mapRef.current, {
 			...mapOptions,
 			zoom: ZOOM_DEFAULT,
-			center: [50.4501, 30.5234], // TODO: get from user location
 		});
 
 		tileLayers.Default.addTo(map);
 
 		L.control.layers(tileLayers).addTo(map);
 
-		mapInstanceRef.current = map; // TODO: handleReset of zoom mapInstanceRef.current.setView( [...current], ZOOM_DEFAULT);
+		mapInstanceRef.current = map;
 
 		return () => {
 			map.remove();
+		};
+	}, []);
+
+	const updateUserLocation = () => {
+		if (!mapInstanceRef.current) {
+			return;
+		}
+
+		mapInstanceRef.current.locate({ setView: true, maxZoom: ZOOM_DEFAULT });
+	};
+
+	useEffect(() => {
+		if (!mapInstanceRef.current) {
+			return;
+		}
+
+		const handleLocationFound = (e: L.LocationEvent) => {
+			if (userMarkerRef.current) {
+				mapInstanceRef.current?.removeLayer(userMarkerRef.current);
+				userMarkerRef.current = null;
+			}
+
+			mapInstanceRef.current?.eachLayer((layer) => {
+				if (layer instanceof L.Circle) {
+					mapInstanceRef.current?.removeLayer(layer);
+				}
+			});
+
+			const userMarker = L.marker(e.latlng, {
+				icon: L.divIcon({
+					html: ReactDOMServer.renderToString(
+						<Icon
+							name="trackedMyLocation"
+							color="#236ac7"
+							fontSize={30}
+						/>
+					),
+					iconAnchor: [15, 15],
+					className: styles.marker,
+				}),
+			}).addTo(mapInstanceRef.current as L.Map);
+
+			const circle = L.circle(e.latlng, {
+				radius: 0,
+				color: "none",
+				fillColor: "#236ac7",
+			}).addTo(mapInstanceRef.current as L.Map);
+
+			let currentRadius = 0;
+			const maxRadius = 50;
+			const animationDuration = 1000;
+			const stepTime = 20;
+
+			const animateCircle = () => {
+				currentRadius += maxRadius / (animationDuration / stepTime);
+				if (currentRadius <= maxRadius) {
+					circle.setRadius(currentRadius);
+					circle.setStyle({
+						fillOpacity: 0.8 * (1 - currentRadius / maxRadius),
+					});
+					setTimeout(animateCircle, stepTime);
+				} else {
+					mapInstanceRef.current?.removeLayer(circle);
+				}
+			};
+
+			animateCircle();
+
+			userMarkerRef.current = userMarker;
+		};
+
+		mapInstanceRef.current.on("locationfound", handleLocationFound);
+
+		mapInstanceRef.current.on("locationerror", (e: L.ErrorEvent) => {
+			console.error("Location error:", e.message);
+		});
+
+		updateUserLocation();
+
+		return () => {
+			if (userMarkerRef.current) {
+				mapInstanceRef.current?.removeLayer(userMarkerRef.current);
+				userMarkerRef.current = null;
+			}
+
+			mapInstanceRef.current?.off("locationfound", handleLocationFound);
+			mapInstanceRef.current?.off("locationerror");
 		};
 	}, []);
 
@@ -234,7 +322,7 @@ const RootMap = () => {
 				return null;
 			},
 			waypoints: [startWaypoint, ...waypoints, endWaypoint],
-			// show: false,
+			show: false,
 			lineOptions: {
 				styles: [{ color: themeOptions.palette.primary.main, weight: 3 }],
 			},
@@ -283,12 +371,20 @@ const RootMap = () => {
 	}, [stopoverPoints, tripStart, tripEnd]);
 
 	return (
-		<div className={styles.container}>
-			<div
-				ref={mapRef}
-				className={styles.map}
-			/>
-		</div>
+		<>
+			<button
+				onClick={updateUserLocation}
+				className={styles.locateButton}
+			>
+				Update Location
+			</button>
+			<div className={styles.container}>
+				<div
+					ref={mapRef}
+					className={styles.map}
+				/>
+			</div>
+		</>
 	);
 };
 
