@@ -205,11 +205,13 @@ class TripService {
 				tours,
 			});
 
+		const lastRowOnlyPlaces = lastRow.slice(1, -1);
+
 		const walkDurationsStartToPlaceToEnd = startingPointRow
 			.slice(1, -1)
 			.map((target, index) => ({
 				index,
-				sum: target.time + lastRow[index].time,
+				sum: target.time + lastRowOnlyPlaces[index].time,
 			}));
 
 		const closestPlacesTravelTimes = walkDurationsStartToPlaceToEnd
