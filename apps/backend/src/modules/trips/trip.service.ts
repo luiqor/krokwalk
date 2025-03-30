@@ -197,7 +197,7 @@ class TripService {
 	} & PlacesGetAllQueryParams): Promise<GetWalkTimeDto> {
 		const startingPointCoordinates = startingPoint.split(",").map(Number);
 		const destinationPointCoordinates = destinationPoint.split(",").map(Number);
-		const { timeMatrix, startingPointRow, lastRow } =
+		const { startingPointRow, lastRow } =
 			await this.getTimeMatrixOfClosestPlaces({
 				startingPointCoordinates,
 				destinationPointCoordinates,
@@ -216,18 +216,11 @@ class TripService {
 			.sort((a, b) => a.sum - b.sum)
 			.slice(0, AVERAGE_NUMBER_OF_PLACES_TO_VISIT);
 
-		const { sums: closestPlacesSums, indices: closestPlacesIndices } =
-			this.destructureSumsAndIndicies(closestPlacesTravelTimes);
+		const { sums: closestPlacesSums } = this.destructureSumsAndIndicies(
+			closestPlacesTravelTimes
+		);
 
 		const averageTimeStartToPlaceToEnd = calculateAverage(closestPlacesSums);
-
-		const travelTimesBetweenClosestPlaces = this.getTravelTimesBetweenPlaces({
-			placesIndices: closestPlacesIndices,
-			durationMatrix: timeMatrix,
-		});
-
-		const accumulatedTimeBetweenClosestPlaces =
-			travelTimesBetweenClosestPlaces.reduce((sum, time) => sum + time, 0);
 
 		const selectedTags = tags
 			? await this.tagService.getManyBuSlugs(ensureArray(tags))
@@ -238,8 +231,7 @@ class TripService {
 			: await this.tourService.getAll();
 
 		return {
-			minimumWalkSeconds:
-				averageTimeStartToPlaceToEnd + accumulatedTimeBetweenClosestPlaces,
+			minimumWalkSeconds: averageTimeStartToPlaceToEnd,
 			tags: selectedTags.items,
 			tours: selectedTours.items,
 			startingPoint,
