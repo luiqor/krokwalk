@@ -282,13 +282,10 @@ class TripService {
 
 		// Handle the case when there are no intermediate places
 		if (placeIndices.length === 0) {
-			return {
-				path: [startIndex, endIndex],
-				totalTime: directTime,
-				visitedPlaces: [],
-				startingPoint: startingPointCoordinates,
-				destinationPoint: destinationPointCoordinates,
-			};
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.TRIPS.TRIP_BETWEEN_POINTS_NOT_FOUND,
+			});
 		}
 
 		const coordinates: [number, number][] = placeIndices.map((index) => [
@@ -328,6 +325,7 @@ class TripService {
 
 		console.log(result);
 
+		// TODO? after auth: Replace with stopover places (with user data about visiting)
 		return {
 			path: result.path,
 			totalTime: result.totalTime,
