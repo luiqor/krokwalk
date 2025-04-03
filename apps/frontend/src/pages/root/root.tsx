@@ -1,8 +1,4 @@
-import {
-	RootMap,
-	RouteToolbar,
-	SvgSprite,
-} from "~/libs/components/components.js";
+import { RootMap, RouteToolbar } from "~/libs/components/components.js";
 
 import { PlacesQueryParamsHandler } from "./libs/components/components.js";
 
@@ -14,7 +10,6 @@ const Root = () => {
 			<RouteToolbar />
 			<RootMap />
 			<PlacesQueryParamsHandler />
-			<SvgSprite />
 		</div>
 	);
 };
