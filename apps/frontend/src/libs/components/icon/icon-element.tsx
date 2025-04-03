@@ -1,18 +1,12 @@
 import { forwardRef } from "react";
 
-type IconElementType = {
-	addClass?: string;
-	name: string;
-	widthSize: number;
-	heightSize: number;
-	color?: string;
-};
+import type { IconElementType } from "./libs/types/types.js";
 
 const IconElement = forwardRef<SVGSVGElement, { svgData: IconElementType }>(
 	({ svgData }, ref) => {
 		return (
 			<svg
-				ref={ref}
+				ref={ref || undefined}
 				className={svgData.addClass ? svgData.addClass : ""}
 				width={svgData.widthSize}
 				height={svgData.heightSize}

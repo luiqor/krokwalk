@@ -1,0 +1,88 @@
+.container {
+	position: relative;
+	margin: 60px auto 0;
+	padding: 0 40px 20px;
+	width: 100%;
+	max-width: 1800px;
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.imgBlock {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 740px;
+	overflow: hidden;
+}
+
+.img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 15px;
+}
+
+.textBlock {
+	padding: 35px;
+	width: 50%;
+	background-color: var(--color-gray);
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--color-gray);
+}
+
+.title {
+	font-size: 55px;
+}
+
+.tagBlock {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.tag {
+	padding: 10px;
+	font-size: var(--font-size-100);
+	color: var(--color-white);
+	background-color: var(--color-blue-400);
+	font-weight: 600;
+	border-radius: 15px;
+}
+
+.address {
+	margin-top: 15px;
+	font-size: var(--font-size-300);
+}
+
+.text {
+	margin-top: 25px;
+	font-size: var(--font-size-200);
+}
+
+.buttonBack {
+	position: absolute;
+	background: transparent;
+	top: -43px;
+	display: flex;
+	align-items: center;
+	border: none;
+	cursor: pointer;
+	gap: 5px;
+}
+
+.textBack {
+	color: var(--color-blue-400);
+	font-size: var(--font-size-300);
+	font-weight: 600;
+}
+
+.svgBack {
+	stroke: var(--color-blue-400);
+	transform: rotate(180deg);
+}

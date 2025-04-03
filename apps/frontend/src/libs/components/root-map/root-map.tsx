@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 
 import { mapOptions, tileLayers } from "./libs/constants/constants.js";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { Marker } from "./libs/components/marker.js";
 import {
   actions as locationAction,
@@ -17,6 +17,8 @@ import { Icon } from "../components.js";
 import styles from "./root-map.module.css";
 import type { GeoPoint } from "~/libs/types/types.js";
 
+import { useNavigate } from "react-router-dom";
+
 const ZOOM_DEFAULT = 16;
 
 const RootMap = () => {
@@ -27,6 +29,7 @@ const RootMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -153,7 +156,7 @@ const RootMap = () => {
     });
 
     places.forEach((place) => {
-      const { lat, lng, thumbnailLink, title } = place;
+      const { lat, lng, thumbnailLink, title, id } = place;
 
       const customIcon = L.divIcon({
         html: ReactDOMServer.renderToString(
@@ -166,6 +169,10 @@ const RootMap = () => {
       const marker = L.marker([lat, lng], { icon: customIcon });
 
       marker.addTo(mapInstanceRef.current!);
+
+      marker.on("click", () => {
+        navigate(`${AppRoute.INFORMATION}?id=${id}`)
+      });
     });
   }, [places, status]);
 
