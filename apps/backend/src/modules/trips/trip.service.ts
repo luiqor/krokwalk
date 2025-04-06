@@ -355,7 +355,6 @@ class TripService {
 		visitedPlaces: CreateTripPlace[];
 	} {
 		// Step 1: Create initial path using greedy approach
-		// This path will likely be too long, which is expected
 		const initialPath = this.createInitialPath(
 			timeMatrix,
 			startIndex,
@@ -371,11 +370,16 @@ class TripService {
 			};
 		}
 
-		// Step 2: Assign priorities to places based on tags and tours
-		this.assignPriorities(places, priorityPlaces);
+		// Step 2: Assign priorities to places based on tags, tours, and "on the way" status
+		this.assignPriorities(
+			places,
+			priorityPlaces,
+			timeMatrix,
+			startIndex,
+			endIndex
+		);
 
 		// Step 3: Apply knapsack algorithm to select optimal places
-		// The knapsack will select the most valuable places while staying within maximumWalkSeconds
 		const result = this.applyKnapsackAlgorithm(
 			initialPath,
 			timeMatrix,
@@ -484,11 +488,20 @@ class TripService {
 	/**
 	 * Assigns priority values to places based on their tags and tours
 	 */
+	/**
+	 * Assigns priority values to places based on their tags, tours, and whether they're "on the way"
+	 */
 	private assignPriorities(
 		places: CreateTripPlace[],
-		priorityPlaces: { tags?: string[]; tours?: string[] }
+		priorityPlaces: { tags?: string[]; tours?: string[] },
+		timeMatrix: { time: number }[][],
+		startIndex: number,
+		endIndex: number
 	): void {
 		const { tags = [], tours = [] } = priorityPlaces;
+
+		// Calculate direct time from start to end
+		const directTime = timeMatrix[startIndex][endIndex].time;
 
 		places.forEach((place) => {
 			let priority = 0;
@@ -510,6 +523,20 @@ class TripService {
 					priority += (tours.length - tourIndex) * 3; // Give even more weight to tours
 				}
 			});
+
+			// Check if the place is "on the way" by comparing going directly vs. through this place
+			const detourTime =
+				timeMatrix[startIndex][place.index].time +
+				timeMatrix[place.index][endIndex].time;
+			const detourRatio = detourTime / directTime;
+
+			// Increase priority if the place is on the way (small detour)
+			// Values close to 1.0 mean it's almost directly on the path
+			if (detourRatio <= 1.2) {
+				// Less than 20% detour
+				const onTheWayBonus = Math.max(10, 20 * (1.2 - detourRatio) * 10); // Higher bonus for smaller detours
+				priority += onTheWayBonus;
+			}
 
 			// Add base priority to ensure places with no matching tags/tours still have some value
 			place.priority = priority + 1;
