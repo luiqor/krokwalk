@@ -258,6 +258,38 @@ const RootMap = () => {
 		};
 	}, [destinationPoint]);
 
+	const createCustomMarker = ({
+		lat,
+		lng,
+		title,
+		thumbnailLink,
+		color,
+	}: {
+		lat: number;
+		lng: number;
+		title: string;
+		thumbnailLink: string;
+		color?: string;
+	}): L.Marker => {
+		const customIcon = L.divIcon({
+			html: ReactDOMServer.renderToString(
+				<Marker
+					thumbnailLink={thumbnailLink}
+					title={title}
+					color={color}
+				/>
+			),
+			className: styles.marker,
+			iconAnchor: [20, 40],
+		});
+
+		return L.marker([lat, lng], {
+			icon: customIcon,
+			title: IconTitle.PLACE,
+			alt: title,
+		});
+	};
+
 	useEffect(() => {
 		if (!mapInstanceRef.current || status !== DataStatus.FULFILLED) {
 			return;
@@ -275,21 +307,11 @@ const RootMap = () => {
 		places.forEach((place) => {
 			const { lat, lng, thumbnailLink, title, id } = place;
 
-			const customIcon = L.divIcon({
-				html: ReactDOMServer.renderToString(
-					<Marker
-						thumbnailLink={thumbnailLink}
-						title={title}
-					/>
-				),
-				className: styles.marker,
-				iconAnchor: [20, 40],
-			});
-
-			const marker = L.marker([lat, lng], {
-				icon: customIcon,
-				title: IconTitle.PLACE,
-				alt: title,
+			const marker = createCustomMarker({
+				lat,
+				lng,
+				title,
+				thumbnailLink,
 			});
 
 			marker.addTo(mapInstanceRef.current!);
@@ -298,7 +320,7 @@ const RootMap = () => {
 				navigate(`${AppRoute.INFORMATION}?id=${id}`);
 			});
 		});
-	}, [places, status]);
+	}, [places, status, navigate]);
 
 	useEffect(() => {
 		if (!mapInstanceRef.current || !stopoverPoints) {
@@ -337,10 +359,26 @@ const RootMap = () => {
 					layer.options.title === IconTitle.PLACE &&
 					layer.options.alt === point.title
 				) {
-					layer.options.title = IconTitle.WAYPOINT;
+					layer.remove();
 				}
 			}
 		});
+
+		for (const point of stopoverPoints) {
+			const marker = createCustomMarker({
+				lat: point.lat,
+				lng: point.lng,
+				title: point.title,
+				thumbnailLink: point.thumbnailLink,
+				color: "#236ac7",
+			});
+
+			marker.addTo(mapInstanceRef.current!);
+
+			marker.on("click", () => {
+				navigate(`${AppRoute.INFORMATION}?id=${point.id}`);
+			});
+		}
 
 		mapInstanceRef.current.eachLayer((layer) => {
 			if (
@@ -368,7 +406,7 @@ const RootMap = () => {
 				}
 			});
 		};
-	}, [stopoverPoints, tripStart, tripEnd]);
+	}, [stopoverPoints, tripStart, tripEnd, navigate]);
 
 	return (
 		<>

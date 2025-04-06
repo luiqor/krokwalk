@@ -1,4 +1,4 @@
-import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
+import { createSlice, isRejected } from "@reduxjs/toolkit";
 
 import type { TagDto } from "../tags/tags.js";
 import type { TourDto } from "../tours/tours.js";
@@ -54,9 +54,14 @@ const { reducer, actions, name } = createSlice({
 			state.destinationPoint = destinationPoint;
 			state.status = DataStatus.FULFILLED;
 		});
-		builder.addMatcher(isPending, (state) => {
-			state.status = DataStatus.PENDING;
-		});
+		builder.addMatcher(
+			(action) =>
+				action.type === loadMinimumWalkTime.pending.type ||
+				action.type === createTrip.pending.type,
+			(state) => {
+				state.status = DataStatus.PENDING;
+			}
+		);
 		builder.addMatcher(isRejected, (state) => {
 			state.status = DataStatus.REJECTED;
 		});

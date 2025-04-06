@@ -25,16 +25,19 @@ const RouteToolbar: React.FC = () => {
 
 	const renderScreenBasedOnStatus = (
 		component: React.JSX.Element
-	): React.JSX.Element | undefined => {
+	): React.JSX.Element | null => {
+		console.log("status", status);
+
 		if (status === "pending") {
 			return <CircularProgress />;
 		}
 
-		if (status === "fulfilled") {
+		if (status === "fulfilled" || status === "idle") {
 			return component;
 		}
 
 		dispatch(locationAction.setScreen(Screen.FILTERING));
+		return null;
 	};
 
 	const getScreen = (
