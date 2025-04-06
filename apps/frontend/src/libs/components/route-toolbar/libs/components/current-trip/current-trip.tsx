@@ -1,12 +1,21 @@
 import React from "react";
-import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
+import { Button } from "@mui/material";
+
+import { actions as locationAction } from "~/modules/location/location.js";
+import { actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./current-trip.module.css";
-import { Button } from "@mui/material";
 
 const CurrentTrip: React.FC = () => {
 	const { startingPoint, destinationPoint, stopoverPoints, walkSeconds } =
 		useAppSelector((state) => state.trips);
+	const dispatch = useAppDispatch();
+
+	const handlePlanAnotherTrip = () => {
+		dispatch(locationAction.resetLocationData());
+		dispatch(tripAction.resetTripData());
+	};
 
 	return (
 		<div className={styles.container}>
@@ -66,6 +75,7 @@ const CurrentTrip: React.FC = () => {
 			<Button
 				variant="contained"
 				fullWidth
+				onClick={handlePlanAnotherTrip}
 			>
 				Plan Another Trip
 			</Button>

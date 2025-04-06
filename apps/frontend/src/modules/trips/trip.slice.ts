@@ -31,7 +31,18 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
 	name: SliceName.TRIPS,
 	initialState,
-	reducers: {},
+	reducers: {
+		resetTripData: (state) => {
+			state.startingPoint = [];
+			state.destinationPoint = [];
+			state.stopoverPoints = [];
+			state.walkSeconds = null;
+			state.minimumWalkSeconds = null;
+			state.filteredTags = [];
+			state.filteredTours = [];
+			state.status = DataStatus.IDLE;
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(loadMinimumWalkTime.fulfilled, (state, action) => {
 			const { tags, tours, minimumWalkSeconds } = action.payload;
