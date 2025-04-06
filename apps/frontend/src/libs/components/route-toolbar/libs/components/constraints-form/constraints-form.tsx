@@ -102,6 +102,11 @@ const ConstraintsForm: React.FC = () => {
 	const { hours: minHours, minutes: minMinutes } =
 		convertSecondsToHoursAndMinutes(minimumWalkSeconds);
 
+	const handlePlanAnotherTrip = () => {
+		dispatch(locationAction.resetLocationData());
+		dispatch(tripAction.resetTripData());
+	};
+
 	return (
 		<form className={styles.form}>
 			<div className={styles.contentBox}>
@@ -155,6 +160,13 @@ const ConstraintsForm: React.FC = () => {
 				onClick={onSubmit}
 			>
 				Submit
+			</Button>
+			<Button
+				variant="contained"
+				fullWidth
+				onClick={handlePlanAnotherTrip}
+			>
+				Plan Another Trip
 			</Button>
 		</form>
 	);

@@ -6,6 +6,7 @@ import { actions as locationAction } from "~/modules/location/location.js";
 import { actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./current-trip.module.css";
+import { convertSecondsToHoursAndMinutes } from "~/libs/components/route-toolbar/libs/components/constraints-form/libs/helpers/helpers.js";
 
 const CurrentTrip: React.FC = () => {
 	const { startingPoint, destinationPoint, stopoverPoints, walkSeconds } =
@@ -17,10 +18,15 @@ const CurrentTrip: React.FC = () => {
 		dispatch(tripAction.resetTripData());
 	};
 
+	const {hours, minutes} = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.walkTime}>
-				Estimated Walk Time: {walkSeconds} seconds
+				<p>
+				Estimated Walk Time: 
+				</p>
+				{hours} hours {minutes} minutes
 			</div>
 			<div className={styles.tripList}>
 				{startingPoint.length > 0 && (
