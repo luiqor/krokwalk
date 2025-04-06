@@ -340,7 +340,7 @@ class TripRouteService {
 
 			// Update dp if this combination is feasible and better
 			if (time <= timeLimit) {
-				const key = `${n}_${time}`;
+				const key = `${mask}_${time}`;
 				if (!dp.has(key) || priority > dp.get(key)!) {
 					dp.set(key, priority);
 

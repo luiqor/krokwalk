@@ -26,8 +26,6 @@ const RouteToolbar: React.FC = () => {
 	const renderScreenBasedOnStatus = (
 		component: React.JSX.Element
 	): React.JSX.Element | null => {
-		console.log("status", status);
-
 		if (status === "pending") {
 			return <CircularProgress />;
 		}
