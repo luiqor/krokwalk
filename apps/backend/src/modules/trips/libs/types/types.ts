@@ -1,1 +1,6 @@
-export type { GetWalkTimeDto, CreateTripDto } from "shared";
+export type {
+	GetWalkTimeDto,
+	CreateTripBodyDto,
+	CreateTripPlace,
+	CreateTripResDto,
+} from "shared";

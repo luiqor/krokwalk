@@ -1,8 +1,8 @@
 const convertSecondsToHoursAndMinutes = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return { hours, minutes: remainingMinutes };
+  const hours = Math.floor(seconds / 3600); 
+  const remainingSeconds = seconds % 3600; 
+  const minutes = Math.floor(remainingSeconds / 60);
+  return { hours, minutes };
 };
 
 const convertHoursAndMinutesToSeconds = (hours: number, minutes: number) => {
