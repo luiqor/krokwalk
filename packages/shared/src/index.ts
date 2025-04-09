@@ -30,5 +30,13 @@ export {
 	type CreateTripPlace,
 	type CreateTripResDto,
 } from "./libs/modules/trips/trips";
+export {
+	type UserDto,
+	type UserSignUpRequestDto,
+	type UserSignInRequestDto,
+	type UserSignInResponseDto,
+	type UserSignUpResponseDto,
+} from "./libs/modules/users/users";
+export { type TokenPayload } from "./libs/types/types";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";
