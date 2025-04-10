@@ -37,6 +37,11 @@ export {
 	type UserSignInResponseDto,
 	type UserSignUpResponseDto,
 } from "./libs/modules/users/users";
+export {
+	AuthApiPath,
+	signInValidationSchema,
+	signUpValidationSchema,
+} from "./libs/modules/auth/auth";
 export { type TokenPayload } from "./libs/types/types";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";
