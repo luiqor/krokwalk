@@ -5,25 +5,39 @@
 	top: 0;
 	left: 0;
 	background: var(--color-blue-400);
-	opacity: 0.5;
+	opacity: 0;
 	z-index: 1001;
 	transition: opacity 0.5s ease-in-out;
 }
 
+.backGround.hide {
+	opacity: 0;
+	top: -100%;
+}
+
+.backGroundInActive {
+	top: 0;
+	opacity: 0.5;
+}
+
 .fadeIn {
+	top: 0;
 	opacity: 0;
 }
 
 .fadeInActive {
-	opacity: 1;
+	top: 0;
+	opacity: 0;
 }
 
 .fadeOut {
-	opacity: 1;
+	top: 0;
+	opacity: 0.5;
 }
 
 .fadeOutActive {
-	opacity: 0;
+	top: 0;
+	opacity: 0.5;
 }
 
 .popap {
@@ -60,6 +74,8 @@
 
 .mapchikSvg {
 	margin-top: 25px;
+	width: 100px;
+	height: 170px;
 }
 
 .textGrup {

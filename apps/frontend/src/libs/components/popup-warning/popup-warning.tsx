@@ -1,22 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { CSSTransition } from "react-transition-group";
 
+import IconRuns from "../../../assets/images/mapchik-runs.svg";
 import { IconElement } from "~/libs/components/components.js";
 
 import type { WarningProps } from "~/libs/components/popup-warning/libs/types/types.js";
 
 import styles from "./popup-warning.module.css";
+import { DomUtil } from "leaflet";
 
 const modalWarning: HTMLElement = document.getElementById(
 	"modalWarning"
 ) as HTMLElement;
 
 const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
-	if (isOpen) return null;
-
 	return ReactDOM.createPortal(
 		<>
-			<div className={styles.backGround}></div>
+			<CSSTransition
+				in={!isOpen}
+				timeout={500}
+				classNames={{
+					enter: styles.fadeIn,
+					enterActive: styles.fadeInActive,
+					exit: styles.fadeOut,
+					exitActive: styles.fadeOutActive,
+				}}
+				onEnter={(node) => node.classList.remove(styles.hide)}
+				onEntered={(node) => node.classList.add(styles.backGroundInActive)}
+				onExit={(node) => node.classList.remove(styles.backGroundInActive)}
+				onExited={(node) => {
+					setTimeout(() => node.classList.add(styles.hide), 500);
+				}}
+			>
+				<div className={styles.backGround}></div>
+			</CSSTransition>
+
 			<article className={styles.popap}>
 				<button
 					className={styles.button}
@@ -40,13 +59,9 @@ const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
 							and share your location.
 						</p>
 					</div>
-					<IconElement
-						svgData={{
-							addClass: styles.mapchikSvg,
-							name: "mapchikRuns",
-							widthSize: 100,
-							heightSize: 170,
-						}}
+					<img
+						className={styles.mapchikSvg}
+						src={IconRuns}
 					/>
 				</div>
 			</article>

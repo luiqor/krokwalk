@@ -7,16 +7,10 @@ import {
 import { PlacesQueryParamsHandler } from "./libs/components/components.js";
 
 import styles from "./root.module.css";
-import { useEffect, useState } from "react";
-import { useGeolocation } from "~/libs/components/popup-warning/libs/castome-hook/use-geolocation.js";
+import { useTrackingGeolocationPermission } from "~/libs/components/popup-warning/libs/castome-hook/use-tracking-geolocation-permission.js";
 
 const Root = () => {
-	const geolocation = useGeolocation();
-	const [popupState, setPopupState] = useState<boolean>(false);
-
-	useEffect(() => {
-		setPopupState(geolocation);
-	}, [geolocation]);
+	const geolocation = useTrackingGeolocationPermission();
 
 	return (
 		<div className={styles.container}>
@@ -24,8 +18,8 @@ const Root = () => {
 			<RootMap />
 			<PlacesQueryParamsHandler />
 			<PopupWarning
-				isOpen={popupState}
-				onClose={() => setPopupState(true)}
+				isOpen={geolocation.isGeolocationEnabled}
+				onClose={() => geolocation.closedPopup()}
 			/>
 		</div>
 	);
