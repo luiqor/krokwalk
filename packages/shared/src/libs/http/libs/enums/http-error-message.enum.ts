@@ -13,6 +13,9 @@ const HTTPErrorMessage = {
 		INVALID_CREDENTIALS: "Invalid credentials.",
 		EMAIL_ALREADY_EXISTS: "User with this email already exists.",
 		USERNAME_ALREADY_EXISTS: "User with this username already exists.",
+		UNAUTHORIZED: "Unauthorized access.",
+		INVALID_TOKEN: "Invalid token.",
+		FORBIDDEN: "Forbidden access.",
 	},
 } as const;
 
