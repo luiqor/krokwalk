@@ -2,4 +2,6 @@ type TokenPayload = {
 	userId: string;
 };
 
-export type { TokenPayload };
+type ValueOf<T> = T[keyof T];
+
+export type { TokenPayload, ValueOf };

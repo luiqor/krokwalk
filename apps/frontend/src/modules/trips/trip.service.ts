@@ -21,7 +21,6 @@ class TripService extends BaseService<CreateTripResDto> {
 			this.getUrl(`${TripsApiPath.WALK_TIME}${queryString}`),
 			{
 				method: "GET",
-				token: BaseService.token,
 			}
 		);
 	}
