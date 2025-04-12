@@ -21,17 +21,14 @@
 }
 
 .fadeIn {
-	top: 0;
 	opacity: 0;
 }
 
 .fadeInActive {
-	top: 0;
 	opacity: 0;
 }
 
 .fadeOut {
-	top: 0;
 	opacity: 0.5;
 }
 
@@ -44,12 +41,32 @@
 	padding: 30px;
 	width: 550px;
 	position: absolute;
-	top: 50%;
+	top: -20%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background: var(--color-white);
 	opacity: 1;
 	z-index: 1002;
+}
+
+.popapActive {
+	top: 50%;
+}
+
+.popapEnter {
+	top: -20%;
+}
+
+.popapEnterActive {
+	animation: openingAnimation 0.5s ease-in-out forwards;
+}
+
+.popapExit {
+	top: 50%;
+}
+
+.popapExitActive {
+	animation: closeAnimation 0.5s ease-in-out forwards;
 }
 
 .button {
@@ -96,4 +113,48 @@
 
 .text {
 	margin-top: 25px;
+}
+
+@keyframes openingAnimation {
+	0% {
+		top: -20%;
+	}
+
+	60% {
+		top: 57%;
+	}
+
+	70% {
+		top: 60%;
+	}
+
+	80% {
+		top: 57%;
+	}
+
+	100% {
+		top: 50%;
+	}
+}
+
+@keyframes closeAnimation {
+	0% {
+		top: 50%;
+	}
+
+	20% {
+		top: 43%;
+	}
+
+	30% {
+		top: 40%;
+	}
+
+	40% {
+		top: 43%;
+	}
+
+	100% {
+		top: 120%;
+	}
 }

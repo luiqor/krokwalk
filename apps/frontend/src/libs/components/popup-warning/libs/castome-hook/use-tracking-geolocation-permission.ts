@@ -8,10 +8,10 @@ const useTrackingGeolocationPermission = () => {
 		navigator.permissions
 			.query({ name: "geolocation" })
 			.then((permissionsStatus) => {
-				setIsGeolocationEnabled(permissionsStatus.state === "granted");
+				setIsGeolocationEnabled(permissionsStatus.state !== "granted");
 
 				const handlePermissionChange = () => {
-					setIsGeolocationEnabled(permissionsStatus.state === "granted");
+					setIsGeolocationEnabled(permissionsStatus.state !== "granted");
 				};
 
 				permissionsStatus.addEventListener("change", handlePermissionChange);
@@ -26,7 +26,7 @@ const useTrackingGeolocationPermission = () => {
 	}, []);
 
 	const closedPopup = () => {
-		setIsGeolocationEnabled(true);
+		setIsGeolocationEnabled(false);
 	};
 
 	return { isGeolocationEnabled, closedPopup };
