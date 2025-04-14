@@ -7,8 +7,6 @@ type UserSignInRequestValidationDto = {
 	password: z.ZodString;
 };
 
-
-
 const signInValidationSchema = z
 	.object<UserSignInRequestValidationDto>({
 		email: z
@@ -22,7 +20,9 @@ const signInValidationSchema = z
 			.trim()
 			.min(UserValidationRule.NON_EMPTY_STRING_MIN_LENGTH)
 			.regex(UserValidationRegexRule.PASSWORD_VALID_CHARS)
-			.regex(UserValidationRegexRule.PASSWORD_CONTAINS_LETTER_NUMBER_AND_LENGTH),
+			.regex(
+				UserValidationRegexRule.PASSWORD_CONTAINS_LETTER_NUMBER_AND_LENGTH
+			),
 	})
 	.required();
 

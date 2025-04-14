@@ -21,7 +21,7 @@ class HTTPService {
 		const {
 			method = "GET",
 			payload = null,
-			contentType = null,
+			contentType = ContentType.JSON,
 			hasAuth = false,
 		} = options;
 
