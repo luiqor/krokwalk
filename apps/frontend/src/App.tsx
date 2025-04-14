@@ -6,6 +6,7 @@ import {
 import { AppRoute } from "./libs/enums/enums.js";
 import { Layout } from "./libs/components/components.js";
 import { Root, Information, SignIn, SignUp } from "./pages/pages.js";
+import ProtectedRoute from "./protected-route.js";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -28,6 +29,12 @@ const App = () => {
 				{
 					element: <SignUp />,
 					path: AppRoute.SIGN_UP,
+				},
+				{
+					element: <ProtectedRoute />,
+					children: [
+						// Add user-logged-in routes here
+					],
 				},
 				{
 					element: (
