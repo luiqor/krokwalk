@@ -7,6 +7,7 @@ import { AppRoute } from "./libs/enums/enums.js";
 import { Layout } from "./libs/components/components.js";
 import { Root, Information, SignIn, SignUp } from "./pages/pages.js";
 import ProtectedRoute from "./protected-route.js";
+import { ToursPage } from "~/pages/tours-page/tours-page.js";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const App = () => {
 				{
 					element: <SignUp />,
 					path: AppRoute.SIGN_UP,
+				},
+				{
+					element: <ToursPage />,
+					path: AppRoute.TOURSPAGE,
 				},
 				{
 					element: <ProtectedRoute />,

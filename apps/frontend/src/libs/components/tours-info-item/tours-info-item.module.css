@@ -1,0 +1,61 @@
+.toursItem {
+	margin-top: 200px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background: var(--color-white);
+	width: 400px;
+	height: 200px;
+
+	span {
+	}
+
+	h3 {
+		margin-top: auto;
+	}
+
+	button {
+		margin: 15px 0;
+		border: none;
+		color: var(--color-white);
+		background: var(--color-blue-400);
+		padding: 6px;
+		width: 80%;
+		border-radius: 6px;
+	}
+}
+
+.toursItem:last-child {
+	margin-bottom: 200px;
+}
+
+.position1 {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.position2 {
+	left: 30%;
+	transform: translateX(-70%);
+}
+
+.position3 {
+	left: 60%;
+	transform: translateX(-40%);
+}
+
+.position4 {
+	left: 47%;
+	transform: translateX(-63%);
+}
+
+.imgBlock {
+	position: absolute;
+
+	img {
+	}
+}
+
+.svgGeoPoint {
+	fill: var(--color-white);
+}
