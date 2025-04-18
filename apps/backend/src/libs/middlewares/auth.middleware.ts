@@ -35,16 +35,18 @@ export const authMiddleware = async (
 		}
 
 		const jwtToken = authHeader.split(" ")[1];
-		const decodedToken = await token.decode(jwtToken);
 
-		if (!decodedToken) {
+		try {
+			const decodedToken = await token.decode(jwtToken);
+
+			req.user = decodedToken.payload;
+		} catch (error) {
 			throw new HTTPError({
-				message: HTTPErrorMessage.AUTH.INVALID_TOKEN,
+				message: HTTPErrorMessage.AUTH.UNAUTHORIZED,
 				status: HTTPCode.UNAUTHORIZED,
+				cause: `${error}`,
 			});
 		}
-
-		req.user = decodedToken.payload;
 
 		next();
 	} catch (error) {

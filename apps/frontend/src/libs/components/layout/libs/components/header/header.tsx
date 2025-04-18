@@ -9,7 +9,7 @@ const Header = () => {
 	const dispatch = useAppDispatch();
 	const { user, status } = useAppSelector((state) => state.auth);
 
-	if (!user && status !== "pending") {
+	if (!user && status === "idle") {
 		dispatch(authActions.getUser());
 	}
 
