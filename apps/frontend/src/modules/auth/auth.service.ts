@@ -36,6 +36,13 @@ class AuthService extends BaseService {
 			payload: JSON.stringify({ email, username, password }),
 		});
 	}
+
+	async getUser(): Promise<UserDto> {
+		return this.http.load(this.getUrl(AuthApiPath.ROOT), {
+			method: "GET",
+			hasAuth: true,
+		});
+	}
 }
 
 export { AuthService };

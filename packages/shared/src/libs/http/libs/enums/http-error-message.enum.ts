@@ -16,6 +16,7 @@ const HTTPErrorMessage = {
 		UNAUTHORIZED: "Unauthorized access.",
 		INVALID_TOKEN: "Invalid token.",
 		FORBIDDEN: "Forbidden access.",
+		USER_NOT_FOUND: "User not found.",
 	},
 } as const;
 

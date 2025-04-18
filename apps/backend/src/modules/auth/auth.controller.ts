@@ -10,6 +10,7 @@ import {
 	signInValidationSchema,
 	signUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas";
+import { AppRequest } from "~/libs/types/request.type";
 
 class AuthController extends BaseController {
 	private service: AuthService;
@@ -31,6 +32,7 @@ class AuthController extends BaseController {
 			validateRequestBody(signInValidationSchema),
 			this.signIn.bind(this)
 		);
+		this.get(AuthApiPath.ROOT, this.getUser.bind(this));
 	}
 
 	private async signUp(req: Request, res: Response): Promise<void> {
@@ -41,6 +43,12 @@ class AuthController extends BaseController {
 	private async signIn(req: Request, res: Response): Promise<void> {
 		const signInResponse = await this.service.signIn(req.body);
 		res.status(HTTPCode.OK).send(signInResponse);
+	}
+
+	private async getUser(req: AppRequest, res: Response): Promise<void> {
+		const { user } = req;
+		const response = await this.service.getUserById(user!.userId);
+		res.status(HTTPCode.OK).send(response);
 	}
 }
 

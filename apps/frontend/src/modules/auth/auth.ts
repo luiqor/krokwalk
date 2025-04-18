@@ -1,4 +1,4 @@
-import { logOut, signIn, signUp } from "./actions.js";
+import { getUser, logOut, signIn, signUp } from "./actions.js";
 import { AuthService } from "./auth.service.js";
 import { actions, reducer } from "./auth.slice.js";
 
@@ -7,6 +7,7 @@ const allActions = {
 	signIn,
 	signUp,
 	logOut,
+	getUser,
 };
 const authService = new AuthService();
 

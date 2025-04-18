@@ -1,6 +1,7 @@
 import type { Encrypt } from "~/libs/modules/encrypt/encrypt.js";
 import { token } from "~/libs/modules/token/token.js";
 import {
+	UserDto,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
@@ -69,9 +70,22 @@ class AuthService {
 
 		const user = await this.service.create(userRequestDto);
 
-		const jwtToken = await token.createToken({  userId: user.id });
+		const jwtToken = await token.createToken({ userId: user.id });
 
 		return { token: jwtToken, user };
+	}
+
+	public async getUserById(id: string): Promise<null | UserDto> {
+		const user = await this.service.getById(id);
+
+		if (!user) {
+			throw new HTTPError({
+				message: HTTPErrorMessage.AUTH.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return user.toObject();
 	}
 }
 

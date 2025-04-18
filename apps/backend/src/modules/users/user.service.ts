@@ -3,11 +3,7 @@ import type { Service } from "~/libs/types/types";
 
 import { UserRepository } from "./user.repository";
 import { UserEntity } from "./user.entity";
-import {
-	type UserDto,
-	type UserSignUpRequestDto,
-} from "./libs/types/types.js";
-
+import { type UserDto, type UserSignUpRequestDto } from "./libs/types/types.js";
 
 class UserService implements Service {
 	private repository: UserRepository;
@@ -35,6 +31,10 @@ class UserService implements Service {
 
 	public getByEmail(email: string): Promise<null | UserEntity> {
 		return this.repository.getByEmail(email);
+	}
+
+	public getById(id: string): Promise<null | UserEntity> {
+		return this.repository.getById(id);
 	}
 
 	public getAll(): Promise<{

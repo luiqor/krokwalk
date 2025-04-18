@@ -1,8 +1,8 @@
-import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
+import { createSlice, isRejected } from "@reduxjs/toolkit";
 import { UserDto, ValueOf } from "shared";
 
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
-import { signIn, signUp } from "./actions.js";
+import { signIn, signUp, getUser } from "./actions.js";
 
 type State = {
 	status: ValueOf<typeof DataStatus>;
@@ -31,6 +31,13 @@ const { reducer, actions, name } = createSlice({
 			state.status = DataStatus.FULFILLED;
 		});
 		builder.addCase(signUp.pending, (state) => {
+			state.status = DataStatus.PENDING;
+		});
+		builder.addCase(getUser.fulfilled, (state, action) => {
+			state.user = action.payload;
+			state.status = DataStatus.FULFILLED;
+		});
+		builder.addCase(getUser.pending, (state) => {
 			state.status = DataStatus.PENDING;
 		});
 		builder.addMatcher(isRejected, (state) => {

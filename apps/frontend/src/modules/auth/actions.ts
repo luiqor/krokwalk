@@ -52,4 +52,13 @@ const logOut = createAsyncThunk<null, undefined, AsyncThunkConfig>(
 	}
 );
 
-export { signIn, signUp, logOut };
+const getUser = createAsyncThunk<UserDto, undefined, AsyncThunkConfig>(
+	`${sliceName}/get-user`,
+	async (_, { extra: { authService } }) => {
+		const user = await authService.getUser();
+
+		return user;
+	}
+);
+
+export { signIn, signUp, logOut, getUser };

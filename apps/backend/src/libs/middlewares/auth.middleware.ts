@@ -4,7 +4,8 @@ import { token } from "~/libs/modules/token/token";
 import { HTTPError, HTTPCode, HTTPErrorMessage } from "~/libs/http/http";
 import { AppRequest } from "../types/types";
 
-const AUTH_ONLY_PATHS = ["/health/auth"];
+const AUTH_ONLY_PATHS = ["/health/auth", "/auth"];
+const WHITELIST_NESTED_ROUTES = ["/auth/sign-up", "/auth/sign-in"];
 
 export const authMiddleware = async (
 	req: AppRequest,
@@ -16,7 +17,11 @@ export const authMiddleware = async (
 			req.path.startsWith(`/api${route}`)
 		);
 
-		if (!isBlacklistedRoute) {
+		const isWhitelistedRoute = WHITELIST_NESTED_ROUTES.some((route) =>
+			req.path.startsWith(`/api${route}`)
+		);
+
+		if (!isBlacklistedRoute || isWhitelistedRoute) {
 			return next();
 		}
 
