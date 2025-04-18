@@ -5,7 +5,7 @@ const TABLE_NAME = "users";
 const ColumnName = {
 	ID: "id",
 	EMAIL: "email",
-	USERMAME: "username",
+	USERNAME: "username",
 	PASSWORD_HASH: "password_hash",
 	PASSWORD_SALT: "password_salt",
 	CREATED_AT: "created_at",
@@ -19,7 +19,7 @@ function up(knex: Knex): Promise<void> {
 			.primary()
 			.defaultTo(knex.raw("uuid_generate_v4()"));
 		table.string(ColumnName.EMAIL).unique().notNullable();
-		table.string(ColumnName.USERMAME).unique().notNullable();
+		table.string(ColumnName.USERNAME).unique().notNullable();
 		table.text(ColumnName.PASSWORD_HASH).notNullable();
 		table.text(ColumnName.PASSWORD_SALT).notNullable();
 		table
