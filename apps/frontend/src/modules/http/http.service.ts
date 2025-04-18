@@ -1,83 +1,86 @@
+import type { ValueOf } from "shared";
+
 import { ContentType, HttpHeaders, HTTPCode } from "./libs/enums/enums.js";
 import { HTTPError } from "./libs/exceptions/exceptions.js";
+import { storage, StorageKey } from "../storage/storage.js";
 
 type HTTPMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
-type ValueOf<T> = T[keyof T];
-
 type HTTPOptions = {
-  method: HTTPMethod;
-  contentType?: ValueOf<typeof ContentType>;
-  payload?: BodyInit | null;
-  token: string | null;
+	method: HTTPMethod;
+	contentType?: ValueOf<typeof ContentType>;
+	payload?: BodyInit | null;
+	hasAuth: boolean;
 };
 
 class HTTPService {
-  public async load<T = unknown>(
-    url: string,
-    options: Partial<HTTPOptions> = {}
-  ): Promise<T> {
-    const {
-      method = "GET",
-      payload = null,
-      contentType = null,
-      token = null,
-    } = options;
+	public async load<T = unknown>(
+		url: string,
+		options: Partial<HTTPOptions> = {}
+	): Promise<T> {
+		const {
+			method = "GET",
+			payload = null,
+			contentType = ContentType.JSON,
+			hasAuth = false,
+		} = options;
 
-    const headers = this.getHeaders(contentType, token);
+		const headers = await this.getHeaders(contentType, hasAuth);
 
-    return fetch(url, {
-      method,
-      headers,
-      body: payload,
-    })
-      .then(this.checkStatus)
-      .then((res) => this.parseJSON<T>(res))
-      .catch(this.handleError);
-  }
+		return fetch(url, {
+			method,
+			headers,
+			body: payload,
+		})
+			.then(this.checkStatus)
+			.then((res) => this.parseJSON<T>(res))
+			.catch(this.handleError);
+	}
 
-  private getHeaders(
-    contentType: ValueOf<typeof ContentType> | null,
-    token: string | null
-  ): Headers | Record<string, string> {
-    const headers: Record<string, string> = {};
+	private async getHeaders(
+		contentType: ValueOf<typeof ContentType> | null,
+		hasAuth: boolean
+	): Promise<Headers | Record<string, string>> {
+		const headers: Record<string, string> = {};
 
-    if (contentType) {
-      headers[HttpHeaders.CONTENT_TYPE] = contentType;
-    }
+		if (contentType) {
+			headers[HttpHeaders.CONTENT_TYPE] = contentType;
+		}
 
-    if (token) {
-      headers[HttpHeaders.AUTHORIZATION] = `Bearer ${token}`;
-    }
+		if (hasAuth) {
+			const token = await storage.get<string>(StorageKey.TOKEN);
 
-    return headers;
-  }
+			headers[HttpHeaders.AUTHORIZATION] = `Bearer ${token}`;
+		}
 
-  private async checkStatus(response: Response): Promise<Response> {
-    if (!response.ok) {
-      const errorBody = await response.json();
-      const errorMessage =
-        errorBody.message || errorBody.error || JSON.stringify(errorBody);
+		return headers;
+	}
 
-      const error = new HTTPError({
-        status: response.status as (typeof HTTPCode)[keyof typeof HTTPCode],
-        message: errorMessage,
-        cause: response.statusText,
-      });
+	private async checkStatus(response: Response): Promise<Response> {
+		if (!response.ok) {
+			const errorBody = await response.json();
+			const errorMessage =
+				errorBody.message || errorBody.error || JSON.stringify(errorBody);
 
-      throw error;
-    }
+			const error = new HTTPError({
+				status: response.status as (typeof HTTPCode)[keyof typeof HTTPCode],
+				message: errorMessage,
+				cause: response.statusText,
+			});
 
-    return response;
-  }
+			throw error;
+		}
 
-  private parseJSON<T>(response: Response): Promise<T> {
-    return response.json();
-  }
+		return response;
+	}
 
-  private handleError(error: unknown): never {
-    throw error;
-  }
+	private parseJSON<T>(response: Response): Promise<T> {
+		return response.json();
+	}
+
+	private handleError(error: unknown): never {
+		throw error;
+	}
 }
 
 export { HTTPService };

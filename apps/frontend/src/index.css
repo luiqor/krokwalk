@@ -28,12 +28,14 @@ body {
 	font-size: 14px;
 	line-height: 1.5;
 	color: #3e4968;
+	width: 100%;
 }
 
 #root {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	width: 100%;
 }
 
 #modalWarning {
