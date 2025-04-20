@@ -6,6 +6,7 @@ const DatabaseTableName = {
 	TOURS_PLACES: "tours_places",
 	MIGRATIONS: "migrations",
 	USERS: "users",
+	USER_PLACES: "user_places",
 } as const;
 
 export { DatabaseTableName };

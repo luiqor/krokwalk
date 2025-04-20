@@ -36,12 +36,18 @@ export {
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpResponseDto,
+	UsersApiPath,
 } from "./libs/modules/users/users";
 export {
 	AuthApiPath,
 	signInValidationSchema,
 	signUpValidationSchema,
 } from "./libs/modules/auth/auth";
+export {
+	VisitStatus,
+	type UserPlace,
+	type UserPlacesGetAllResponseDto,
+} from "./libs/modules/user-places/user-places";
 export type { TokenPayload, ValueOf } from "./libs/types/types";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";
 export { type Schema as ValidationSchema } from "zod";

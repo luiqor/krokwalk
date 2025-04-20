@@ -16,7 +16,7 @@ const ColumnName = {
 	UPDATED_AT: "updated_at",
 } as const;
 
-const VISIT_STATUS_ENUM = {
+const VisitStatus = {
 	CONFIRMED: "confirmed",
 	MARKED: "marked",
 	UNVISITED: "unvisited",
@@ -35,6 +35,7 @@ async function up(knex: Knex): Promise<void> {
 		table
 			.uuid(ColumnName.USER_ID)
 			.notNullable()
+			.unique()
 			.references(ColumnName.ID)
 			.inTable(TableName.USERS)
 			.onDelete(DELETE_STRATEGY);
@@ -45,12 +46,12 @@ async function up(knex: Knex): Promise<void> {
 			.inTable(TableName.PLACES)
 			.onDelete(DELETE_STRATEGY);
 		table
-			.enum(ColumnName.VISIT_STATUS, Object.values(VISIT_STATUS_ENUM), {
+			.enum(ColumnName.VISIT_STATUS, Object.values(VisitStatus), {
 				useNative: true,
 				enumName: VISIT_STATUS_ENUM_NAME,
 			})
 			.notNullable()
-			.defaultTo(VISIT_STATUS_ENUM.UNVISITED);
+			.defaultTo(VisitStatus.UNVISITED);
 		table.dateTime(ColumnName.VISITED_AT).nullable();
 		table
 			.dateTime(ColumnName.CREATED_AT)

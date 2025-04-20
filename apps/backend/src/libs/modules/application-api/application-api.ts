@@ -7,6 +7,7 @@ import { tagRouter } from "~/modules/tags/tags";
 import { tourRouter } from "~/modules/tours/tours";
 import { tripRouter } from "~/modules/trips/trips";
 import { authRouter } from "~/modules/auth/auth";
+import { userRouter } from "~/modules/users/users";
 
 const routes = [
 	{ path: APIPath.HEALTH, router: healthRouter },
@@ -29,6 +30,10 @@ const routes = [
 	{
 		path: APIPath.AUTH,
 		router: authRouter,
+	},
+	{
+		path: APIPath.USERS,
+		router: userRouter,
 	},
 ];
 
