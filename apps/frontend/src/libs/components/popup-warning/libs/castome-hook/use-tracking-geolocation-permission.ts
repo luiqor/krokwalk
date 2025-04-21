@@ -5,25 +5,28 @@ const useTrackingGeolocationPermission = () => {
 		useState<boolean>(false);
 
 	useEffect(() => {
-		navigator.permissions
-			.query({ name: "geolocation" })
-			.then((permissionsStatus) => {
-				setIsGeolocationEnabled(permissionsStatus.state !== "granted");
+		let watcher: number;
 
-				const handlePermissionChange = () => {
-					setIsGeolocationEnabled(permissionsStatus.state !== "granted");
-				};
+		const checkGeolocation = () => {
+			if (!navigator.geolocation) {
+				setIsGeolocationEnabled(false);
+				return;
+			}
 
-				permissionsStatus.addEventListener("change", handlePermissionChange);
+			watcher = navigator.geolocation.watchPosition(
+				() => setIsGeolocationEnabled(true),
+				() => setIsGeolocationEnabled(false),
+				{ enableHighAccuracy: false, timeout: 10000 }
+			);
+		};
 
-				return () => {
-					permissionsStatus.removeEventListener(
-						"change",
-						handlePermissionChange
-					);
-				};
-			});
+		checkGeolocation();
+
+		return () => {
+			if (watcher) navigator.geolocation.clearWatch(watcher);
+		};
 	}, []);
+
 
 	const closedPopup = () => {
 		setIsGeolocationEnabled(false);
