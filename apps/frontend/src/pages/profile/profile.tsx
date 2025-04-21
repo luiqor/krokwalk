@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CircularProgress, Card, Avatar, Box } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { AppRoute } from "~/libs/enums/app-route.enum.js";
 import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
@@ -9,8 +9,7 @@ import { actions as usersActions } from "~/modules/users/users.js";
 const Profile: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const [searchParams] = useSearchParams();
-	const id = searchParams.get("id");
+	const { id } = useParams<{ id: string }>(); // Extract 'id' from the path
 
 	const { user: authUser } = useAppSelector((state) => state.auth);
 	const { user, status } = useAppSelector((state) => state.users);

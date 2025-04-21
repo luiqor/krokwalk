@@ -317,7 +317,7 @@ const RootMap = () => {
 			marker.addTo(mapInstanceRef.current!);
 
 			marker.on("click", () => {
-				navigate(`${AppRoute.INFORMATION}?id=${id}`);
+				navigate(`places/${id}`);
 			});
 		});
 	}, [places, status, navigate]);

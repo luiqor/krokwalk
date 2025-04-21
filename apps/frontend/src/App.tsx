@@ -37,6 +37,10 @@ const App = () => {
 					path: AppRoute.PROFILE,
 				},
 				{
+					element: <Profile />,
+					path: AppRoute.PROFILE_$ID,
+				},
+				{
 					element: <TourPage />,
 					path: AppRoute.TOURPAGE,
 				},

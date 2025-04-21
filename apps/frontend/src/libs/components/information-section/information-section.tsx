@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import type { PlaceDto } from "~/modules/places/places.js";
 
@@ -8,17 +8,22 @@ import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 const InformationSection = () => {
 	const [info, setInfo] = useState<PlaceDto | null>(null);
-	const [searchParams] = useSearchParams();
-
-	const fetchData = async (id: string | null) => {
-		const result = await fetch(`http://localhost:8000/api/places/${id}`);
-		setInfo(await result.json());
-		setTimeout(() => console.log(info), 600);
-	};
+	const { id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetchData(searchParams.get("id"));
-	}, []);
+		const fetchData = async (id: string | undefined) => {
+			if (!id) {
+				return;
+			}
+
+			const result = await fetch(`http://localhost:8000/api/places/${id}`);
+			setInfo(await result.json());
+			setTimeout(() => console.log(info), 600);
+		};
+
+		fetchData(id);
+	}, [id, info]);
 
 	return (
 		<section className={styles.container}>
