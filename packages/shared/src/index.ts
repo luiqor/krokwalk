@@ -36,6 +36,8 @@ export {
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpResponseDto,
+	type UserGetParametersDto,
+	type UserGetResponseDto,
 	UsersApiPath,
 } from "./libs/modules/users/users";
 export {

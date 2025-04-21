@@ -1,4 +1,4 @@
-import { HTTPCode, HTTPErrorMessage } from "shared";
+import { HTTPErrorMessage } from "shared";
 import { isRejected, Middleware } from "@reduxjs/toolkit";
 
 import { notification } from "~/modules/notification/notification.js";

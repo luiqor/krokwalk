@@ -6,6 +6,7 @@ import { tourService, reducer as toursReducer } from "../tours/tours.js";
 import { reducer as locationReducer } from "../location/location.js";
 import { tripService, reducer as tripsReducer } from "../trips/trips.js";
 import { authService, reducer as authReducer } from "../auth/auth.js";
+import { userService, reducer as usersReducer } from "../users/users.js";
 import { errorHandlingMiddleware } from "./libs/middlewares/middlewares.js";
 
 const reducers = {
@@ -15,6 +16,7 @@ const reducers = {
 	location: locationReducer,
 	trips: tripsReducer,
 	auth: authReducer,
+	users: usersReducer,
 };
 
 const extraArgument = {
@@ -23,6 +25,7 @@ const extraArgument = {
 	tourService,
 	tripService,
 	authService,
+	userService,
 };
 
 const store = configureStore({
