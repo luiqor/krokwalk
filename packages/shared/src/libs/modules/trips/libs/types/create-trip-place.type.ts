@@ -8,6 +8,8 @@ type CreateTripPlace = {
 	tags: string[];
 	tours: string[];
 	thumbnailLink: string;
+	visitedAt: string | null;
+	visitStatus: string | null;
 };
 
 export type { CreateTripPlace };

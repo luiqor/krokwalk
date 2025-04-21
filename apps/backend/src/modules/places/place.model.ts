@@ -26,6 +26,8 @@ class PlaceModel extends BaseModel {
 
 	public tours?: TourModel[];
 
+	public userPlaces?: UserPlacesModel[];
+
 	static get relationMappings(): RelationMappings {
 		return {
 			[RelationName.TAGS]: {
@@ -52,7 +54,7 @@ class PlaceModel extends BaseModel {
 				modelClass: TourModel,
 				relation: Model.ManyToManyRelation,
 			},
-			UserPlacesModel: {
+			userPlaces: {
 				join: {
 					from: `${DatabaseTableName.PLACES}.id`,
 					to: `${DatabaseTableName.USER_PLACES}.placeId`,

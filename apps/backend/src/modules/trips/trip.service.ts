@@ -253,7 +253,8 @@ class TripService {
 		maximumWalkSeconds,
 		prioritizedTags,
 		prioritizedTours,
-	}: CreateTripBodyDto): Promise<CreateTripResDto> {
+		userId,
+	}: CreateTripBodyDto & { userId: string | null }): Promise<CreateTripResDto> {
 		const startingPointCoordinates: [number, number] = [
 			startingPoint.latitude,
 			startingPoint.longitude,
@@ -298,8 +299,10 @@ class TripService {
 		]);
 
 		// Fetch all place details in a single call
-		const placesResponse =
-			await this.placeService.getManyByCoordinates(coordinates);
+		const placesResponse = await this.placeService.getManyByCoordinates(
+			coordinates,
+			userId
+		);
 
 		// Prepare places with their details
 		const places = placesResponse.map((place, index) => ({
@@ -312,6 +315,8 @@ class TripService {
 			lng: place.lng,
 			thumbnailLink: place.thumbnailLink,
 			priority: 0,
+			visitedAt: place.visitedAt,
+			visitStatus: place.visitStatus,
 		}));
 
 		const result = this.tripRouteService.findTripRoute({

@@ -3,7 +3,11 @@ import { http } from "../http/http.js";
 import { BaseService } from "../base-service/base-service.js";
 
 import { TripsApiPath } from "./libs/enums/enums.js";
-import type { CreateTripResDto, GetWalkTimeDto } from "./libs/types/types.js";
+import type {
+	CreateTripBodyDto,
+	CreateTripResDto,
+	GetWalkTimeDto,
+} from "./libs/types/types.js";
 
 class TripService extends BaseService<CreateTripResDto> {
 	constructor() {
@@ -23,6 +27,14 @@ class TripService extends BaseService<CreateTripResDto> {
 				method: "GET",
 			}
 		);
+	}
+
+	async create(params: CreateTripBodyDto): Promise<CreateTripResDto> {
+		return this.http.load(this.getUrl(TripsApiPath.ROOT), {
+			method: "POST",
+			payload: JSON.stringify(params),
+			hasAuth: true,
+		});
 	}
 }
 
