@@ -24,7 +24,10 @@ const Header = () => {
 				</Link>
 				<nav className={styles.navigation}>
 					{user ? (
-						`Welcome ${user.username}`
+						<>
+							<span style={{ marginRight: "0.3rem" }}>Welcome</span>
+							<Link to={AppRoute.PROFILE}>{user.username}</Link>
+						</>
 					) : (
 						<Link to={AppRoute.SIGN_IN}>Login</Link>
 					)}
