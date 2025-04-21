@@ -37,7 +37,6 @@ class UserController extends BaseController {
 	private async getProfile(req: AppRequest, res: Response): Promise<void> {
 		const response = await this.service.getProfile({
 			id: req.params.id,
-			currentUserId: req.user!.userId,
 		});
 
 		res.status(HTTPCode.OK).send(response);

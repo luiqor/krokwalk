@@ -38,20 +38,7 @@ class UserService implements Service {
 		return this.repository.getById(id);
 	}
 
-	public async getProfile({
-		id,
-		currentUserId,
-	}: {
-		id: string;
-		currentUserId: string;
-	}): Promise<UserDto> {
-		if (id !== currentUserId) {
-			throw new HTTPError({
-				status: HTTPCode.FORBIDDEN,
-				message: HTTPErrorMessage.AUTH.FORBIDDEN,
-			});
-		}
-
+	public async getProfile({ id }: { id: string }): Promise<UserDto> {
 		const entity = await this.repository.getById(id);
 
 		if (entity === null) {

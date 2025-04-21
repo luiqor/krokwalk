@@ -1,4 +1,4 @@
-import { createSlice, isRejected } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { UserDto, ValueOf } from "shared";
 
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
@@ -26,7 +26,7 @@ const { reducer, actions, name } = createSlice({
 		builder.addCase(getUser.pending, (state) => {
 			state.status = DataStatus.PENDING;
 		});
-		builder.addMatcher(isRejected, (state) => {
+		builder.addCase(getUser.rejected, (state) => {
 			state.status = DataStatus.REJECTED;
 		});
 	},
