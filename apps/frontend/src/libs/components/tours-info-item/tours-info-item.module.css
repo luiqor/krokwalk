@@ -1,32 +1,71 @@
+.toursItemBlock {
+	position: relative;
+
+	&:last-child {
+		margin-bottom: 200px;
+	}
+}
+
 .toursItem {
-	margin-top: 200px;
+	margin-top: 190px;
+	padding: 20px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background: var(--color-white);
 	width: 400px;
-	height: 200px;
+	height: 265px;
+	border-radius: 15px;
+	overflow: hidden;
+	z-index: 2;
+	box-shadow: var(--color-blue-400) 0px 22px 70px 4px;
 
-	span {
+	&:after {
+		content: "";
+		position: absolute;
+		background: var(--color-blue-400);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.5;
+		z-index: -1;
 	}
 
+	&:hover {
+		img {
+			transform: scale(1.2);
+		}
+	}
+
+	span {
+		color: var(--color-white);
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		font-size: var(--font-size-200);
+	}
 	h3 {
 		margin-top: auto;
+		color: var(--color-white);
 	}
 
 	button {
-		margin: 15px 0;
+		margin: 15px 0 0;
 		border: none;
 		color: var(--color-white);
 		background: var(--color-blue-400);
 		padding: 6px;
-		width: 80%;
+		width: 100%;
 		border-radius: 6px;
-	}
-}
+		transition:
+			background 0.5s ease-in-out,
+			color 0.5s ease-in-out;
 
-.toursItem:last-child {
-	margin-bottom: 200px;
+		&:hover {
+			color: var(--color-blue-400);
+			background: var(--color-blue-200);
+		}
+	}
 }
 
 .position1 {
@@ -50,12 +89,52 @@
 }
 
 .imgBlock {
+	width: 100%;
+	height: 100%;
 	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: contain;
+	z-index: -2;
 
 	img {
+		width: 100%;
+		transition: transform 0.5s ease-in-out;
 	}
 }
 
 .svgGeoPoint {
 	fill: var(--color-white);
+}
+
+.svgPath {
+	position: absolute;
+}
+
+.svgPosition1 {
+	composes: svgPath;
+	top: 60.5%;
+	left: 41%;
+	transform: translateX(-59%);
+}
+
+.svgPosition2 {
+	composes: svgPath;
+	top: 9%;
+	left: 45%;
+	transform: translateX(-54%);
+}
+
+.svgPosition3 {
+	composes: svgPath;
+	top: 72%;
+	left: 53%;
+	transform: translateX(-50%);
+}
+
+.svgPosition4 {
+	composes: svgPath;
+	top: 95%;
+	left: 47%;
+	transform: translateX(-53%);
 }

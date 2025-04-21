@@ -1,10 +1,12 @@
-import React from "react";
-
 import styles from "./tours-info-item.module.css";
 import { IconElement } from "~/libs/components/components.js";
-import type { DataArr } from "~/libs/components/tours-info-item/libs/types/types.js";
+import type { ToursArr } from "~/libs/components/tours-info-item/libs/types/types.js";
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
+import { useNavigate } from "react-router-dom";
 
-const ToursInfoItem: React.FC<DataArr> = ({ data }) => {
+const ToursInfoItem: React.FC<ToursArr> = ({ data }) => {
+	const navigate = useNavigate();
+
 	const stylesPostion = (index: number) => {
 		switch (index % 4) {
 			case 0:
@@ -18,33 +20,80 @@ const ToursInfoItem: React.FC<DataArr> = ({ data }) => {
 		}
 	};
 
+	const stylePath = (index: number) => {
+		switch (index % 4) {
+			case 1:
+				return {
+					name: `path1`,
+					widthSize: 514,
+					heightSize: 395,
+					addClass: styles.svgPosition1,
+				};
+			case 2:
+				return {
+					name: `path2`,
+					widthSize: 702,
+					heightSize: 645,
+					addClass: styles.svgPosition2,
+				};
+			case 3:
+				return {
+					name: `path3`,
+					widthSize: 407,
+					heightSize: 324,
+					addClass: styles.svgPosition3,
+				};
+			case 0:
+				return {
+					name: `path4`,
+					widthSize: 170,
+					heightSize: 204,
+					addClass: styles.svgPosition4,
+				};
+		}
+	};
+
 	return (
 		<section>
 			{data.map((item, index) => (
-				<article
-					className={`${styles.toursItem} ${stylesPostion(index)}`}
-					key={item.id}
-				>
-					<picture className={styles.imgBlock}>
-						<img
-							src={item.image}
-							alt={item.title}
-						/>
-					</picture>
-					<span>
+				<div className={styles.toursItemBlock}>
+					<article
+						className={`${styles.toursItem} ${stylesPostion(index)}`}
+						key={item.id}
+					>
+						<picture className={styles.imgBlock}>
+							<img
+								src={item.thumbnailLink}
+								alt={item.title}
+							/>
+						</picture>
+						<span>
+							<IconElement
+								svgData={{
+									addClass: styles.svgGeoPoint,
+									name: "geoPoint",
+									widthSize: 20,
+									heightSize: 20,
+								}}
+							/>{" "}
+							point №{++index}
+						</span>
+						<h3>{item.title}</h3>
+						<button
+							onClick={() => navigate(`${AppRoute.INFORMATION}?id=${item.id}`)}
+						>
+							read more
+						</button>
+					</article>
+					{data.length > index && (
 						<IconElement
 							svgData={{
-								addClass: styles.svgGeoPoint,
-								name: "geoPoint",
-								widthSize: 20,
-								heightSize: 20,
+								color: "transparent",
+								...stylePath(index),
 							}}
-						/>{" "}
-						point №{index}
-					</span>
-					<h3>{item.title}</h3>
-					<button>read more</button>
-				</article>
+						/>
+					)}
+				</div>
 			))}
 		</section>
 	);

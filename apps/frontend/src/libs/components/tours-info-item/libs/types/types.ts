@@ -1,9 +1,16 @@
-type DataTours = {
-	id: number;
+type DataTour = {
+	id: string;
 	title: string;
-	image?: string;
+	description: string;
+	address: string;
+	thumbnailLink: string;
+	lat: number;
+	lng: number;
+	elevation: number | null;
+	createdAt: string;
+	updatedAt: string;
 };
 
-type DataArr = { data: DataTours[] };
+type ToursArr = { data: DataTour[] };
 
-export type { DataArr };
+export type { ToursArr, DataTour };
