@@ -1,10 +1,19 @@
-import styles from "./tours-info-item.module.css";
-import { IconElement } from "~/libs/components/components.js";
-import type { ToursArr } from "~/libs/components/tours-info-item/libs/types/types.js";
+import React from "react";
 import { AppRoute } from "~/libs/enums/app-route.enum.js";
 import { useNavigate } from "react-router-dom";
 
-const ToursInfoItem: React.FC<ToursArr> = ({ data }) => {
+import { IconElement } from "~/libs/components/components.js";
+
+import type { ToursArr } from "~/libs/components/tours-info-item/libs/types/types.js";
+
+import IconLovely from "../../../assets/images/mapckik-lovely.svg";
+import IconJumps from "../../../assets/images/mapchik-jumps-happily.svg";
+import IconRuns from "../../../assets/images/mapchik-runs.svg";
+import IconAngry from "../../../assets/images/mapckik-angry.svg";
+
+import styles from "./tour-info-item.module.css";
+
+const TourInfoItem: React.FC<ToursArr> = ({ data }) => {
 	const navigate = useNavigate();
 
 	const stylesPostion = (index: number) => {
@@ -53,6 +62,12 @@ const ToursInfoItem: React.FC<ToursArr> = ({ data }) => {
 		}
 	};
 
+	const svgOption = () => {
+		const arraySvg = [IconLovely, IconJumps, IconAngry, IconRuns];
+		const randomSvg = Math.floor(Math.random() * arraySvg.length);
+		return arraySvg[randomSvg];
+	};
+
 	return (
 		<section>
 			{data.map((item, index) => (
@@ -93,10 +108,17 @@ const ToursInfoItem: React.FC<ToursArr> = ({ data }) => {
 							}}
 						/>
 					)}
+					{index % 2 === 0 && (
+						<picture
+							className={`${styles.blockSubImg} ${index % 4 ? styles.subImgLeft : styles.subImgRight}`}
+						>
+							<img src={svgOption()} />
+						</picture>
+					)}
 				</div>
 			))}
 		</section>
 	);
 };
 
-export { ToursInfoItem };
+export { TourInfoItem };

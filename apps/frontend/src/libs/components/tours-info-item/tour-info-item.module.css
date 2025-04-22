@@ -92,8 +92,7 @@
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	top: 0;
-	left: 0;
+	inset: 0;
 	object-fit: contain;
 	z-index: -2;
 
@@ -113,28 +112,41 @@
 
 .svgPosition1 {
 	composes: svgPath;
-	top: 60.5%;
-	left: 41%;
+	inset: 60.5% auto auto 41%;
 	transform: translateX(-59%);
 }
 
 .svgPosition2 {
 	composes: svgPath;
-	top: 9%;
-	left: 45%;
+	inset: 9% auto auto 45%;
 	transform: translateX(-54%);
 }
 
 .svgPosition3 {
 	composes: svgPath;
-	top: 72%;
-	left: 53%;
+	inset: 72% auto auto 53%;
 	transform: translateX(-50%);
 }
 
 .svgPosition4 {
 	composes: svgPath;
-	top: 95%;
-	left: 47%;
+	inset: 95% auto auto 47%;
 	transform: translateX(-53%);
+}
+
+.blockSubImg {
+	position: absolute;
+
+	img {
+		width: 120px;
+		height: 100%;
+	}
+}
+
+.subImgLeft {
+	inset: -5% auto auto 70%;
+}
+
+.subImgRight {
+	inset: -5% auto auto 10%;
 }

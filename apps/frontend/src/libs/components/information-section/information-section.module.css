@@ -65,24 +65,6 @@
 	font-size: var(--font-size-200);
 }
 
-.buttonBack {
-	position: absolute;
-	background: transparent;
-	top: -43px;
-	display: flex;
-	align-items: center;
-	border: none;
-	cursor: pointer;
-	gap: 5px;
-}
-
-.textBack {
-	color: var(--color-blue-400);
-	font-size: var(--font-size-300);
-	font-weight: 600;
-}
-
-.svgBack {
-	stroke: var(--color-blue-400);
-	transform: rotate(180deg);
+.subBackClass {
+	top: -6%;
 }
