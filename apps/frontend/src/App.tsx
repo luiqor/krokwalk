@@ -7,6 +7,7 @@ import { AppRoute } from "./libs/enums/enums.js";
 import { Layout } from "./libs/components/components.js";
 import { Root, Information, SignIn, SignUp } from "./pages/pages.js";
 import ProtectedRoute from "./protected-route.js";
+import { TourPage } from "~/pages/tour-page/tour-page.js";
 import { ToursPage } from "~/pages/tours-page/tours-page.js";
 
 const App = () => {
@@ -30,6 +31,10 @@ const App = () => {
 				{
 					element: <SignUp />,
 					path: AppRoute.SIGN_UP,
+				},
+				{
+					element: <TourPage />,
+					path: AppRoute.TOURPAGE,
 				},
 				{
 					element: <ToursPage />,

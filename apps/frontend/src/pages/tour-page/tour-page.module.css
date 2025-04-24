@@ -1,7 +1,7 @@
 .container {
 	position: relative;
 	flex: 1;
-	/*background: #8ea4be;*/
+	background: #8ea4be;
 	/*background: var(--color-blue-400);*/
 	padding: 0 20px;
 	height: 100%;
