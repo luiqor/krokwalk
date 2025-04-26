@@ -29,7 +29,7 @@ class PlaceService implements Service {
 		return { items: placeEntities.map((entity) => entity.toObject()) };
 	}
 
-	public async getById(id: string): Promise<GetPlaceByIdDto | null> {
+	public async getById(id: string): Promise<GetPlaceByIdDto> {
 		const placeEntity = await this.repository.getById(id);
 
 		if (!placeEntity) {

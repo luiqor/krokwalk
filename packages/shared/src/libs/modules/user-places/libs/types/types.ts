@@ -1,3 +1,6 @@
+import { ValueOf } from "src/libs/types/types";
+import { VisitStatus } from "../enums/enums";
+
 type UserPlace = {
 	id: string;
 	userId: string;
@@ -13,4 +16,16 @@ type UserPlacesGetAllResponseDto = {
 	items: Omit<UserPlace, "userId">[];
 };
 
-export type { UserPlace, UserPlacesGetAllResponseDto };
+type UserPatchVisitStatusResponseDto = UserPlace;
+
+type UserPatchVisitStatusRequestDto = {
+	placeId: string;
+	visitStatus: ValueOf<typeof VisitStatus>;
+};
+
+export type {
+	UserPlace,
+	UserPlacesGetAllResponseDto,
+	UserPatchVisitStatusResponseDto,
+	UserPatchVisitStatusRequestDto,
+};

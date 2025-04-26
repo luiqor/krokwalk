@@ -57,3 +57,11 @@
 	height: 50px;
 	object-fit: cover;
 }
+
+.confirmedCheckbox {
+	color: var(--color-blue-300);
+}
+
+.markedCheckbox {
+	color: #888888;
+}

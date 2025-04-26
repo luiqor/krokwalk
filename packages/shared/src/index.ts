@@ -49,6 +49,9 @@ export {
 	VisitStatus,
 	type UserPlace,
 	type UserPlacesGetAllResponseDto,
+	type UserPatchVisitStatusResponseDto,
+	type UserPatchVisitStatusRequestDto,
+	updatePlaceVisitStatusValidationSchema,
 } from "./libs/modules/user-places/user-places";
 export type { TokenPayload, ValueOf } from "./libs/types/types";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";

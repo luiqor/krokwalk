@@ -27,7 +27,6 @@ const useTrackingGeolocationPermission = () => {
 		};
 	}, []);
 
-
 	const closedPopup = () => {
 		setIsGeolocationEnabled(false);
 	};

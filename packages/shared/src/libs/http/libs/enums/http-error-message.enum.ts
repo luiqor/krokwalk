@@ -21,6 +21,10 @@ const HTTPErrorMessage = {
 	USER: {
 		NOT_FOUND: "User not found.",
 	},
+	PLACE: {
+		NOT_FOUND: "Place not found.",
+		TOO_FAR: "Place is too far. Unfortunately, you cannot confirm your visit.",
+	},
 } as const;
 
 export { HTTPErrorMessage };

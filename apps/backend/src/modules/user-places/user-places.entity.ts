@@ -52,19 +52,21 @@ class UserPlacesEntity implements Entity {
 		visitStatus,
 		userId,
 		placeId,
+		visitedAt = null,
 	}: {
 		visitStatus: ValueOf<typeof VisitStatus>;
 		userId: string;
 		placeId: string;
+		visitedAt?: null | string;
 	}): UserPlacesEntity {
 		return new UserPlacesEntity({
 			id: uuidv4(),
 			visitStatus,
-			userId: userId,
-			placeId: placeId,
+			userId,
+			placeId,
 			createdAt: new Date().toISOString(),
 			updatedAt: new Date().toISOString(),
-			visitedAt: null,
+			visitedAt,
 		});
 	}
 
@@ -125,6 +127,8 @@ class UserPlacesEntity implements Entity {
 			updatedAt: this.updatedAt,
 		};
 	}
+
+	public toNewObject = this.toObject;
 }
 
 export { UserPlacesEntity };

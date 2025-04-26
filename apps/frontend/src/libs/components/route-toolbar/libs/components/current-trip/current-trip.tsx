@@ -7,6 +7,8 @@ import { actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./current-trip.module.css";
 import { convertSecondsToHoursAndMinutes } from "~/libs/components/route-toolbar/libs/components/constraints-form/libs/helpers/helpers.js";
+import { Checkbox } from "@mui/material";
+import { VisitStatus } from "shared";
 
 const CurrentTrip: React.FC = () => {
 	const { startingPoint, destinationPoint, stopoverPoints, walkSeconds } =
@@ -18,14 +20,21 @@ const CurrentTrip: React.FC = () => {
 		dispatch(tripAction.resetTripData());
 	};
 
-	const {hours, minutes} = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
+	const { hours, minutes } = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
+
+	const handleCheckboxClick = (pointId: string, visitStatus: string | null) => {
+		const updatedStatus =
+			visitStatus === VisitStatus.UNVISITED
+				? VisitStatus.MARKED
+				: VisitStatus.UNVISITED;
+
+		// dispatch(tripAction.markAsVisited(pointId, updatedStatus));
+	};
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.walkTime}>
-				<p>
-				Estimated Walk Time: 
-				</p>
+				<p>Estimated Walk Time:</p>
 				{hours} hours {minutes} minutes
 			</div>
 			<div className={styles.tripList}>
@@ -62,6 +71,20 @@ const CurrentTrip: React.FC = () => {
 							</p>
 							<p>Tags: {point.tags.join(", ")}</p>
 							<p>Tours: {point.tours.join(", ")}</p>
+						</div>
+						<div>
+							<Checkbox
+								checked={
+									point.visitStatus !== VisitStatus.UNVISITED &&
+									point.visitStatus !== null
+								}
+								className={
+									point.visitStatus === VisitStatus.CONFIRMED
+										? styles.confirmedCheckbox
+										: styles.markedCheckbox
+								}
+								onClick={() => handleCheckboxClick(point.id, point.visitStatus)}
+							/>
 						</div>
 					</div>
 				))}
