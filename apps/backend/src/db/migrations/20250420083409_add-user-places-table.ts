@@ -35,7 +35,6 @@ async function up(knex: Knex): Promise<void> {
 		table
 			.uuid(ColumnName.USER_ID)
 			.notNullable()
-			.unique()
 			.references(ColumnName.ID)
 			.inTable(TableName.USERS)
 			.onDelete(DELETE_STRATEGY);
@@ -61,6 +60,10 @@ async function up(knex: Knex): Promise<void> {
 			.dateTime(ColumnName.UPDATED_AT)
 			.notNullable()
 			.defaultTo(knex.fn.now());
+		table.unique(
+			[ColumnName.USER_ID, ColumnName.PLACE_ID],
+			"user_place_unique"
+		);
 	});
 }
 

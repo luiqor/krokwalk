@@ -4,5 +4,6 @@ export type {
 	UserPlace,
 	UserPatchVisitStatusResponseDto,
 	UserPatchVisitStatusRequestDto,
+	UserPatchConfirmVisitResponseDto,
 } from "./libs/types/types";
-export { updatePlaceVisitStatusValidationSchema } from "./libs/validation-schemas/validation-schemas";
+export { updatePlaceVisitStatusBodyValidationSchema } from "./libs/validation-schemas/validation-schemas";

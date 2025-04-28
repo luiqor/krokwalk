@@ -19,8 +19,14 @@ type UserPlacesGetAllResponseDto = {
 type UserPatchVisitStatusResponseDto = UserPlace;
 
 type UserPatchVisitStatusRequestDto = {
-	placeId: string;
 	visitStatus: ValueOf<typeof VisitStatus>;
+	placeId: string;
+};
+
+type UserPatchConfirmVisitResponseDto = {
+	placeId: string;
+	lat: number;
+	lng: number;
 };
 
 export type {
@@ -28,4 +34,5 @@ export type {
 	UserPlacesGetAllResponseDto,
 	UserPatchVisitStatusResponseDto,
 	UserPatchVisitStatusRequestDto,
+	UserPatchConfirmVisitResponseDto,
 };

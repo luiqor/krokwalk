@@ -2,9 +2,8 @@ import { z } from "zod";
 
 import { VisitStatus } from "../enums/enums";
 
-const updatePlaceVisitStatusValidationSchema = z.object({
-	placeId: z.string().uuid(),
+const updatePlaceVisitStatusBodyValidationSchema = z.object({
 	visitStatus: z.enum([VisitStatus.UNVISITED, VisitStatus.MARKED]),
 });
 
-export { updatePlaceVisitStatusValidationSchema };
+export { updatePlaceVisitStatusBodyValidationSchema };

@@ -51,7 +51,8 @@ export {
 	type UserPlacesGetAllResponseDto,
 	type UserPatchVisitStatusResponseDto,
 	type UserPatchVisitStatusRequestDto,
-	updatePlaceVisitStatusValidationSchema,
+	type UserPatchConfirmVisitResponseDto,
+	updatePlaceVisitStatusBodyValidationSchema,
 } from "./libs/modules/user-places/user-places";
 export type { TokenPayload, ValueOf } from "./libs/types/types";
 export { HTTPCode, HTTPErrorMessage } from "./libs/http/http";

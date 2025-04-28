@@ -7,8 +7,7 @@ import { actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./current-trip.module.css";
 import { convertSecondsToHoursAndMinutes } from "~/libs/components/route-toolbar/libs/components/constraints-form/libs/helpers/helpers.js";
-import { Checkbox } from "@mui/material";
-import { VisitStatus } from "shared";
+import { PointCard } from "./libs/components/point-card/point-card.js";
 
 const CurrentTrip: React.FC = () => {
 	const { startingPoint, destinationPoint, stopoverPoints, walkSeconds } =
@@ -21,15 +20,6 @@ const CurrentTrip: React.FC = () => {
 	};
 
 	const { hours, minutes } = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
-
-	const handleCheckboxClick = (pointId: string, visitStatus: string | null) => {
-		const updatedStatus =
-			visitStatus === VisitStatus.UNVISITED
-				? VisitStatus.MARKED
-				: VisitStatus.UNVISITED;
-
-		// dispatch(tripAction.markAsVisited(pointId, updatedStatus));
-	};
 
 	return (
 		<div className={styles.container}>
@@ -50,43 +40,10 @@ const CurrentTrip: React.FC = () => {
 					</div>
 				)}
 				{stopoverPoints.map((point) => (
-					<div
+					<PointCard
 						key={point.id}
-						className={styles.point}
-					>
-						<div className={styles.icon}>
-							{point.thumbnailLink ? (
-								<img
-									src={point.thumbnailLink}
-									className={styles.thumbnail}
-								/>
-							) : (
-								"🚏"
-							)}
-						</div>
-						<div className={styles.details}>
-							<h3>{point.title}</h3>
-							<p>
-								Latitude: {point.lat}, Longitude: {point.lng}
-							</p>
-							<p>Tags: {point.tags.join(", ")}</p>
-							<p>Tours: {point.tours.join(", ")}</p>
-						</div>
-						<div>
-							<Checkbox
-								checked={
-									point.visitStatus !== VisitStatus.UNVISITED &&
-									point.visitStatus !== null
-								}
-								className={
-									point.visitStatus === VisitStatus.CONFIRMED
-										? styles.confirmedCheckbox
-										: styles.markedCheckbox
-								}
-								onClick={() => handleCheckboxClick(point.id, point.visitStatus)}
-							/>
-						</div>
-					</div>
+						point={point}
+					/>
 				))}
 				{destinationPoint.length > 0 && (
 					<div className={styles.point}>

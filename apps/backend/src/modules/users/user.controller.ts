@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { updatePlaceVisitStatusValidationSchema } from "shared";
+import { updatePlaceVisitStatusBodyValidationSchema } from "shared";
 
 import { BaseController } from "../../libs/modules/controller/base-controller";
 import { HTTPCode } from "~/libs/http/http";
@@ -28,7 +28,7 @@ class UserController extends BaseController {
 		this.get(UsersApiPath.PLACES_$ID, this.getPlaces.bind(this));
 		this.patch(
 			UsersApiPath.PLACES_$ID_VISIT_STATUS,
-			validateRequestBody(updatePlaceVisitStatusValidationSchema),
+			validateRequestBody(updatePlaceVisitStatusBodyValidationSchema),
 			this.updatePlaceVisitStatus.bind(this)
 		);
 		this.patch(

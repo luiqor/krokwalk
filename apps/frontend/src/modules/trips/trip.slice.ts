@@ -2,7 +2,12 @@ import { createSlice, isRejected } from "@reduxjs/toolkit";
 
 import type { TagDto } from "../tags/tags.js";
 import type { TourDto } from "../tours/tours.js";
-import { createTrip, loadMinimumWalkTime } from "./actions.js";
+import {
+	confirmPlaceVisit,
+	createTrip,
+	loadMinimumWalkTime,
+	updatePlaceVisitStatus,
+} from "./actions.js";
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 import type { CreateTripPlace } from "./libs/types/types.js";
 
@@ -26,6 +31,20 @@ const initialState: State = {
 	destinationPoint: [],
 	walkSeconds: null,
 	status: DataStatus.IDLE,
+};
+
+const updateStopoverPoints = (
+	stopoverPoints: CreateTripPlace[],
+	placeId: string,
+	visitStatus: string,
+	visitedAt: string | null
+): CreateTripPlace[] => {
+	return stopoverPoints.map((place) => {
+		if (place.id === placeId) {
+			return { ...place, visitStatus, visitedAt };
+		}
+		return place;
+	});
 };
 
 const { reducer, actions, name } = createSlice({
@@ -61,10 +80,33 @@ const { reducer, actions, name } = createSlice({
 			state.destinationPoint = destinationPoint;
 			state.status = DataStatus.FULFILLED;
 		});
+		builder.addCase(updatePlaceVisitStatus.fulfilled, (state, action) => {
+			const { placeId, visitStatus, visitedAt } = action.payload;
+
+			state.stopoverPoints = updateStopoverPoints(
+				state.stopoverPoints,
+				placeId,
+				visitStatus,
+				visitedAt
+			);
+			state.status = DataStatus.FULFILLED;
+		});
+		builder.addCase(confirmPlaceVisit.fulfilled, (state, action) => {
+			const { placeId, visitStatus, visitedAt } = action.payload;
+
+			state.stopoverPoints = updateStopoverPoints(
+				state.stopoverPoints,
+				placeId,
+				visitStatus,
+				visitedAt
+			);
+			state.status = DataStatus.FULFILLED;
+		});
 		builder.addMatcher(
 			(action) =>
 				action.type === loadMinimumWalkTime.pending.type ||
-				action.type === createTrip.pending.type,
+				action.type === createTrip.pending.type ||
+				action.type === updatePlaceVisitStatus.pending.type,
 			(state) => {
 				state.status = DataStatus.PENDING;
 			}

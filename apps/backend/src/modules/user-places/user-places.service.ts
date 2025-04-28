@@ -3,6 +3,7 @@ import {
 	HTTPCode,
 	HTTPError,
 	HTTPErrorMessage,
+	UserPatchConfirmVisitResponseDto,
 	UserPatchVisitStatusRequestDto,
 	UserPatchVisitStatusResponseDto,
 	VisitStatus,
@@ -102,11 +103,8 @@ class UserPlacesService implements Service {
 		placeId,
 		lat,
 		lng,
-	}: {
+	}: UserPatchConfirmVisitResponseDto & {
 		userId: string;
-		placeId: string;
-		lat: number;
-		lng: number;
 	}): Promise<UserPatchVisitStatusResponseDto> {
 		const initialEntity = await this.repository.getById(userId, placeId);
 

@@ -1,4 +1,9 @@
-import { createTrip, loadMinimumWalkTime } from "./actions.js";
+import {
+	confirmPlaceVisit,
+	createTrip,
+	loadMinimumWalkTime,
+	updatePlaceVisitStatus,
+} from "./actions.js";
 import { TripService } from "./trip.service.js";
 import { actions, reducer } from "./trip.slice.js";
 
@@ -6,6 +11,8 @@ const allActions = {
 	...actions,
 	createTrip,
 	loadMinimumWalkTime,
+	updatePlaceVisitStatus,
+	confirmPlaceVisit,
 };
 
 const tripService = new TripService();

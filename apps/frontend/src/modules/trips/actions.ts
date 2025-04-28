@@ -1,4 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import type {
+	UserPatchConfirmVisitResponseDto,
+	UserPatchVisitStatusRequestDto,
+	UserPatchVisitStatusResponseDto,
+} from "shared";
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 
@@ -35,4 +40,40 @@ const createTrip = createAsyncThunk<
 	return await tripService.create(params);
 });
 
-export { loadMinimumWalkTime, createTrip };
+const updatePlaceVisitStatus = createAsyncThunk<
+	UserPatchVisitStatusResponseDto,
+	UserPatchVisitStatusRequestDto,
+	AsyncThunkConfig
+>(
+	`${sliceName}/update-place-visit-status`,
+	async (payload, { extra: { userService } }) => {
+		const { placeId, visitStatus } = payload;
+
+		const updatedVisitStatus = await userService.updatePlaceVisitStatus(
+			placeId,
+			visitStatus
+		);
+
+		return updatedVisitStatus;
+	}
+);
+
+const confirmPlaceVisit = createAsyncThunk<
+	UserPatchVisitStatusResponseDto,
+	UserPatchConfirmVisitResponseDto,
+	AsyncThunkConfig
+>(
+	`${sliceName}/confirm-place-visit`,
+	async (payload, { extra: { userService } }) => {
+		const { placeId, lat, lng } = payload;
+
+		return await userService.confirmPlaceVisit({ placeId, lat, lng });
+	}
+);
+
+export {
+	loadMinimumWalkTime,
+	createTrip,
+	updatePlaceVisitStatus,
+	confirmPlaceVisit,
+};
