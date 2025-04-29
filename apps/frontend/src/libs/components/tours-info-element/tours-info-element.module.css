@@ -1,0 +1,66 @@
+.container{
+    width: 80%;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    h2{
+        font-size: var(--font-size-600);
+        text-align: center;
+    }
+
+    &:last-child {
+        margin-bottom: 70px;
+    }
+}
+
+.toursItem {
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 2;
+    background: var(--color-white);
+    box-shadow: var(--color-blue-400) 0px 2px 20px 4px;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: var(--font-size-200);
+    }
+    h3 {
+        margin-top: 15px;
+    }
+
+    p {
+        margin-top: 15px;
+    }
+
+    button {
+        margin: 15px 0 0;
+        border: none;
+        color: var(--color-white);
+        background: var(--color-blue-400);
+        padding: 6px;
+        width: 100%;
+        border-radius: 6px;
+        transition:
+                background 0.5s ease-in-out,
+                color 0.5s ease-in-out;
+
+        &:hover {
+            color: var(--color-blue-400);
+            background: var(--color-blue-200);
+        }
+    }
+}
+
+.svgPath {
+    position: absolute;
+}

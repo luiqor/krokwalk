@@ -1,4 +1,4 @@
-import { DataTour } from "~/libs/components/tours-info-item/libs/types/types.js";
+import { DataTour } from "~/libs/components/tour-info-item/libs/types/types.js";
 
 type RecvestTour = {
 	id: string;

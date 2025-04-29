@@ -1,33 +1,35 @@
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { TourInfo, TourInfoItem } from "~/libs/components/components.js";
 
-import type { RecvestTour } from "~/pages/tour-page/libs/types/types.js";
+import { useSearchParams } from "react-router-dom";
+import { useAppDispatch } from "~/libs/hooks/hooks.js";
+import { actions as toursActions } from "~/modules/tours/tours.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 
 import styles from "./tour-page.module.css";
+import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 const TourPage = () => {
-	const [info, setInfo] = useState<RecvestTour | null>(null);
-	const fetchData = async () => {
-		const result = await fetch(
-			`http://localhost:8000/api/tours/4d1d87d1-4b96-444a-bca7-abdbfc207daf`
-		);
-		setInfo(await result.json());
-	};
+	const dispatch = useAppDispatch();
+	const { tour } = useAppSelector((state) => state.tours);
+	const [searchParams] = useSearchParams();
 
 	useEffect(() => {
-		fetchData();
-	}, []);
+		dispatch(toursActions.loadTour({ id: searchParams.get("id") as string }));
+	}, [dispatch, searchParams]);
 
 	return (
 		<section className={styles.container}>
-			{info && (
+			{tour && (
 				<>
+					<ButtonBack subClass={styles.subBackClass} />
 					<TourInfo
-						title={info.title}
-						description={info.description}
+						title={tour.title}
+						description={tour.description}
 					/>
-					<TourInfoItem data={info.places} />
+
+					<TourInfoItem data={tour.places} />
 				</>
 			)}
 		</section>

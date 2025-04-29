@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IconElement } from "~/libs/components/components.js";
 
-import type { ToursArr } from "~/libs/components/tours-info-item/libs/types/types.js";
+import type { ToursArr } from "./libs/types/types.js";
 
 import IconLovely from "../../../assets/images/mapckik-lovely.svg";
 import IconJumps from "../../../assets/images/mapchik-jumps-happily.svg";
@@ -70,53 +70,56 @@ const TourInfoItem: React.FC<ToursArr> = ({ data }) => {
 
 	return (
 		<section>
-			{data.map((item, index) => (
-				<div className={styles.toursItemBlock}>
-					<article
-						className={`${styles.toursItem} ${stylesPostion(index)}`}
-						key={item.id}
-					>
-						<picture className={styles.imgBlock}>
-							<img
-								src={item.thumbnailLink}
-								alt={item.title}
-							/>
-						</picture>
-						<span>
+			{data &&
+				data.map((item, index) => (
+					<div className={styles.toursItemBlock}>
+						<article
+							className={`${styles.toursItem} ${stylesPostion(index)}`}
+							key={item.id}
+						>
+							<picture className={styles.imgBlock}>
+								<img
+									src={item.thumbnailLink}
+									alt={item.title}
+								/>
+							</picture>
+							<span>
+								<IconElement
+									svgData={{
+										addClass: styles.svgGeoPoint,
+										name: "geoPoint",
+										widthSize: 20,
+										heightSize: 20,
+									}}
+								/>{" "}
+								point №{++index}
+							</span>
+							<h3>{item.title}</h3>
+							<button
+								onClick={() =>
+									navigate(`${AppRoute.INFORMATION}?id=${item.id}`)
+								}
+							>
+								read more
+							</button>
+						</article>
+						{data.length > index && (
 							<IconElement
 								svgData={{
-									addClass: styles.svgGeoPoint,
-									name: "geoPoint",
-									widthSize: 20,
-									heightSize: 20,
+									color: "transparent",
+									...stylePath(index),
 								}}
-							/>{" "}
-							point №{++index}
-						</span>
-						<h3>{item.title}</h3>
-						<button
-							onClick={() => navigate(`${AppRoute.INFORMATION}?id=${item.id}`)}
-						>
-							read more
-						</button>
-					</article>
-					{data.length > index && (
-						<IconElement
-							svgData={{
-								color: "transparent",
-								...stylePath(index),
-							}}
-						/>
-					)}
-					{index % 2 === 0 && (
-						<picture
-							className={`${styles.blockSubImg} ${index % 4 ? styles.subImgLeft : styles.subImgRight}`}
-						>
-							<img src={svgOption()} />
-						</picture>
-					)}
-				</div>
-			))}
+							/>
+						)}
+						{index % 2 === 0 && (
+							<picture
+								className={`${styles.blockSubImg} ${index % 4 ? styles.subImgLeft : styles.subImgRight}`}
+							>
+								<img src={svgOption()} />
+							</picture>
+						)}
+					</div>
+				))}
 		</section>
 	);
 };
