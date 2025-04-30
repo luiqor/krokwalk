@@ -74,3 +74,8 @@
 .defaultCheckbox {
 	color: #888888;
 }
+
+.markedPointInfo,
+.confirmedPointInfo {
+    background-color: rgba(0, 0, 0, 0.048);
+}

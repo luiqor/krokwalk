@@ -21,6 +21,7 @@ import type { GeoPoint } from "~/libs/types/types.js";
 import { themeOptions } from "~/libs/constants/theme-options.constant.js";
 
 import { useNavigate } from "react-router-dom";
+import { ValueOf, VisitStatus } from "shared";
 
 const ZOOM_DEFAULT = 16;
 
@@ -45,6 +46,7 @@ const RootMap = () => {
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const mapInstanceRef = useRef<L.Map | null>(null);
 	const userMarkerRef = useRef<L.Marker | null>(null);
+	const routingControlsRef = useRef<L.Routing.Control[]>([]);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -326,31 +328,58 @@ const RootMap = () => {
 		if (!mapInstanceRef.current || !stopoverPoints) {
 			return;
 		}
-		const waypoints = stopoverPoints.map((point) =>
-			L.latLng(point.lat, point.lng)
-		);
-		const startWaypoint =
-			tripStart[0] && tripStart[1] && L.latLng(tripStart[0], tripStart[1]);
-		const endWaypoint =
-			tripEnd[0] && tripEnd[1] && L.latLng(tripEnd[0], tripEnd[1]);
 
-		const routingControl = L.Routing.control({
-			router: L.Routing.osrmv1({
-				serviceUrl: import.meta.env.VITE_ROUTING_SERVICE_URL,
-			}),
-			routeWhileDragging: false,
-			addWaypoints: false,
-			createMarker: () => {
-				return null;
+		const allPoints = [
+			{
+				lat: tripStart[0],
+				lng: tripStart[1],
+				visitStatus: VisitStatus.CONFIRMED,
 			},
-			waypoints: [startWaypoint, ...waypoints, endWaypoint],
-			show: false,
-			lineOptions: {
-				styles: [{ color: themeOptions.palette.primary.main, weight: 3 }],
-			},
-		} as unknown as L.Routing.RoutingControlOptions).addTo(
-			mapInstanceRef.current!
-		);
+			...stopoverPoints,
+			{ lat: tripEnd[0], lng: tripEnd[1], visitStatus: VisitStatus.CONFIRMED },
+		];
+
+		const getLineStyle = (
+			status1: "confirmed" | "marked",
+			status2: "confirmed" | "marked"
+		) => {
+			const isBothMarkedOrConfirmed =
+				[VisitStatus.MARKED, VisitStatus.CONFIRMED].includes(status1) &&
+				[VisitStatus.MARKED, VisitStatus.CONFIRMED].includes(status2);
+
+			if (isBothMarkedOrConfirmed) {
+				return { color: "grey", weight: 3, dashArray: "6, 6" }; // dotted grey line
+			}
+			return { color: themeOptions.palette.primary.main, weight: 3 }; // default style
+		};
+
+		const drawSegment = (
+			from: (typeof allPoints)[0],
+			to: (typeof allPoints)[0]
+		) => {
+			const routingControl = L.Routing.control({
+				router: L.Routing.osrmv1({
+					serviceUrl: import.meta.env.VITE_ROUTING_SERVICE_URL,
+				}),
+				waypoints: [L.latLng(from.lat!, from.lng!), L.latLng(to.lat!, to.lng!)],
+				routeWhileDragging: false,
+				addWaypoints: false,
+				createMarker: () => null,
+				show: false,
+				lineOptions: {
+					styles: [getLineStyle(from.visitStatus, to.visitStatus)],
+				},
+			} as unknown as L.Routing.RoutingControlOptions).addTo(
+				mapInstanceRef.current!
+			);
+
+			routingControl.addTo(mapInstanceRef.current!);
+			routingControlsRef.current.push(routingControl);
+		};
+
+		for (let i = 0; i < allPoints.length - 1; i++) {
+			drawSegment(allPoints[i], allPoints[i + 1]);
+		}
 
 		mapInstanceRef.current.eachLayer((layer) => {
 			for (const point of stopoverPoints) {
@@ -390,19 +419,20 @@ const RootMap = () => {
 		});
 
 		return () => {
-			routingControl.remove();
+			if (!mapInstanceRef.current) return;
 
-			if (!mapInstanceRef.current) {
-				return;
-			}
+			routingControlsRef.current.forEach((control) => control.remove());
+			routingControlsRef.current = [];
 
 			mapInstanceRef.current.eachLayer((layer) => {
 				if (
 					layer instanceof L.Marker &&
-					(layer.options.title === IconTitle.WAYPOINT ||
-						layer.options.title === IconTitle.START_END_WAYPOINT)
+					layer.options.title === IconTitle.WAYPOINT
 				) {
 					layer.remove();
+				}
+				if (layer instanceof L.Routing.Control) {
+					mapInstanceRef.current?.removeLayer(layer);
 				}
 			});
 		};

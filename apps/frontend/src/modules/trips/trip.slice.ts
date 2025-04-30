@@ -43,6 +43,8 @@ const updateStopoverPoints = (
 		if (place.id === placeId) {
 			return { ...place, visitStatus, visitedAt };
 		}
+		console.log("updateStopoverPoints ", "placeId", placeId, "place", place);
+
 		return place;
 	});
 };

@@ -62,6 +62,20 @@ const SignIn: React.FC = () => {
 					Sign In
 				</Button>
 			</form>
+			<Box mt={2}>
+				<Typography
+					variant="body2"
+					align="center"
+				>
+					Don't have an account?{" "}
+					<Button
+						color="primary"
+						onClick={() => navigate("/sign-up")}
+					>
+						Sign Up
+					</Button>
+				</Typography>
+			</Box>
 		</Box>
 	);
 };

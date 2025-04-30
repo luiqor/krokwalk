@@ -48,13 +48,21 @@ class UserPlacesRepository implements Repository {
 	}
 
 	public async create(entity: UserPlacesEntity) {
-		const { userId, placeId, id, visitedAt, createdAt, updatedAt } =
-			entity.toNewObject();
+		const {
+			userId,
+			placeId,
+			id,
+			visitedAt,
+			visitStatus,
+			createdAt,
+			updatedAt,
+		} = entity.toNewObject();
 		const userPlace = await this.model.query().insert({
 			userId,
 			placeId,
 			id,
 			visitedAt,
+			visitStatus,
 			createdAt,
 			updatedAt,
 		});

@@ -6,8 +6,21 @@ import { actions as tripAction } from "~/modules/trips/trips.js";
 import { useAppDispatch } from "~/libs/hooks/hooks.js";
 
 import styles from "../../../current-trip.module.css";
+import clsx from "clsx";
 
 const PointCard: React.FC<{ point: CreateTripPlace }> = ({ point }) => {
+	const {
+		id,
+		title,
+		lat,
+		lng,
+		tags,
+		tours,
+		thumbnailLink,
+		visitStatus,
+		index,
+	} = point;
+
 	const dispatch = useAppDispatch();
 
 	const handleStatusChange = (
@@ -36,15 +49,18 @@ const PointCard: React.FC<{ point: CreateTripPlace }> = ({ point }) => {
 
 	return (
 		<div
-			key={point.id}
-			className={styles.point}
+			key={id}
+			className={clsx(
+				styles.point,
+				visitStatus && styles[`${visitStatus}PointInfo`]
+			)}
 		>
 			<div className={styles.pointInfo}>
 				<div>
 					<div className={styles.icon}>
-						{point.thumbnailLink ? (
+						{thumbnailLink ? (
 							<img
-								src={point.thumbnailLink}
+								src={thumbnailLink}
 								className={styles.thumbnail}
 							/>
 						) : (
@@ -52,22 +68,23 @@ const PointCard: React.FC<{ point: CreateTripPlace }> = ({ point }) => {
 						)}
 					</div>
 					<div className={styles.details}>
-						<h3>{point.title}</h3>
+						<h3>
+							{title}
+						</h3>
 						<p>
-							Latitude: {point.lat}, Longitude: {point.lng}
+							Latitude: {lat}, Longitude: {lng}
 						</p>
-						<p>Tags: {point.tags.join(", ")}</p>
-						<p>Tours: {point.tours.join(", ")}</p>
+						<p>Tags: {tags.join(", ")}</p>
+						<p>Tours: {tours.join(", ")}</p>
 					</div>
 				</div>
 				<div className={styles.checkboxContainer}>
-					{point.visitStatus === VisitStatus.UNVISITED ||
-					point.visitStatus === null ? (
+					{visitStatus === VisitStatus.UNVISITED || visitStatus === null ? (
 						<RadioButtonUnchecked className={styles.defaultCheckbox} />
 					) : (
 						<CheckCircleRounded
 							className={
-								point.visitStatus === VisitStatus.CONFIRMED
+								visitStatus === VisitStatus.CONFIRMED
 									? styles.confirmedCheckbox
 									: styles.defaultCheckbox
 							}
@@ -77,11 +94,10 @@ const PointCard: React.FC<{ point: CreateTripPlace }> = ({ point }) => {
 			</div>
 			<ToggleButtonGroup
 				fullWidth
-				key={point.visitStatus}
-				value={point.visitStatus ?? VisitStatus.UNVISITED}
+				value={visitStatus}
 				size="small"
 				exclusive
-				onChange={(event, newStatus) => handleStatusChange(point.id, newStatus)}
+				onChange={(event, newStatus) => handleStatusChange(id, newStatus)}
 				aria-label="visit status"
 			>
 				<ToggleButton
