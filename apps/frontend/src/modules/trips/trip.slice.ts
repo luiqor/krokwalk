@@ -1,10 +1,11 @@
-import { createSlice, isRejected } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import type { TagDto } from "../tags/tags.js";
 import type { TourDto } from "../tours/tours.js";
 import {
 	confirmPlaceVisit,
 	createTrip,
+	getPlacesDataForUnauth,
 	loadMinimumWalkTime,
 	updatePlaceVisitStatus,
 	updatePlaceVisitStatusUnauth,
@@ -44,7 +45,6 @@ const updateStopoverPoints = (
 		if (place.id === placeId) {
 			return { ...place, visitStatus, visitedAt };
 		}
-		console.log("updateStopoverPoints ", "placeId", placeId, "place", place);
 
 		return place;
 	});
@@ -113,7 +113,26 @@ const { reducer, actions, name } = createSlice({
 				id,
 				visitStatus
 			);
+			state.status = DataStatus.FULFILLED;
 		});
+				builder.addCase(getPlacesDataForUnauth.fulfilled, (state, action) => {
+					const placesWithIdAndVisitStatus = action.payload;
+
+					state.stopoverPoints = state.stopoverPoints.map((stopoverPoint) => {
+						const matchingPlace = placesWithIdAndVisitStatus.find(
+							(place) => place.id === stopoverPoint.id
+						);
+
+						if (matchingPlace) {
+							return {
+								...stopoverPoint,
+								visitStatus: matchingPlace.visitStatus,
+							};
+						}
+
+						return stopoverPoint;
+					});
+				});
 		builder.addMatcher(
 			(action) =>
 				action.type === loadMinimumWalkTime.pending.type ||
@@ -124,9 +143,16 @@ const { reducer, actions, name } = createSlice({
 				state.status = DataStatus.PENDING;
 			}
 		);
-		builder.addMatcher(isRejected, (state) => {
-			state.status = DataStatus.REJECTED;
-		});
+		builder.addMatcher(
+			(action) =>
+				action.type === loadMinimumWalkTime.rejected.type ||
+				action.type === createTrip.rejected.type ||
+				action.type === updatePlaceVisitStatus.rejected.type ||
+				action.type === confirmPlaceVisit.rejected.type,
+			(state) => {
+				state.status = DataStatus.REJECTED;
+			}
+		);
 	},
 });
 

@@ -14,16 +14,16 @@ const theme = createTheme(themeOptions);
 const NOTIFICATION_DURATION = 5000;
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ToastContainer
-      autoClose={NOTIFICATION_DURATION}
-      hideProgressBar
-      position="top-center"
-    />
-    <StoreProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </StoreProvider>
-  </StrictMode>
+	<StrictMode>
+		<ToastContainer
+			autoClose={NOTIFICATION_DURATION}
+			hideProgressBar
+			position="top-center"
+		/>
+		<StoreProvider store={store}>
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
+		</StoreProvider>
+	</StrictMode>
 );

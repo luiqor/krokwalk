@@ -108,23 +108,30 @@ class PlaceRepository implements Repository {
 		coordinates: [number, number][],
 		userId: string | null = null
 	): Promise<PlaceEntity[]> {
-		const places = await this.model
-			.query()
-			.where((builder) => {
-				coordinates.forEach(([lat, lng]) => {
-					builder.orWhere((subQuery) => {
-						subQuery.where("lat", lat).andWhere("lng", lng);
-					});
+		const query = this.model.query().where((builder) => {
+			coordinates.forEach(([lat, lng]) => {
+				builder.orWhere((subQuery) => {
+					subQuery.where("lat", lat).andWhere("lng", lng);
 				});
-			})
-			.withGraphJoined(
-				`[${RelationName.TAGS}, ${RelationName.TOURS}, userPlaces]`
-			)
-			.modifyGraph("userPlaces", (builder) => {
-				if (userId) {
-					builder.where("userPlaces.userId", userId);
-				}
 			});
+		});
+
+		if (userId) {
+			query
+				.withGraphJoined(
+					`[${RelationName.TAGS}, ${RelationName.TOURS}, userPlaces]`
+				)
+				.modifyGraph("userPlaces", (builder) => {
+					builder.where("userPlaces.userId", userId);
+				});
+		} else {
+			query.withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+		}
+
+		const places = await query;
+
+		console.log("userId", userId);
+		console.log("places", places);
 
 		return Promise.all(
 			places.map(async (place) => {

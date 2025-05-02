@@ -9,3 +9,4 @@ export { TourInfo } from "./tour-info/tour-info.js";
 export { ToursInfoElement } from "./tours-info-element/tours-info-element.js";
 export { Icon } from "./icon/icon.jsx";
 export { IconElement } from "./icon/icon-element.jsx";
+export { AuthWarningModal } from "./auth-warning-modal/auth-warning-modal.js";

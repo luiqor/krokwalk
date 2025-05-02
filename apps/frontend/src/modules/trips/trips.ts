@@ -1,6 +1,7 @@
 import {
 	confirmPlaceVisit,
 	createTrip,
+	getPlacesDataForUnauth,
 	loadMinimumWalkTime,
 	updatePlaceVisitStatus,
 	updatePlaceVisitStatusUnauth,
@@ -15,6 +16,7 @@ const allActions = {
 	updatePlaceVisitStatus,
 	confirmPlaceVisit,
 	updatePlaceVisitStatusUnauth,
+	getPlacesDataForUnauth,
 };
 
 const tripService = new TripService();

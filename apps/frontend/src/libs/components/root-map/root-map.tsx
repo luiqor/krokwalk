@@ -316,10 +316,6 @@ const RootMap = () => {
 				thumbnailLink,
 			});
 
-			L.circle([lat, lng], { radius: 2, color: "red" }).addTo(
-				mapInstanceRef.current!
-			);
-
 			marker.addTo(mapInstanceRef.current!);
 
 			marker.on("click", () => {

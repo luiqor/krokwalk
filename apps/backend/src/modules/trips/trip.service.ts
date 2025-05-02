@@ -331,8 +331,6 @@ class TripService {
 			maximumWalkSeconds,
 		});
 
-		console.log(result);
-
 		return {
 			path: result.path,
 			totalTime: result.totalTime,

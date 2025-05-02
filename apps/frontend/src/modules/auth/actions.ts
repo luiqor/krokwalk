@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { UserDto, UserSignInRequestDto, UserSignUpRequestDto } from "shared";
 
+import { actions as authActions } from "../auth/auth.js";
 import type { AsyncThunkConfig } from "~/libs/types/types.js";
 import { storage, StorageKey } from "../storage/storage.js";
 import { name as sliceName } from "./auth.slice.js";
@@ -54,7 +55,15 @@ const logOut = createAsyncThunk<null, undefined, AsyncThunkConfig>(
 
 const getUser = createAsyncThunk<UserDto, undefined, AsyncThunkConfig>(
 	`${sliceName}/get-user`,
-	async (_, { extra: { authService } }) => {
+	async (_, { dispatch, extra: { authService } }) => {
+		const token = await storage.get(StorageKey.TOKEN);
+
+		if (!token) {
+			dispatch(authActions.triggerOpenModal());
+
+			throw new Error("Token not found");
+		}
+
 		const user = await authService.getUser();
 
 		return user;

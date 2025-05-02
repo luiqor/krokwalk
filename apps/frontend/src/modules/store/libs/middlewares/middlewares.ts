@@ -9,7 +9,7 @@ type MiddlewareError = {
 	message?: string;
 };
 
-const errorHandlingMiddleware: Middleware = () => {
+const errorHandlingMiddleware: Middleware = (_store) => {
 	return (next) => {
 		return (action) => {
 			if (isRejected(action)) {
@@ -20,7 +20,7 @@ const errorHandlingMiddleware: Middleware = () => {
 						"Would you like to perform this action? Please authorize."
 					);
 
-					return;
+					return next(action);
 				}
 
 				const error = action.error as MiddlewareError;

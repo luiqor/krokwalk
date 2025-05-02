@@ -6,6 +6,7 @@ import type {
 } from "shared";
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import { actions as authActions } from "../auth/auth.js";
 
 import { name as sliceName } from "./trip.slice.js";
 import type {
@@ -36,13 +37,42 @@ const createTrip = createAsyncThunk<
 	CreateTripResDto,
 	CreateTripBodyDto,
 	AsyncThunkConfig
->(`${sliceName}/create-trip`, async (params, { extra }) => {
+>(`${sliceName}/create-trip`, async (params, { dispatch, extra, getState }) => {
 	const { tripService } = extra;
+	const state = getState();
+	const { isAnonymousEnabled } = state.auth;
 
 	const response = await tripService.create(params);
 
-	if (response.userId === null) {
-		// dispatch(otherSliceActions.someAction());
+	if (response.userId === null && !isAnonymousEnabled) {
+		dispatch(authActions.triggerOpenModal());
+	}
+
+	if (response.userId === null && isAnonymousEnabled) {
+		const placesString = await storage.get(StorageKey.PLACES);
+
+		const {
+			places: placeVisitStatus,
+		}: { places: UnauthUserUpdateVisitStatusResult[] } = placesString
+			? JSON.parse(placesString)
+			: { places: [] };
+
+		const updatedPlaces = response.visitedPlaces.map((stopoverPoint) => {
+			const matchingPlace = placeVisitStatus.find(
+				(place) => place.id === stopoverPoint.id
+			);
+
+			if (matchingPlace) {
+				return {
+					...stopoverPoint,
+					visitStatus: matchingPlace.visitStatus,
+				};
+			}
+
+			return stopoverPoint;
+		});
+
+		response.visitedPlaces = updatedPlaces;
 	}
 
 	return response;
@@ -95,12 +125,25 @@ const updatePlaceVisitStatusUnauth = createAsyncThunk<
 		return place.id === placeId ? { ...place, visitStatus } : place;
 	});
 
-	void storage.set(
+	await storage.set(
 		StorageKey.PLACES,
 		JSON.stringify({ places: updatedPlaces })
 	);
 
 	return { id: placeId, visitStatus };
+});
+
+const getPlacesDataForUnauth = createAsyncThunk<
+	UnauthUserUpdateVisitStatusResult[],
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/get-places-data-unauth`, async (_) => {
+	const placesString = await storage.get(StorageKey.PLACES);
+
+	const { places }: { places: UnauthUserUpdateVisitStatusResult[] } =
+		placesString ? JSON.parse(placesString) : { places: [] };
+
+	return places;
 });
 
 export {
@@ -109,4 +152,5 @@ export {
 	updatePlaceVisitStatus,
 	confirmPlaceVisit,
 	updatePlaceVisitStatusUnauth,
+	getPlacesDataForUnauth,
 };
