@@ -7,3 +7,10 @@ export type {
 	CreateTripResDto,
 	CreateTripPlace,
 } from "shared";
+
+type UnauthUserUpdateVisitStatusResult = {
+	id: string;
+	visitStatus: string;
+};
+
+export type { UnauthUserUpdateVisitStatusResult };

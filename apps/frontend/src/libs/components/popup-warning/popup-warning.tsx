@@ -28,7 +28,7 @@ const PopupWarning: React.FC<WarningProps> = ({
 					exit: styles.fadeOut,
 					exitActive: styles.fadeOutActive,
 				}}
-				onEntered={(node) => {
+				onEntered={(node: HTMLElement) => {
 					node.classList.add(styles.backGroundInActive);
 					node.classList.remove(styles.hide);
 				}}
@@ -48,7 +48,7 @@ const PopupWarning: React.FC<WarningProps> = ({
 					exit: styles.popapExit,
 					exitActive: styles.popapExitActive,
 				}}
-				onEnter={(node) => node.classList.add(styles.popapActive)}
+				onEnter={(node: HTMLElement) => node.classList.add(styles.popapActive)}
 				onExit={(node) => node.classList.remove(styles.popapActive)}
 			>
 				<article className={styles.popap}>

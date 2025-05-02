@@ -13,7 +13,9 @@ import type {
 	CreateTripResDto,
 	GetWalkTimeDto,
 	GetWalkTimeParams,
+	UnauthUserUpdateVisitStatusResult,
 } from "./libs/types/types.js";
+import { storage, StorageKey } from "../storage/storage.js";
 
 const loadMinimumWalkTime = createAsyncThunk<
 	GetWalkTimeDto,
@@ -37,7 +39,13 @@ const createTrip = createAsyncThunk<
 >(`${sliceName}/create-trip`, async (params, { extra }) => {
 	const { tripService } = extra;
 
-	return await tripService.create(params);
+	const response = await tripService.create(params);
+
+	if (response.userId === null) {
+		// dispatch(otherSliceActions.someAction());
+	}
+
+	return response;
 });
 
 const updatePlaceVisitStatus = createAsyncThunk<
@@ -71,9 +79,34 @@ const confirmPlaceVisit = createAsyncThunk<
 	}
 );
 
+const updatePlaceVisitStatusUnauth = createAsyncThunk<
+	UnauthUserUpdateVisitStatusResult,
+	UserPatchVisitStatusRequestDto,
+	AsyncThunkConfig
+>(`${sliceName}/update-place-visit-status-unauth`, async (payload) => {
+	const { placeId, visitStatus } = payload;
+
+	const placesString = await storage.get(StorageKey.PLACES);
+
+	const { places }: { places: UnauthUserUpdateVisitStatusResult[] } =
+		placesString ? JSON.parse(placesString) : { places: [] };
+
+	const updatedPlaces = places.map((place) => {
+		return place.id === placeId ? { ...place, visitStatus } : place;
+	});
+
+	void storage.set(
+		StorageKey.PLACES,
+		JSON.stringify({ places: updatedPlaces })
+	);
+
+	return { id: placeId, visitStatus };
+});
+
 export {
 	loadMinimumWalkTime,
 	createTrip,
 	updatePlaceVisitStatus,
 	confirmPlaceVisit,
+	updatePlaceVisitStatusUnauth,
 };

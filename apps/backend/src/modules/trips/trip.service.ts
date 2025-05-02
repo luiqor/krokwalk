@@ -333,13 +333,13 @@ class TripService {
 
 		console.log(result);
 
-		// TODO? after auth: Replace with stopover places (with user data about visiting)
 		return {
 			path: result.path,
 			totalTime: result.totalTime,
 			visitedPlaces: result.visitedPlaces,
 			startingPoint: startingPointCoordinates,
 			destinationPoint: destinationPointCoordinates,
+			userId: userId ?? null,
 		};
 	}
 }

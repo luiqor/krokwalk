@@ -3,6 +3,7 @@ import {
 	createTrip,
 	loadMinimumWalkTime,
 	updatePlaceVisitStatus,
+	updatePlaceVisitStatusUnauth,
 } from "./actions.js";
 import { TripService } from "./trip.service.js";
 import { actions, reducer } from "./trip.slice.js";
@@ -13,6 +14,7 @@ const allActions = {
 	loadMinimumWalkTime,
 	updatePlaceVisitStatus,
 	confirmPlaceVisit,
+	updatePlaceVisitStatusUnauth,
 };
 
 const tripService = new TripService();

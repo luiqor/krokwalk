@@ -7,6 +7,7 @@ import {
 	createTrip,
 	loadMinimumWalkTime,
 	updatePlaceVisitStatus,
+	updatePlaceVisitStatusUnauth,
 } from "./actions.js";
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 import type { CreateTripPlace } from "./libs/types/types.js";
@@ -37,7 +38,7 @@ const updateStopoverPoints = (
 	stopoverPoints: CreateTripPlace[],
 	placeId: string,
 	visitStatus: string,
-	visitedAt: string | null
+	visitedAt: string | null = null
 ): CreateTripPlace[] => {
 	return stopoverPoints.map((place) => {
 		if (place.id === placeId) {
@@ -104,11 +105,21 @@ const { reducer, actions, name } = createSlice({
 			);
 			state.status = DataStatus.FULFILLED;
 		});
+		builder.addCase(updatePlaceVisitStatusUnauth.fulfilled, (state, action) => {
+			const { visitStatus, id } = action.payload;
+
+			state.stopoverPoints = updateStopoverPoints(
+				state.stopoverPoints,
+				id,
+				visitStatus
+			);
+		});
 		builder.addMatcher(
 			(action) =>
 				action.type === loadMinimumWalkTime.pending.type ||
 				action.type === createTrip.pending.type ||
-				action.type === updatePlaceVisitStatus.pending.type,
+				action.type === updatePlaceVisitStatus.pending.type ||
+				action.type === confirmPlaceVisit.pending.type,
 			(state) => {
 				state.status = DataStatus.PENDING;
 			}
