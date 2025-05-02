@@ -98,6 +98,28 @@ class UserPlacesService implements Service {
 		return entity.toObject();
 	}
 
+	private getDistanceInMeters(
+		lat1: number,
+		lng1: number,
+		lat2: number,
+		lng2: number
+	): number {
+		const R = 6371e3; // Earth's radius in meters
+		const toRad = (value: number) => (value * Math.PI) / 180;
+
+		const φ1 = toRad(lat1);
+		const φ2 = toRad(lat2);
+		const Δφ = toRad(lat2 - lat1);
+		const Δλ = toRad(lng2 - lng1);
+
+		const a =
+			Math.sin(Δφ / 2) ** 2 +
+			Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+		return R * c;
+	}
+
 	public async confirmPlaceVisit({
 		userId,
 		placeId,
@@ -107,17 +129,16 @@ class UserPlacesService implements Service {
 		userId: string;
 	}): Promise<UserPatchVisitStatusResponseDto> {
 		const initialEntity = await this.repository.getById(userId, placeId);
-
 		const place = await this.placeService.getById(placeId);
-
 		const { lat: placeLat, lng: placeLng } = place;
 
-		const distance = Math.sqrt(
-			Math.pow(placeLat - lat, 2) + Math.pow(placeLng - lng, 2)
-		);
-		const DISTANCE_THRESHOLD = 0.01; // 0.01 degrees is approximately 1 km
+		const distance = this.getDistanceInMeters(lat, lng, placeLat, placeLng);
+		console.log(`${place.title} - ${placeLat} ${placeLng} : ${distance}m`);
+		console.log(`User location: ${lat} ${lng}`);
 
-		if (distance > DISTANCE_THRESHOLD) {
+		const DISTANCE_THRESHOLD_METERS = 115;
+
+		if (distance > DISTANCE_THRESHOLD_METERS) {
 			throw new HTTPError({
 				status: HTTPCode.BAD_REQUEST,
 				message: HTTPErrorMessage.PLACE.TOO_FAR,
@@ -133,7 +154,6 @@ class UserPlacesService implements Service {
 			});
 
 			const entity = await this.repository.create(newUserPlace);
-
 			return entity.toObject();
 		}
 

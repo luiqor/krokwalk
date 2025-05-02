@@ -12,17 +12,20 @@ type MiddlewareError = {
 const errorHandlingMiddleware: Middleware = () => {
 	return (next) => {
 		return (action) => {
-			console.log("Action received in middleware:", action);
-
 			if (isRejected(action)) {
 				if (action?.error?.message === HTTPErrorMessage.AUTH.UNAUTHORIZED) {
 					storage.drop(StorageKey.TOKEN);
 
-					return next(action);
+					notification.error(
+						"Would you like to perform this action? Please authorize."
+					);
+
+					return;
 				}
 
 				const error = action.error as MiddlewareError;
 				notification.error(error.data ? error.data.message : error.message);
+				return;
 			}
 
 			return next(action);

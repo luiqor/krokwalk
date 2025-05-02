@@ -16,7 +16,7 @@ const useTrackingGeolocationPermission = () => {
 			watcher = navigator.geolocation.watchPosition(
 				() => setIsGeolocationEnabled(true),
 				() => setIsGeolocationEnabled(false),
-				{ enableHighAccuracy: false, timeout: 10000 }
+				{ enableHighAccuracy: false, timeout: 10 }
 			);
 		};
 
@@ -27,11 +27,11 @@ const useTrackingGeolocationPermission = () => {
 		};
 	}, []);
 
-	const closedPopup = () => {
+	const setGeolocationDisabled = () => {
 		setIsGeolocationEnabled(false);
 	};
 
-	return { isGeolocationEnabled, closedPopup };
+	return { isGeolocationEnabled, setGeolocationDisabled };
 };
 
 export { useTrackingGeolocationPermission };

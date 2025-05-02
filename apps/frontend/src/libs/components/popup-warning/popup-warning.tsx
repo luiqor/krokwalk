@@ -13,8 +13,10 @@ const modalWarning: HTMLElement = document.getElementById(
 	"modalWarning"
 ) as HTMLElement;
 
-const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
-	useEffect(() => console.log(isOpen), [isOpen]);
+const PopupWarning: React.FC<WarningProps> = ({
+	isOpen,
+	onClose = () => {},
+}) => {
 	return ReactDOM.createPortal(
 		<>
 			<CSSTransition
