@@ -2,7 +2,7 @@ import { createSlice, isRejected } from "@reduxjs/toolkit";
 import { UserDto, ValueOf } from "shared";
 
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
-import { signIn, signUp, getUser } from "./actions.js";
+import { signIn, signUp, getUser, logOut } from "./actions.js";
 
 type State = {
 	status: ValueOf<typeof DataStatus>;
@@ -39,6 +39,10 @@ const { reducer, actions, name } = createSlice({
 		});
 		builder.addCase(getUser.pending, (state) => {
 			state.status = DataStatus.PENDING;
+		});
+		builder.addCase(logOut.fulfilled, (state) => {
+			state.user = null;
+			state.status = DataStatus.FULFILLED;
 		});
 		builder.addMatcher(isRejected, (state) => {
 			state.status = DataStatus.REJECTED;
