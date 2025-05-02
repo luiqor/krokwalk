@@ -1,10 +1,11 @@
-import { loadTours } from "./actions.js";
+import { loadTours, loadTour } from "./actions.js";
 import { TourService } from "./tour.service.js";
 import { actions, reducer } from "./tour.slice.js";
 
 const allActions = {
-  ...actions,
-  loadTours,
+	...actions,
+	loadTours,
+	loadTour,
 };
 
 const tourService = new TourService();

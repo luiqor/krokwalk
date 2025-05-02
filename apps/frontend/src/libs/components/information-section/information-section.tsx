@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import type { PlaceDto } from "~/modules/places/places.js";
 
 import styles from "./information-section.module.css";
-import { IconElement } from "~/libs/components/components.js";
+import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 const InformationSection = () => {
 	const [info, setInfo] = useState<PlaceDto | null>(null);
 	const [searchParams] = useSearchParams();
-	const navigate = useNavigate();
 
 	const fetchData = async (id: string | null) => {
 		const result = await fetch(`http://localhost:8000/api/places/${id}`);
@@ -23,21 +22,7 @@ const InformationSection = () => {
 
 	return (
 		<section className={styles.container}>
-			<button
-				onClick={() => navigate(-1)}
-				className={styles.buttonBack}
-			>
-				<IconElement
-					svgData={{
-						addClass: styles.svgBack,
-						name: "back",
-						widthSize: 24,
-						heightSize: 24,
-						color: "transparent",
-					}}
-				/>
-				<span className={styles.textBack}>Back</span>
-			</button>
+			<ButtonBack subClass={styles.subBackClass} />
 			<picture className={styles.imgBlock}>
 				<img
 					className={styles.img}

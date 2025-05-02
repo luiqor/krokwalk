@@ -9,7 +9,7 @@ type IconName =
 	| "clock";
 
 type IconElementType = {
-	addClass?: string;
+	addClass?: string | string[];
 	name: string;
 	widthSize: number;
 	heightSize: number;

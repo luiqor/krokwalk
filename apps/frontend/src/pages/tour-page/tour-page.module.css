@@ -1,0 +1,12 @@
+.container {
+	position: relative;
+	flex: 1;
+	background: var(--color-blue-lite-100);
+	padding: 0 20px;
+	height: 100%;
+	overflow: hidden;
+}
+
+.subBackClass {
+	inset: 30px auto auto 169px;
+}

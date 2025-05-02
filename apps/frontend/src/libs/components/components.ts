@@ -4,5 +4,8 @@ export { RouteToolbar } from "./route-toolbar/route-toolbar.jsx";
 export { LocationSelection } from "./location-selection/location-selection.jsx";
 export { InformationSection } from "./information-section/information-section.js";
 export { PopupWarning } from "./popup-warning/popup-warning.js";
+export { TourInfoItem } from "./tour-info-item/tour-info-item.js";
+export { TourInfo } from "./tour-info/tour-info.js";
+export { ToursInfoElement } from "./tours-info-element/tours-info-element.js";
 export { Icon } from "./icon/icon.jsx";
 export { IconElement } from "./icon/icon-element.jsx";

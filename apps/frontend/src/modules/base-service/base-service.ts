@@ -16,6 +16,8 @@ type Multiple<T> = {
 };
 
 class BaseService<T = unknown, N = unknown> {
+	protected static token: string | null = null;
+
 	protected baseUrl: string = ENV.API;
 
 	protected basePath: string;
@@ -27,9 +29,18 @@ class BaseService<T = unknown, N = unknown> {
 		this.http = http;
 	}
 
+	public static updateToken(newToken: string | null): void {
+		BaseService.token = newToken;
+	}
+
+	public static getToken(): string | null {
+		return BaseService.token;
+	}
+
 	public getOne(): Promise<T> {
 		return this.http.load(this.getUrl(), {
 			method: "GET",
+			token: BaseService.token,
 		});
 	}
 
@@ -39,12 +50,14 @@ class BaseService<T = unknown, N = unknown> {
 		const queryString = params ? this.getQueryString(params) : "";
 		return this.http.load(this.getUrl(queryString), {
 			method: "GET",
+			token: BaseService.token,
 		});
 	}
 
 	public getById(id: string): Promise<T> {
 		return this.http.load(this.getUrl(`/${id}`), {
 			method: "GET",
+			token: BaseService.token,
 		});
 	}
 
@@ -53,6 +66,7 @@ class BaseService<T = unknown, N = unknown> {
 			method: "POST",
 			contentType: ContentType.JSON,
 			payload: JSON.stringify(travel),
+			token: BaseService.token,
 		});
 	}
 
@@ -61,6 +75,7 @@ class BaseService<T = unknown, N = unknown> {
 			method: "PATCH",
 			contentType: ContentType.JSON,
 			payload: JSON.stringify(travel),
+			token: BaseService.token,
 		});
 	}
 
@@ -68,6 +83,7 @@ class BaseService<T = unknown, N = unknown> {
 		return this.http.load(this.getUrl(`/${id}`), {
 			method: "DELETE",
 			contentType: ContentType.TEXT,
+			token: BaseService.token,
 		});
 	}
 

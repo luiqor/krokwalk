@@ -1,0 +1,18 @@
+.headerTour {
+	position: relative;
+	margin: 100px auto 0;
+	padding: 30px;
+	width: 600px;
+	background: var(--color-white);
+	border-radius: 15px;
+	box-shadow: var(--color-blue-400) 0px 22px 70px 4px;
+
+	h2 {
+		text-align: center;
+	}
+
+	p {
+		margin-top: 35px;
+		text-align: center;
+	}
+}

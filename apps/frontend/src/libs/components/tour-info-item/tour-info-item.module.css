@@ -1,0 +1,152 @@
+.toursItemBlock {
+	position: relative;
+
+	&:last-child {
+		margin-bottom: 200px;
+	}
+}
+
+.toursItem {
+	margin-top: 190px;
+	padding: 20px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 400px;
+	height: 265px;
+	border-radius: 15px;
+	overflow: hidden;
+	z-index: 2;
+	box-shadow: var(--color-blue-400) 0px 22px 70px 4px;
+
+	&:after {
+		content: "";
+		position: absolute;
+		background: var(--color-blue-400);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.5;
+		z-index: -1;
+	}
+
+	&:hover {
+		img {
+			transform: scale(1.2);
+		}
+	}
+
+	span {
+		color: var(--color-white);
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		font-size: var(--font-size-200);
+	}
+	h3 {
+		margin-top: auto;
+		color: var(--color-white);
+	}
+
+	button {
+		margin: 15px 0 0;
+		border: none;
+		color: var(--color-white);
+		background: var(--color-blue-400);
+		padding: 6px;
+		width: 100%;
+		border-radius: 6px;
+		transition:
+			background 0.5s ease-in-out,
+			color 0.5s ease-in-out;
+
+		&:hover {
+			color: var(--color-blue-400);
+			background: var(--color-blue-200);
+		}
+	}
+}
+
+.position1 {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.position2 {
+	left: 30%;
+	transform: translateX(-70%);
+}
+
+.position3 {
+	left: 60%;
+	transform: translateX(-40%);
+}
+
+.position4 {
+	left: 47%;
+	transform: translateX(-63%);
+}
+
+.imgBlock {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	inset: 0;
+	object-fit: contain;
+	z-index: -2;
+
+	img {
+		width: 100%;
+		transition: transform 0.5s ease-in-out;
+	}
+}
+
+.svgGeoPoint {
+	fill: var(--color-white);
+}
+
+.svgPath {
+	position: absolute;
+}
+
+.svgPosition1 {
+	composes: svgPath;
+	inset: 60.5% auto auto 41%;
+	transform: translateX(-59%);
+}
+
+.svgPosition2 {
+	composes: svgPath;
+	inset: 9% auto auto 45%;
+	transform: translateX(-54%);
+}
+
+.svgPosition3 {
+	composes: svgPath;
+	inset: 72% auto auto 53%;
+	transform: translateX(-50%);
+}
+
+.svgPosition4 {
+	composes: svgPath;
+	inset: 95% auto auto 47%;
+	transform: translateX(-53%);
+}
+
+.blockSubImg {
+	position: absolute;
+
+	img {
+		width: 120px;
+		height: 100%;
+	}
+}
+
+.subImgLeft {
+	inset: -5% auto auto 70%;
+}
+
+.subImgRight {
+	inset: -5% auto auto 10%;
+}
