@@ -28,6 +28,19 @@ export const authMiddleware = async (
 		});
 
 		if (!isBlacklistedRoute || isWhitelistedRoute) {
+			const authHeader = req.headers.authorization;
+
+			if (authHeader && authHeader.startsWith("Bearer ")) {
+				const jwtToken = authHeader.split(" ")[1];
+
+				try {
+					const decodedToken = await token.decode(jwtToken);
+					req.user = decodedToken.payload;
+				} catch (error) {
+					return next();
+				}
+			}
+
 			return next();
 		}
 

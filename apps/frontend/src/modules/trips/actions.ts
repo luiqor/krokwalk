@@ -44,6 +44,7 @@ const createTrip = createAsyncThunk<
 
 	const response = await tripService.create(params);
 
+	console.log("response.userId", response.userId);
 	if (response.userId === null && !isAnonymousEnabled) {
 		dispatch(authActions.triggerOpenModal());
 	}

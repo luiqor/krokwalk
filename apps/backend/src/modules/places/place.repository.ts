@@ -130,9 +130,6 @@ class PlaceRepository implements Repository {
 
 		const places = await query;
 
-		console.log("userId", userId);
-		console.log("places", places);
-
 		return Promise.all(
 			places.map(async (place) => {
 				return PlaceEntity.initializeUserDetailed({
