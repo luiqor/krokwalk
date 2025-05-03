@@ -12,6 +12,10 @@ const InformationSection = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (!id || info !== null) {
+			return;
+		}
+
 		const fetchData = async (id: string | undefined) => {
 			if (!id) {
 				return;
