@@ -1,4 +1,6 @@
-import { type Entity } from "~/libs/types/types.js";
+import type { Entity } from "~/libs/types/types";
+
+import type { AchievementDto } from "./libs/types/types";
 
 class UserEntity implements Entity {
 	private createdAt: string;
@@ -15,6 +17,8 @@ class UserEntity implements Entity {
 
 	private updatedAt: string;
 
+	private achievements: AchievementDto[];
+
 	private constructor({
 		createdAt,
 		email,
@@ -23,6 +27,7 @@ class UserEntity implements Entity {
 		passwordHash,
 		passwordSalt,
 		updatedAt,
+		achievements,
 	}: {
 		createdAt: string;
 		email: string;
@@ -31,6 +36,7 @@ class UserEntity implements Entity {
 		passwordHash: string;
 		passwordSalt: string;
 		updatedAt: string;
+		achievements: AchievementDto[];
 	}) {
 		this.createdAt = createdAt;
 		this.id = id;
@@ -39,6 +45,7 @@ class UserEntity implements Entity {
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
 		this.updatedAt = updatedAt;
+		this.achievements = achievements;
 	}
 
 	public static initialize({
@@ -66,6 +73,38 @@ class UserEntity implements Entity {
 			passwordHash,
 			passwordSalt,
 			updatedAt,
+			achievements: [],
+		});
+	}
+
+	public static initializeDetailed({
+		createdAt,
+		email,
+		id,
+		username,
+		passwordHash,
+		passwordSalt,
+		updatedAt,
+		achievements,
+	}: {
+		createdAt: string;
+		email: string;
+		id: string;
+		username: string;
+		passwordHash: string;
+		passwordSalt: string;
+		updatedAt: string;
+		achievements: AchievementDto[];
+	}): UserEntity {
+		return new UserEntity({
+			createdAt,
+			email,
+			id,
+			username,
+			passwordHash,
+			passwordSalt,
+			updatedAt,
+			achievements,
 		});
 	}
 
@@ -88,6 +127,7 @@ class UserEntity implements Entity {
 			passwordHash,
 			passwordSalt,
 			updatedAt: "",
+			achievements: [],
 		});
 	}
 
@@ -122,6 +162,24 @@ class UserEntity implements Entity {
 			username: this.username,
 			id: this.id as string,
 			updatedAt: this.updatedAt,
+		};
+	}
+
+	public toDetailedObject(): {
+		createdAt: string;
+		email: string;
+		username: string;
+		id: string;
+		updatedAt: string;
+		achievements: AchievementDto[];
+	} {
+		return {
+			createdAt: this.createdAt,
+			email: this.email,
+			username: this.username,
+			id: this.id as string,
+			updatedAt: this.updatedAt,
+			achievements: this.achievements,
 		};
 	}
 }

@@ -3,6 +3,7 @@ import { Model, type RelationMappings } from "objection";
 import { BaseModel } from "../../libs/modules/model/model";
 import { DatabaseTableName } from "../../libs/modules/database/database";
 import { UserPlacesModel } from "../user-places/user-places.model";
+import { AchievementModel } from "./achievement.model";
 
 class UserModel extends BaseModel {
 	email!: string;
@@ -13,6 +14,8 @@ class UserModel extends BaseModel {
 
 	passwordSalt!: string;
 
+	achievements!: AchievementModel[];
+
 	static get relationMappings(): RelationMappings {
 		return {
 			places: {
@@ -22,6 +25,18 @@ class UserModel extends BaseModel {
 				},
 				modelClass: UserPlacesModel,
 				relation: Model.HasManyRelation,
+			},
+			achievements: {
+				join: {
+					from: `${DatabaseTableName.USERS}.id`,
+					through: {
+						from: `${DatabaseTableName.USER_ACHIEVEMENTS}.user_id`,
+						to: `${DatabaseTableName.USER_ACHIEVEMENTS}.achievement_id`,
+					},
+					to: `${DatabaseTableName.ACHIEVEMENTS}.id`,
+				},
+				modelClass: AchievementModel,
+				relation: Model.ManyToManyRelation,
 			},
 		};
 	}

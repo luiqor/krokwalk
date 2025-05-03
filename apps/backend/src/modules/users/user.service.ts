@@ -4,7 +4,11 @@ import type { Service } from "~/libs/types/types";
 
 import { UserRepository } from "./user.repository";
 import { UserEntity } from "./user.entity";
-import type { UserDto, UserSignUpRequestDto } from "./libs/types/types.js";
+import type {
+	GetUserProfileResponseDto,
+	UserDto,
+	UserSignUpRequestDto,
+} from "./libs/types/types.js";
 
 class UserService implements Service {
 	private repository: UserRepository;
@@ -38,7 +42,11 @@ class UserService implements Service {
 		return this.repository.getById(id);
 	}
 
-	public async getProfile({ id }: { id: string }): Promise<UserDto> {
+	public async getProfile({
+		id,
+	}: {
+		id: string;
+	}): Promise<GetUserProfileResponseDto> {
 		const entity = await this.repository.getById(id);
 
 		if (entity === null) {
@@ -48,7 +56,7 @@ class UserService implements Service {
 			});
 		}
 
-		return entity.toObject();
+		return entity.toDetailedObject();
 	}
 
 	public getAll(): Promise<{

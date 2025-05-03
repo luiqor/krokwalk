@@ -38,6 +38,8 @@ export {
 	type UserSignUpResponseDto,
 	type UserGetParametersDto,
 	type UserGetResponseDto,
+	type GetUserProfileResponseDto,
+	type AchievementDto,
 	UsersApiPath,
 } from "./libs/modules/users/users";
 export {
