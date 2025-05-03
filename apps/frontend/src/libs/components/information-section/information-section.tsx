@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import type { PlaceDto } from "~/modules/places/places.js";
+import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 import styles from "./information-section.module.css";
-import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 const InformationSection = () => {
 	const [info, setInfo] = useState<PlaceDto | null>(null);
 	const { id } = useParams();
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!id || info !== null) {
