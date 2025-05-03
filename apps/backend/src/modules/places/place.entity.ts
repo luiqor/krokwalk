@@ -5,206 +5,285 @@ import { type TagEntity } from "../tags/tags";
 import { type TourEntity } from "../tours/tours";
 
 import { type PlacesEntityParameters } from "./libs/types/types";
+import { UserPlacesEntity } from "../user-places/user-places.entity";
 
 class PlaceEntity implements Entity {
-  private id: null | string;
+	private id: null | string;
 
-  private title: string;
+	private title: string;
 
-  private description: string;
+	private description: string;
 
-  private address: string;
+	private address: string;
 
-  private thumbnailLink: string;
+	private thumbnailLink: string;
 
-  private lat: number;
+	private lat: number;
 
-  private lng: number;
+	private lng: number;
 
-  private elevation: null | number;
+	private elevation: null | number;
 
-  private createdAt: string;
+	private createdAt: string;
 
-  private updatedAt: string;
+	private updatedAt: string;
 
-  private tags: TagEntity[];
+	private tags: TagEntity[];
 
-  private tours: TourEntity[];
+	private tours: TourEntity[];
 
-  private constructor({
-    id,
-    title,
-    description,
-    address,
-    thumbnailLink,
-    lat,
-    lng,
-    elevation,
-    createdAt,
-    updatedAt,
-    tags,
-    tours,
-  }: PlacesEntityParameters) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.address = address;
-    this.thumbnailLink = thumbnailLink;
-    this.lat = lat;
-    this.lng = lng;
-    this.elevation = elevation;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.tags = tags;
-    this.tours = tours;
-  }
+	private userPlace: UserPlacesEntity | null;
 
-  public static initializeNew({
-    title,
-    description,
-    address,
-    thumbnailLink,
-    lat,
-    lng,
-    elevation,
-  }: {
-    title: string;
-    description: string;
-    address: string;
-    thumbnailLink: string;
-    lat: number;
-    lng: number;
-    elevation?: number;
-  }): PlaceEntity {
-    return new PlaceEntity({
-      id: uuidv4(),
-      title,
-      description,
-      address,
-      thumbnailLink,
-      lat,
-      lng,
-      elevation: elevation ?? null,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      tags: [],
-      tours: [],
-    });
-  }
+	private constructor({
+		id,
+		title,
+		description,
+		address,
+		thumbnailLink,
+		lat,
+		lng,
+		elevation,
+		createdAt,
+		updatedAt,
+		tags,
+		tours,
+		userPlace,
+	}: PlacesEntityParameters) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.address = address;
+		this.thumbnailLink = thumbnailLink;
+		this.lat = lat;
+		this.lng = lng;
+		this.elevation = elevation;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.tags = tags;
+		this.tours = tours;
+		this.userPlace = userPlace;
+	}
 
-  public static initialize({
-    id,
-    title,
-    description,
-    address,
-    thumbnailLink,
-    lat,
-    lng,
-    elevation,
-    createdAt,
-    updatedAt,
-  }: Omit<PlacesEntityParameters, "tags" | "tours">): PlaceEntity {
-    return new PlaceEntity({
-      id,
-      title,
-      description,
-      address,
-      thumbnailLink,
-      lat,
-      lng,
-      elevation,
-      createdAt,
-      updatedAt,
-      tags: [],
-      tours: [],
-    });
-  }
+	public static initializeNew({
+		title,
+		description,
+		address,
+		thumbnailLink,
+		lat,
+		lng,
+		elevation,
+	}: {
+		title: string;
+		description: string;
+		address: string;
+		thumbnailLink: string;
+		lat: number;
+		lng: number;
+		elevation?: number;
+	}): PlaceEntity {
+		return new PlaceEntity({
+			id: uuidv4(),
+			title,
+			description,
+			address,
+			thumbnailLink,
+			lat,
+			lng,
+			elevation: elevation ?? null,
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+			tags: [],
+			tours: [],
+			userPlace: null,
+		});
+	}
 
-  public static initializeDetailed({
-    id,
-    title,
-    description,
-    address,
-    thumbnailLink,
-    lat,
-    lng,
-    elevation,
-    createdAt,
-    updatedAt,
-    tags,
-    tours,
-  }: PlacesEntityParameters): PlaceEntity {
-    return new PlaceEntity({
-      id,
-      title,
-      description,
-      address,
-      thumbnailLink,
-      lat,
-      lng,
-      elevation,
-      createdAt,
-      updatedAt,
-      tags,
-      tours,
-    });
-  }
+	public static initialize({
+		id,
+		title,
+		description,
+		address,
+		thumbnailLink,
+		lat,
+		lng,
+		elevation,
+		createdAt,
+		updatedAt,
+	}: Omit<
+		PlacesEntityParameters,
+		"tags" | "tours" | "userPlace"
+	>): PlaceEntity {
+		return new PlaceEntity({
+			id,
+			title,
+			description,
+			address,
+			thumbnailLink,
+			lat,
+			lng,
+			elevation,
+			createdAt,
+			updatedAt,
+			tags: [],
+			tours: [],
+			userPlace: null,
+		});
+	}
 
-  public toObject(): {
-    id: string;
-    title: string;
-    description: string;
-    address: string;
-    thumbnailLink: string;
-    lat: number;
-    lng: number;
-    elevation: number | null;
-    createdAt: string;
-    updatedAt: string;
-  } {
-    return {
-      id: this.id as string,
-      title: this.title,
-      description: this.description,
-      address: this.address,
-      thumbnailLink: this.thumbnailLink,
-      lat: this.lat,
-      lng: this.lng,
-      elevation: this.elevation,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    };
-  }
+	public static initializeDetailed({
+		id,
+		title,
+		description,
+		address,
+		thumbnailLink,
+		lat,
+		lng,
+		elevation,
+		createdAt,
+		updatedAt,
+		tags,
+		tours,
+	}: Omit<PlacesEntityParameters, "userPlace">): PlaceEntity {
+		return new PlaceEntity({
+			id,
+			title,
+			description,
+			address,
+			thumbnailLink,
+			lat,
+			lng,
+			elevation,
+			createdAt,
+			updatedAt,
+			tags,
+			tours,
+			userPlace: null,
+		});
+	}
 
-  public toDetailedObject(): {
-    id: string;
-    title: string;
-    description: string;
-    address: string;
-    thumbnailLink: string;
-    lat: number;
-    lng: number;
-    elevation: number | null;
-    createdAt: string;
-    updatedAt: string;
-    tags: ReturnType<TagEntity["toObject"]>[];
-    tours: ReturnType<TourEntity["toObject"]>[];
-  } {
-    return {
-      id: this.id as string,
-      title: this.title,
-      description: this.description,
-      address: this.address,
-      thumbnailLink: this.thumbnailLink,
-      lat: this.lat,
-      lng: this.lng,
-      elevation: this.elevation,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      tags: this.tags.map((tag) => tag.toObject()),
-      tours: this.tours.map((tour) => tour.toObject()),
-    };
-  }
+	public static initializeUserDetailed({
+		id,
+		title,
+		description,
+		address,
+		thumbnailLink,
+		lat,
+		lng,
+		elevation,
+		createdAt,
+		updatedAt,
+		tags,
+		tours,
+		userPlace,
+	}: PlacesEntityParameters): PlaceEntity {
+		return new PlaceEntity({
+			id,
+			title,
+			description,
+			address,
+			thumbnailLink,
+			lat,
+			lng,
+			elevation,
+			createdAt,
+			updatedAt,
+			tags,
+			tours,
+			userPlace,
+		});
+	}
+
+	public toObject(): {
+		id: string;
+		title: string;
+		description: string;
+		address: string;
+		thumbnailLink: string;
+		lat: number;
+		lng: number;
+		elevation: number | null;
+		createdAt: string;
+		updatedAt: string;
+	} {
+		return {
+			id: this.id as string,
+			title: this.title,
+			description: this.description,
+			address: this.address,
+			thumbnailLink: this.thumbnailLink,
+			lat: this.lat,
+			lng: this.lng,
+			elevation: this.elevation,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+		};
+	}
+
+	public toDetailedObject(): {
+		id: string;
+		title: string;
+		description: string;
+		address: string;
+		thumbnailLink: string;
+		lat: number;
+		lng: number;
+		elevation: number | null;
+		createdAt: string;
+		updatedAt: string;
+		tags: ReturnType<TagEntity["toObject"]>[];
+		tours: ReturnType<TourEntity["toObject"]>[];
+	} {
+		return {
+			id: this.id as string,
+			title: this.title,
+			description: this.description,
+			address: this.address,
+			thumbnailLink: this.thumbnailLink,
+			lat: this.lat,
+			lng: this.lng,
+			elevation: this.elevation,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+			tags: this.tags.map((tag) => tag.toObject()),
+			tours: this.tours.map((tour) => tour.toObject()),
+		};
+	}
+
+	public toUserDetailedObject(): {
+		id: string;
+		title: string;
+		description: string;
+		address: string;
+		thumbnailLink: string;
+		lat: number;
+		lng: number;
+		elevation: number | null;
+		createdAt: string;
+		updatedAt: string;
+		tags: ReturnType<TagEntity["toObject"]>[];
+		tours: ReturnType<TourEntity["toObject"]>[];
+		visitedAt: string | null;
+		visitStatus: string | null;
+	} {
+		const userPlace = this.userPlace?.toUserObject();
+
+		return {
+			id: this.id as string,
+			title: this.title,
+			description: this.description,
+			address: this.address,
+			thumbnailLink: this.thumbnailLink,
+			lat: this.lat,
+			lng: this.lng,
+			elevation: this.elevation,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+			tags: this.tags.map((tag) => tag.toObject()),
+			tours: this.tours.map((tour) => tour.toObject()),
+			visitedAt: userPlace?.visitedAt ?? null,
+			visitStatus: userPlace?.visitStatus ?? null,
+		};
+	}
 }
 
 export { PlaceEntity };

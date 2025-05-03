@@ -13,8 +13,10 @@ const modalWarning: HTMLElement = document.getElementById(
 	"modalWarning"
 ) as HTMLElement;
 
-const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
-	useEffect(() => console.log(isOpen), [isOpen]);
+const PopupWarning: React.FC<WarningProps> = ({
+	isOpen,
+	onClose = () => {},
+}) => {
 	return ReactDOM.createPortal(
 		<>
 			<CSSTransition
@@ -26,7 +28,7 @@ const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
 					exit: styles.fadeOut,
 					exitActive: styles.fadeOutActive,
 				}}
-				onEntered={(node) => {
+				onEntered={(node: HTMLElement) => {
 					node.classList.add(styles.backGroundInActive);
 					node.classList.remove(styles.hide);
 				}}
@@ -46,7 +48,7 @@ const PopupWarning: React.FC<WarningProps> = ({ isOpen, onClose }) => {
 					exit: styles.popapExit,
 					exitActive: styles.popapExitActive,
 				}}
-				onEnter={(node) => node.classList.add(styles.popapActive)}
+				onEnter={(node: HTMLElement) => node.classList.add(styles.popapActive)}
 				onExit={(node) => node.classList.remove(styles.popapActive)}
 			>
 				<article className={styles.popap}>

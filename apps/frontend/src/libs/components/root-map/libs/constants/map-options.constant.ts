@@ -6,8 +6,9 @@ const boundsKyiv: LatLngBoundsExpression = [
 ];
 
 const mapOptions: MapOptions = {
-  maxBounds: boundsKyiv,
-  maxBoundsViscosity: 1.0,
+	maxBounds: boundsKyiv,
+	maxBoundsViscosity: 1.0,
+	center: [50.45, 30.52],
 };
 
 export { mapOptions };

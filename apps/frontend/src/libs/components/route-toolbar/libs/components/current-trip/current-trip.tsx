@@ -7,6 +7,7 @@ import { actions as tripAction } from "~/modules/trips/trips.js";
 
 import styles from "./current-trip.module.css";
 import { convertSecondsToHoursAndMinutes } from "~/libs/components/route-toolbar/libs/components/constraints-form/libs/helpers/helpers.js";
+import { PointCard } from "./libs/components/point-card/point-card.js";
 
 const CurrentTrip: React.FC = () => {
 	const { startingPoint, destinationPoint, stopoverPoints, walkSeconds } =
@@ -18,14 +19,12 @@ const CurrentTrip: React.FC = () => {
 		dispatch(tripAction.resetTripData());
 	};
 
-	const {hours, minutes} = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
+	const { hours, minutes } = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.walkTime}>
-				<p>
-				Estimated Walk Time: 
-				</p>
+				<p>Estimated Walk Time:</p>
 				{hours} hours {minutes} minutes
 			</div>
 			<div className={styles.tripList}>
@@ -41,29 +40,10 @@ const CurrentTrip: React.FC = () => {
 					</div>
 				)}
 				{stopoverPoints.map((point) => (
-					<div
+					<PointCard
 						key={point.id}
-						className={styles.point}
-					>
-						<div className={styles.icon}>
-							{point.thumbnailLink ? (
-								<img
-									src={point.thumbnailLink}
-									className={styles.thumbnail}
-								/>
-							) : (
-								"🚏"
-							)}
-						</div>
-						<div className={styles.details}>
-							<h3>{point.title}</h3>
-							<p>
-								Latitude: {point.lat}, Longitude: {point.lng}
-							</p>
-							<p>Tags: {point.tags.join(", ")}</p>
-							<p>Tours: {point.tours.join(", ")}</p>
-						</div>
-					</div>
+						point={point}
+					/>
 				))}
 				{destinationPoint.length > 0 && (
 					<div className={styles.point}>

@@ -1,4 +1,4 @@
-import { HTTPCode, HTTPErrorMessage } from "shared";
+import { HTTPErrorMessage } from "shared";
 import { isRejected, Middleware } from "@reduxjs/toolkit";
 
 import { notification } from "~/modules/notification/notification.js";
@@ -9,20 +9,23 @@ type MiddlewareError = {
 	message?: string;
 };
 
-const errorHandlingMiddleware: Middleware = () => {
+const errorHandlingMiddleware: Middleware = (_store) => {
 	return (next) => {
 		return (action) => {
-			console.log("Action received in middleware:", action);
-
 			if (isRejected(action)) {
 				if (action?.error?.message === HTTPErrorMessage.AUTH.UNAUTHORIZED) {
 					storage.drop(StorageKey.TOKEN);
+
+					notification.error(
+						"Would you like to perform this action? Please authorize."
+					);
 
 					return next(action);
 				}
 
 				const error = action.error as MiddlewareError;
 				notification.error(error.data ? error.data.message : error.message);
+				return;
 			}
 
 			return next(action);

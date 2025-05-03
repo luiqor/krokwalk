@@ -6,6 +6,7 @@ type CreateTripResDto = {
 	visitedPlaces: CreateTripPlace[];
 	startingPoint: [number, number];
 	destinationPoint: [number, number];
+	userId: string | null;
 };
 
 export type { CreateTripResDto };

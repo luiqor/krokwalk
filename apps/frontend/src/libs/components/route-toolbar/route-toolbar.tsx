@@ -30,12 +30,7 @@ const RouteToolbar: React.FC = () => {
 			return <CircularProgress />;
 		}
 
-		if (status === "fulfilled" || status === "idle") {
-			return component;
-		}
-
-		dispatch(locationAction.setScreen(Screen.FILTERING));
-		return null;
+		return component;
 	};
 
 	const getScreen = (

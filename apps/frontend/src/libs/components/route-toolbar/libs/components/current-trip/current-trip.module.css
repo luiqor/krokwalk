@@ -19,12 +19,17 @@
 }
 
 .point {
-	display: flex;
-	align-items: center;
 	padding: 10px;
 	border-radius: 8px;
 	margin-bottom: 10px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pointInfo {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
 }
 
 .icon {
@@ -56,4 +61,21 @@
 	width: 50px;
 	height: 50px;
 	object-fit: cover;
+}
+
+.checkboxContainer{
+	margin: 20px;
+}
+
+.confirmedCheckbox {
+	color: var(--color-blue-300);
+}
+
+.defaultCheckbox {
+	color: #888888;
+}
+
+.markedPointInfo,
+.confirmedPointInfo {
+    background-color: rgba(0, 0, 0, 0.048);
 }

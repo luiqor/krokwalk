@@ -5,6 +5,7 @@ import { PlaceEntity } from "./place.entity";
 import { PlaceModel } from "./place.model";
 import { TagEntity } from "../tags/tag.entity";
 import { TourEntity } from "../tours/tour.entity";
+import { UserPlacesEntity } from "../user-places/user-places.entity";
 
 class PlaceRepository implements Repository {
 	private model: typeof PlaceModel;
@@ -104,22 +105,34 @@ class PlaceRepository implements Repository {
 	}
 
 	public async getManyByCoordinates(
-		coordinates: [number, number][]
+		coordinates: [number, number][],
+		userId: string | null = null
 	): Promise<PlaceEntity[]> {
-		const places = await this.model
-			.query()
-			.where((builder) => {
-				coordinates.forEach(([lat, lng]) => {
-					builder.orWhere((subQuery) => {
-						subQuery.where("lat", lat).andWhere("lng", lng);
-					});
+		const query = this.model.query().where((builder) => {
+			coordinates.forEach(([lat, lng]) => {
+				builder.orWhere((subQuery) => {
+					subQuery.where("lat", lat).andWhere("lng", lng);
 				});
-			})
-			.withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+			});
+		});
+
+		if (userId) {
+			query
+				.withGraphJoined(
+					`[${RelationName.TAGS}, ${RelationName.TOURS}, userPlaces]`
+				)
+				.modifyGraph("userPlaces", (builder) => {
+					builder.where("userPlaces.userId", userId);
+				});
+		} else {
+			query.withGraphJoined(`[${RelationName.TAGS}, ${RelationName.TOURS}]`);
+		}
+
+		const places = await query;
 
 		return Promise.all(
 			places.map(async (place) => {
-				return PlaceEntity.initializeDetailed({
+				return PlaceEntity.initializeUserDetailed({
 					id: place.id,
 					title: place.title,
 					description: place.description,
@@ -149,6 +162,17 @@ class PlaceRepository implements Repository {
 							updatedAt: tour.updatedAt,
 						});
 					}),
+					userPlace: place.userPlaces?.[0]
+						? UserPlacesEntity.initialize({
+								id: place.userPlaces[0].id,
+								placeId: place.userPlaces[0].placeId,
+								userId: place.userPlaces[0].userId,
+								createdAt: place.userPlaces[0].createdAt,
+								updatedAt: place.userPlaces[0].updatedAt,
+								visitedAt: place.userPlaces[0].visitedAt,
+								visitStatus: place.userPlaces[0].visitStatus,
+							})
+						: null,
 				});
 			})
 		);

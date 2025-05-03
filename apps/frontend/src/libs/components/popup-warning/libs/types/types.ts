@@ -1,6 +1,6 @@
 type WarningProps = {
 	isOpen: boolean;
-	onClose: () => void;
+	onClose?: () => void;
 };
 
 export { type WarningProps };
