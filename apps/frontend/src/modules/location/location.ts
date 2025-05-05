@@ -89,9 +89,7 @@ const { reducer, actions, name } = createSlice({
 			state.screen = action.payload;
 		},
 		resetLocationData: (state) => {
-			state.startingPoint = null;
-			state.destinationPoint = null;
-			state.startingPointType = null;
+			state.startingPointType = StartingPoint.SELECTED;
 			state.selectionMode = null;
 			state.screen = Screen.FILTERING;
 		},
