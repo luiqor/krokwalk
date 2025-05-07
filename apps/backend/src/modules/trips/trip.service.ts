@@ -1,4 +1,4 @@
-import { VisitStatus } from "shared";
+import { AchievementDto, VisitStatus } from "shared";
 
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
@@ -6,6 +6,10 @@ import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
 import type { TagService } from "../tags/tags";
 import type { TourService } from "../tours/tours";
 import type { UserService } from "../users/users";
+import {
+	AchievementEvent,
+	type AchievementService,
+} from "../achievements/achievements";
 import { ensureArray } from "~/libs/helpers/helpers";
 import type { UserPlacesService } from "../user-places/user-places";
 
@@ -32,13 +36,16 @@ type Constructor = {
 	tripRouteService: TripRouteService;
 	userPlacesService: UserPlacesService;
 	userService: UserService;
+	achievementService: AchievementService;
 };
 
-type CreateTripRequestDto = {
+type CompleteTripRequestDto = {
 	placeIds: string[];
 };
 
-type CreateTripResponseDto = void;
+type CompleteTripResponseDto = {
+	newAchievements: AchievementDto[];
+};
 
 class TripService {
 	private geoApify: GeoApify;
@@ -48,6 +55,7 @@ class TripService {
 	private tripRouteService: TripRouteService;
 	private userPlacesService: UserPlacesService;
 	private userService: UserService;
+	private achievementService: AchievementService;
 
 	public constructor({
 		geoApify,
@@ -57,6 +65,7 @@ class TripService {
 		tripRouteService,
 		userPlacesService,
 		userService,
+		achievementService,
 	}: Constructor) {
 		this.geoApify = geoApify;
 		this.placeService = placeService;
@@ -65,6 +74,7 @@ class TripService {
 		this.tripRouteService = tripRouteService;
 		this.userPlacesService = userPlacesService;
 		this.userService = userService;
+		this.achievementService = achievementService;
 	}
 
 	private filterClosestPlaces({
@@ -362,9 +372,9 @@ class TripService {
 	public async completeTrip({
 		placeIds,
 		userId,
-	}: CreateTripRequestDto & {
+	}: CompleteTripRequestDto & {
 		userId: string | null;
-	}): Promise<CreateTripResponseDto> {
+	}): Promise<CompleteTripResponseDto> {
 		if (!userId) {
 			throw new HTTPError({
 				status: HTTPCode.UNAUTHORIZED,
@@ -405,20 +415,33 @@ class TripService {
 			});
 		}
 
-		// TODO: Implement achievement logic
-		const achievement = await this.userPlacesService.getAchievementByEvent({
-			achievementEvent: "trip-completed",
-			targetCount: confirmedPlaces.length,
-		});
+		const placeAchievement =
+			await this.achievementService.getAchievementByEvent({
+				achievementEvent: AchievementEvent.VISIT_PLACE,
+				targetCount: confirmedPlaces.length,
+			});
+
+		if (!placeAchievement) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.ACHIEVEMENTS.NOT_FOUND,
+			});
+		}
+
+		// TODO: Check if the user already has this exact achievement. If so - send empty array
 
 		const { achievements } = await this.userService.addAchievement({
 			id: userId,
-			achievementId: "trip-completed",
+			achievementId: placeAchievement.id,
 		});
 
-		console.log(`Achievements: ${achievements.join(", ")}`);
+		const placesAchievement = achievements[0];
 
-		return Promise.resolve();
+		console.log(`newAchievements: ${achievements.join(", ")}`);
+
+		return {
+			newAchievements: placesAchievement ? [placesAchievement] : [],
+		};
 	}
 }
 
