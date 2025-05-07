@@ -29,6 +29,27 @@ class UserPlacesRepository implements Repository {
 		);
 	}
 
+	public async getManyByIds(userId: string, ids: string[]) {
+		const userPlaces = await this.model
+			.query()
+			.where({ userId })
+			.whereIn("id", ids);
+
+		return await Promise.all(
+			userPlaces.map(async (userPlace) =>
+				UserPlacesEntity.initialize({
+					id: userPlace.id,
+					visitedAt: userPlace.visitedAt,
+					visitStatus: userPlace.visitStatus,
+					userId: userPlace.userId,
+					placeId: userPlace.placeId,
+					createdAt: userPlace.createdAt,
+					updatedAt: userPlace.updatedAt,
+				})
+			)
+		);
+	}
+
 	public async getById(userId: string, placeId: string) {
 		const userPlace = await this.model.query().findOne({ userId, placeId });
 

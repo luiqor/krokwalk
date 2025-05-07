@@ -9,13 +9,24 @@ import type {
 	UserDto,
 	UserSignUpRequestDto,
 } from "./libs/types/types.js";
+import { type AchievementService } from "../achievements/achievements";
 
 class UserService implements Service {
-	private repository: UserRepository;
 	private encrypt: Encrypt;
+	private repository: UserRepository;
+	private achievementService: AchievementService;
 
-	public constructor(repository: UserRepository, encrypt: Encrypt) {
+	public constructor({
+		repository,
+		achievementService,
+		encrypt,
+	}: {
+		repository: UserRepository;
+		achievementService: AchievementService;
+		encrypt: Encrypt;
+	}) {
 		this.repository = repository;
+		this.achievementService = achievementService;
 		this.encrypt = encrypt;
 	}
 
@@ -63,6 +74,34 @@ class UserService implements Service {
 		items: null[];
 	}> {
 		return Promise.resolve({ items: [null] });
+	}
+
+	public async addAchievement({
+		id,
+		achievementId,
+	}: {
+		id: string;
+		achievementId: string;
+	}): Promise<ReturnType<UserEntity["toDetailedObject"]>> {
+		const achievement = await this.achievementService.getById(achievementId);
+
+		if (achievement === null) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.ACHIEVEMENTS.NOT_FOUND,
+			});
+		}
+
+		const entity = await this.repository.addAchievement(id, achievementId);
+
+		if (entity === null) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER.NOT_FOUND,
+			});
+		}
+
+		return entity.toDetailedObject();
 	}
 }
 

@@ -9,6 +9,9 @@ const HTTPErrorMessage = {
 		TRIP_BETWEEN_POINTS_NOT_FOUND:
 			"Trip between specified points could not be created.",
 	},
+	ACHIEVEMENTS: {
+		NOT_FOUND: "Achievement not found.",
+	},
 	AUTH: {
 		INVALID_CREDENTIALS: "Invalid credentials.",
 		EMAIL_ALREADY_EXISTS: "User with this email already exists.",

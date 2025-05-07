@@ -3,7 +3,7 @@ import { Model, type RelationMappings } from "objection";
 import { BaseModel } from "../../libs/modules/model/model";
 import { DatabaseTableName } from "../../libs/modules/database/database";
 import { UserPlacesModel } from "../user-places/user-places.model";
-import { AchievementModel } from "./achievement.model";
+import { AchievementModel } from "../achievements/achievements";
 
 class UserModel extends BaseModel {
 	email!: string;

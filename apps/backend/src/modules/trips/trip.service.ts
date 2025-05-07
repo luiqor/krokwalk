@@ -1,15 +1,19 @@
+import { VisitStatus } from "shared";
+
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
 import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
 import type { TagService } from "../tags/tags";
 import type { TourService } from "../tours/tours";
+import type { UserService } from "../users/users";
+import { ensureArray } from "~/libs/helpers/helpers";
+import type { UserPlacesService } from "../user-places/user-places";
 
 import type {
 	CreateTripBodyDto,
 	CreateTripResDto,
 	GetWalkTimeDto,
 } from "./libs/types/types";
-import { ensureArray } from "~/libs/helpers/helpers";
 import type { TripRouteService } from "./trip-route.service";
 
 const AVERAGE_NUMBER_OF_PLACES_TO_VISIT = 3;
@@ -26,7 +30,15 @@ type Constructor = {
 	tagService: TagService;
 	tourService: TourService;
 	tripRouteService: TripRouteService;
+	userPlacesService: UserPlacesService;
+	userService: UserService;
 };
+
+type CreateTripRequestDto = {
+	placeIds: string[];
+};
+
+type CreateTripResponseDto = void;
 
 class TripService {
 	private geoApify: GeoApify;
@@ -34,6 +46,8 @@ class TripService {
 	private tagService: TagService;
 	private tourService: TourService;
 	private tripRouteService: TripRouteService;
+	private userPlacesService: UserPlacesService;
+	private userService: UserService;
 
 	public constructor({
 		geoApify,
@@ -41,12 +55,16 @@ class TripService {
 		tagService,
 		tourService,
 		tripRouteService,
+		userPlacesService,
+		userService,
 	}: Constructor) {
 		this.geoApify = geoApify;
 		this.placeService = placeService;
 		this.tagService = tagService;
 		this.tourService = tourService;
 		this.tripRouteService = tripRouteService;
+		this.userPlacesService = userPlacesService;
+		this.userService = userService;
 	}
 
 	private filterClosestPlaces({
@@ -339,6 +357,68 @@ class TripService {
 			destinationPoint: destinationPointCoordinates,
 			userId: userId ?? null,
 		};
+	}
+
+	public async completeTrip({
+		placeIds,
+		userId,
+	}: CreateTripRequestDto & {
+		userId: string | null;
+	}): Promise<CreateTripResponseDto> {
+		if (!userId) {
+			throw new HTTPError({
+				status: HTTPCode.UNAUTHORIZED,
+				message: HTTPErrorMessage.AUTH.UNAUTHORIZED,
+			});
+		}
+
+		const userPlaces = await this.userPlacesService.getManyByIds(
+			userId,
+			placeIds
+		);
+
+		if (placeIds.length !== userPlaces.length) {
+			const notExistingPlaces = placeIds.filter(
+				(placeId) => !userPlaces.some((place) => place.id === placeId)
+			);
+
+			throw new HTTPError({
+				status: HTTPCode.BAD_REQUEST,
+				message: `${HTTPErrorMessage.NOT_FOUND}. Places ${notExistingPlaces.join(
+					", "
+				)} don't exist`,
+			});
+		}
+
+		const confirmedPlaces = userPlaces.filter(
+			(place) => place.visitStatus === VisitStatus.CONFIRMED
+		);
+
+		if (confirmedPlaces.length !== placeIds.length) {
+			const notConfirmedPlaces = placeIds.filter(
+				(placeId) => !confirmedPlaces.some((place) => place.id === placeId)
+			);
+
+			throw new HTTPError({
+				status: HTTPCode.BAD_REQUEST,
+				message: `Places ${notConfirmedPlaces.join(", ")} are not confirmed.`,
+			});
+		}
+
+		// TODO: Implement achievement logic
+		const achievement = await this.userPlacesService.getAchievementByEvent({
+			achievementEvent: "trip-completed",
+			targetCount: confirmedPlaces.length,
+		});
+
+		const { achievements } = await this.userService.addAchievement({
+			id: userId,
+			achievementId: "trip-completed",
+		});
+
+		console.log(`Achievements: ${achievements.join(", ")}`);
+
+		return Promise.resolve();
 	}
 }
 

@@ -82,6 +82,42 @@ class UserRepository implements Repository {
 	public getAll(): Promise<null[]> {
 		return Promise.resolve([null]);
 	}
+
+	public async addAchievement(
+		id: string,
+		achievementId: string
+	): Promise<null | UserEntity> {
+		await this.model
+			.relatedQuery(DatabaseTableName.ACHIEVEMENTS)
+			.for(id)
+			.relate(achievementId);
+
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphFetched(DatabaseTableName.ACHIEVEMENTS)
+			.where(`${DatabaseTableName.ACHIEVEMENTS}.id`, achievementId);
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
 }
 
 export { UserRepository };
