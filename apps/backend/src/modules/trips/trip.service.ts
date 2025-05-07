@@ -428,7 +428,17 @@ class TripService {
 			});
 		}
 
-		// TODO: Check if the user already has this exact achievement. If so - send empty array
+		const { achievements: existingAchievements } =
+			await this.userService.getAchievementById({
+				id: userId,
+				achievementId: placeAchievement.id,
+			});
+
+		if (existingAchievements.length > 0) {
+			return {
+				newAchievements: [],
+			};
+		}
 
 		const { achievements } = await this.userService.addAchievement({
 			id: userId,
