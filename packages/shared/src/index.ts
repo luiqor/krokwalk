@@ -29,6 +29,8 @@ export {
 	type GeoPoint,
 	type CreateTripPlace,
 	type CreateTripResDto,
+	type CompleteTripRequestDto,
+	type CompleteTripResponseDto,
 } from "./libs/modules/trips/trips";
 export {
 	type UserDto,

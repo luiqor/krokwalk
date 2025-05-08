@@ -3,4 +3,6 @@ export type {
 	CreateTripBodyDto,
 	CreateTripPlace,
 	CreateTripResDto,
+	CompleteTripRequestDto,
+	CompleteTripResponseDto,
 } from "shared";

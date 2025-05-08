@@ -33,7 +33,7 @@ class UserPlacesRepository implements Repository {
 		const userPlaces = await this.model
 			.query()
 			.where({ userId })
-			.whereIn("id", ids);
+			.whereIn("placeId", ids);
 
 		return await Promise.all(
 			userPlaces.map(async (userPlace) =>

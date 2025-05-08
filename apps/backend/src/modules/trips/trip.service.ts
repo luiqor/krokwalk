@@ -1,4 +1,4 @@
-import { AchievementDto, VisitStatus } from "shared";
+import { VisitStatus } from "shared";
 
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
@@ -14,6 +14,8 @@ import { ensureArray } from "~/libs/helpers/helpers";
 import type { UserPlacesService } from "../user-places/user-places";
 
 import type {
+	CompleteTripRequestDto,
+	CompleteTripResponseDto,
 	CreateTripBodyDto,
 	CreateTripResDto,
 	GetWalkTimeDto,
@@ -37,14 +39,6 @@ type Constructor = {
 	userPlacesService: UserPlacesService;
 	userService: UserService;
 	achievementService: AchievementService;
-};
-
-type CompleteTripRequestDto = {
-	placeIds: string[];
-};
-
-type CompleteTripResponseDto = {
-	newAchievements: AchievementDto[];
 };
 
 class TripService {
@@ -373,15 +367,8 @@ class TripService {
 		placeIds,
 		userId,
 	}: CompleteTripRequestDto & {
-		userId: string | null;
+		userId: string;
 	}): Promise<CompleteTripResponseDto> {
-		if (!userId) {
-			throw new HTTPError({
-				status: HTTPCode.UNAUTHORIZED,
-				message: HTTPErrorMessage.AUTH.UNAUTHORIZED,
-			});
-		}
-
 		const userPlaces = await this.userPlacesService.getManyByIds(
 			userId,
 			placeIds
@@ -422,10 +409,9 @@ class TripService {
 			});
 
 		if (!placeAchievement) {
-			throw new HTTPError({
-				status: HTTPCode.NOT_FOUND,
-				message: HTTPErrorMessage.ACHIEVEMENTS.NOT_FOUND,
-			});
+			return {
+				newAchievements: [],
+			};
 		}
 
 		const { achievements: existingAchievements } =
