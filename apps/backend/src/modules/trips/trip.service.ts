@@ -402,41 +402,68 @@ class TripService {
 			});
 		}
 
-		const placeAchievement =
+		const placeAchievements =
 			await this.achievementService.getAchievementByEvent({
 				achievementEvent: AchievementEvent.VISIT_PLACE,
 				targetCount: confirmedPlaces.length,
 			});
 
-		if (!placeAchievement) {
+		if (!placeAchievements || placeAchievements.length === 0) {
 			return {
 				newAchievements: [],
 			};
 		}
 
-		const { achievements: existingAchievements } =
-			await this.userService.getAchievementById({
+		const placeAchievementIds = placeAchievements.map(
+			(achievement) => achievement.id
+		);
+
+		const { achievements: existingPlaceUserAchievements } =
+			await this.userService.getAchievementsByIds({
 				id: userId,
-				achievementId: placeAchievement.id,
+				achievementIds: placeAchievementIds,
 			});
 
-		if (existingAchievements.length > 0) {
+		console.log(`placeAchievements: ${placeAchievementIds.join(", ")}`);
+
+		const existingPlaceAchievementIds = existingPlaceUserAchievements.map(
+			(achievement) => achievement.id
+		);
+
+		console.log(
+			`existingPlaceAchievementIds: ${existingPlaceAchievementIds.join(", ")}`
+		);
+		const newAchievements = placeAchievements.filter(
+			(achievement) => !existingPlaceAchievementIds.includes(achievement.id)
+		);
+
+		console.log(
+			`newAchievements: ${newAchievements.map((a) => a.id).join(", ")}`
+		);
+
+		if (newAchievements.length === 0) {
 			return {
 				newAchievements: [],
 			};
 		}
 
-		const { achievements } = await this.userService.addAchievement({
-			id: userId,
-			achievementId: placeAchievement.id,
-		});
+		const newUserAchievements = (
+			await Promise.all(
+				newAchievements.map(async (achievement) => {
+					const { achievements } = await this.userService.addAchievement({
+						id: userId,
+						achievementId: achievement.id,
+					});
 
-		const placesAchievement = achievements[0];
+					return achievements;
+				})
+			)
+		).flat();
 
-		console.log(`newAchievements: ${achievements.join(", ")}`);
+		console.log(`newAchievements: ${newUserAchievements.join(", ")}`);
 
 		return {
-			newAchievements: placesAchievement ? [placesAchievement] : [],
+			newAchievements: newUserAchievements,
 		};
 	}
 }

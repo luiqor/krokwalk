@@ -25,8 +25,8 @@ class AchievementService implements Service {
 	}: {
 		achievementEvent: string;
 		targetCount: number;
-	}): Promise<null | AchievementDto> {
-		return this.repository.getAchievementByEvent({
+	}): Promise<null | AchievementDto[]> {
+		return this.repository.getAchievementsByEvent({
 			achievementEvent,
 			targetCount,
 		});

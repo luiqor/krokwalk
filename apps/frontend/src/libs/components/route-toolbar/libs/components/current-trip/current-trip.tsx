@@ -22,7 +22,12 @@ const CurrentTrip: React.FC = () => {
 	};
 
 	const handleCompleteTrip = () => {
-		// TODO: Implement the logic to complete the trip
+		const stopoverPlacesIds = stopoverPoints.map((point) => point.id);
+		dispatch(
+			tripAction.completeTrip({
+				placeIds: stopoverPlacesIds,
+			})
+		);
 	};
 
 	const { hours, minutes } = convertSecondsToHoursAndMinutes(walkSeconds ?? 0);

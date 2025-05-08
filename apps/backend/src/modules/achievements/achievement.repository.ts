@@ -32,30 +32,31 @@ class AchievementRepository implements Repository {
 		};
 	}
 
-	public async getAchievementByEvent({
+	public async getAchievementsByEvent({
 		achievementEvent,
 		targetCount,
 	}: {
 		achievementEvent: string;
 		targetCount: number;
-	}): Promise<AchievementDto | null> {
-		const model = await this.model.query().findOne({
-			achievementEvent,
-			targetCount,
-		});
+	}): Promise<AchievementDto[] | null> {
+		const models = await this.model
+			.query()
+			.where({ achievementEvent })
+			.andWhere("targetCount", "<=", targetCount)
+			.orderBy("targetCount", "desc");
 
-		if (!model) {
+		if (!models || models.length === 0) {
 			return null;
 		}
 
-		return {
+		return models.map((model) => ({
 			id: model.id,
 			title: model.title,
 			description: model.description,
 			iconLink: model.iconLink,
 			achievementEvent: model.achievementEvent,
 			targetCount: model.targetCount,
-		};
+		}));
 	}
 }
 

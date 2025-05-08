@@ -7,14 +7,18 @@ import type {
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import { actions as authActions } from "../auth/auth.js";
+import { actions as locationAction } from "../location/location.js";
 
 import { name as sliceName } from "./trip.slice.js";
+import { actions as tripAction } from "./trip.slice.js";
 import type {
+	CompleteTripResponseDto,
 	CreateTripBodyDto,
 	CreateTripResDto,
 	GetWalkTimeDto,
 	GetWalkTimeParams,
 	UnauthUserUpdateVisitStatusResult,
+	CompleteTripRequestDto,
 } from "./libs/types/types.js";
 import { storage, StorageKey } from "../storage/storage.js";
 
@@ -44,7 +48,6 @@ const createTrip = createAsyncThunk<
 
 	const response = await tripService.create(params);
 
-	console.log("response.userId", response.userId);
 	if (response.userId === null && !isAnonymousEnabled) {
 		dispatch(authActions.triggerOpenModal());
 	}
@@ -138,13 +141,30 @@ const getPlacesDataForUnauth = createAsyncThunk<
 	UnauthUserUpdateVisitStatusResult[],
 	undefined,
 	AsyncThunkConfig
->(`${sliceName}/get-places-data-unauth`, async (_) => {
+>(`${sliceName}/get-places-data-unauth`, async () => {
 	const placesString = await storage.get(StorageKey.PLACES);
 
 	const { places }: { places: UnauthUserUpdateVisitStatusResult[] } =
 		placesString ? JSON.parse(placesString) : { places: [] };
 
 	return places;
+});
+
+const completeTrip = createAsyncThunk<
+	CompleteTripResponseDto,
+	CompleteTripRequestDto,
+	AsyncThunkConfig
+>(`${sliceName}/complete-trip`, async (payload, { dispatch, extra }) => {
+	const { tripService } = extra;
+
+	const response = await tripService.complete(payload);
+
+	if (response.newAchievements.length === 0) {
+		dispatch(locationAction.resetLocationData());
+		dispatch(tripAction.resetTripData());
+	}
+
+	return response;
 });
 
 export {
@@ -154,4 +174,5 @@ export {
 	confirmPlaceVisit,
 	updatePlaceVisitStatusUnauth,
 	getPlacesDataForUnauth,
+	completeTrip,
 };

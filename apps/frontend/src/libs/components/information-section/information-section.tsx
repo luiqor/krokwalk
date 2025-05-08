@@ -22,7 +22,6 @@ const InformationSection = () => {
 
 			const result = await fetch(`http://localhost:8000/api/places/${id}`);
 			setInfo(await result.json());
-			setTimeout(() => console.log(info), 600);
 		};
 
 		fetchData(id);

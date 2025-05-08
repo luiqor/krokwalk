@@ -95,8 +95,10 @@ class UserRepository implements Repository {
 		const user = await this.model
 			.query()
 			.findById(id)
-			.withGraphFetched(DatabaseTableName.ACHIEVEMENTS)
-			.where(`${DatabaseTableName.ACHIEVEMENTS}.id`, achievementId);
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.where("id", achievementId);
+			});
 
 		return user
 			? UserEntity.initializeDetailed({
@@ -128,6 +130,39 @@ class UserRepository implements Repository {
 			.findById(id)
 			.withGraphFetched(DatabaseTableName.ACHIEVEMENTS)
 			.where(`${DatabaseTableName.ACHIEVEMENTS}.id`, achievementId);
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
+
+	public async getAchievementsByIds(
+		id: string,
+		achievementIds: string[]
+	): Promise<null | UserEntity> {
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.whereIn("achievements.id", achievementIds);
+			});
 
 		return user
 			? UserEntity.initializeDetailed({

@@ -122,6 +122,28 @@ class UserService implements Service {
 
 		return entity.toDetailedObject();
 	}
+
+	public async getAchievementsByIds({
+		id,
+		achievementIds,
+	}: {
+		id: string;
+		achievementIds: string[];
+	}): Promise<ReturnType<UserEntity["toDetailedObject"]>> {
+		const entity = await this.repository.getAchievementsByIds(
+			id,
+			achievementIds
+		);
+
+		if (entity === null) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER.NOT_FOUND,
+			});
+		}
+
+		return entity.toDetailedObject();
+	}
 }
 
 export { UserService };
