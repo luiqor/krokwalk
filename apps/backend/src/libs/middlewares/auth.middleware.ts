@@ -36,6 +36,7 @@ export const authMiddleware = async (
 				try {
 					const decodedToken = await token.decode(jwtToken);
 					req.user = decodedToken.payload;
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (error) {
 					return next();
 				}
