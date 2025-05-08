@@ -14,6 +14,7 @@ import {
 } from "./actions.js";
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 import type { CreateTripPlace } from "./libs/types/types.js";
+import { DEFAULT_ACHIEVEMENT } from "./libs/constants/constants.js";
 
 type State = {
 	minimumWalkSeconds: number | null;
@@ -141,7 +142,10 @@ const { reducer, actions, name } = createSlice({
 			});
 		});
 		builder.addCase(completeTrip.fulfilled, (state, action) => {
-			state.newAchievements = action.payload.newAchievements;
+			state.newAchievements = [
+				...action.payload.newAchievements,
+				DEFAULT_ACHIEVEMENT,
+			];
 			state.status = DataStatus.FULFILLED;
 		});
 		builder.addMatcher(

@@ -424,21 +424,12 @@ class TripService {
 				achievementIds: placeAchievementIds,
 			});
 
-		console.log(`placeAchievements: ${placeAchievementIds.join(", ")}`);
-
 		const existingPlaceAchievementIds = existingPlaceUserAchievements.map(
 			(achievement) => achievement.id
 		);
 
-		console.log(
-			`existingPlaceAchievementIds: ${existingPlaceAchievementIds.join(", ")}`
-		);
 		const newAchievements = placeAchievements.filter(
 			(achievement) => !existingPlaceAchievementIds.includes(achievement.id)
-		);
-
-		console.log(
-			`newAchievements: ${newAchievements.map((a) => a.id).join(", ")}`
 		);
 
 		if (newAchievements.length === 0) {
@@ -459,8 +450,6 @@ class TripService {
 				})
 			)
 		).flat();
-
-		console.log(`newAchievements: ${newUserAchievements.join(", ")}`);
 
 		return {
 			newAchievements: newUserAchievements,

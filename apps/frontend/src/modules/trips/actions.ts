@@ -7,10 +7,8 @@ import type {
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import { actions as authActions } from "../auth/auth.js";
-import { actions as locationAction } from "../location/location.js";
 
 import { name as sliceName } from "./trip.slice.js";
-import { actions as tripAction } from "./trip.slice.js";
 import type {
 	CompleteTripResponseDto,
 	CreateTripBodyDto,
@@ -154,15 +152,10 @@ const completeTrip = createAsyncThunk<
 	CompleteTripResponseDto,
 	CompleteTripRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/complete-trip`, async (payload, { dispatch, extra }) => {
+>(`${sliceName}/complete-trip`, async (payload, { extra }) => {
 	const { tripService } = extra;
 
 	const response = await tripService.complete(payload);
-
-	if (response.newAchievements.length === 0) {
-		dispatch(locationAction.resetLocationData());
-		dispatch(tripAction.resetTripData());
-	}
 
 	return response;
 });
