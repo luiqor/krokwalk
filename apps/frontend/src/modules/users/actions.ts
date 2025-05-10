@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { UserGetResponseDto, UserGetParametersDto } from "shared";
+import type { UserGetParametersDto, GetUserProfileResponseDto } from "shared";
 
 import type { AsyncThunkConfig } from "~/libs/types/types.js";
 import { name as sliceName } from "./user.slice.js";
 
 const getUser = createAsyncThunk<
-	UserGetResponseDto,
+	GetUserProfileResponseDto,
 	UserGetParametersDto,
 	AsyncThunkConfig
 >(`${sliceName}/get-by-id`, async (payload, { extra: { userService } }) => {

@@ -1,6 +1,6 @@
 import {
-	type UserDto,
-	UserPatchConfirmVisitResponseDto,
+	type GetUserProfileResponseDto,
+	type UserPatchConfirmVisitResponseDto,
 	type UserPatchVisitStatusResponseDto,
 	type ValueOf,
 	VisitStatus,
@@ -18,7 +18,7 @@ class UserService extends BaseService {
 		});
 	}
 
-	async getById(id: string): Promise<UserDto> {
+	async getById(id: string): Promise<GetUserProfileResponseDto> {
 		return await this.http.load(this.getUrl(`/${id}`), {
 			method: "GET",
 		});

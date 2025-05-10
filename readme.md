@@ -33,9 +33,11 @@ erDiagram
         string username
         string password_hash
         string password_salt
+        uuid main_achievement_id FK
         datetime created_at
         datetime updated_at
     }
+    ACHIEVEMENTS |o--o{ USERS : "main_achievement_id"
 
     PLACES {
         uuid id PK

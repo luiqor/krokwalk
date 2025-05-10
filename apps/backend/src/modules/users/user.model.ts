@@ -14,6 +14,8 @@ class UserModel extends BaseModel {
 
 	passwordSalt!: string;
 
+	mainAchievementId!: string | null;
+
 	achievements!: AchievementModel[];
 
 	static get relationMappings(): RelationMappings {

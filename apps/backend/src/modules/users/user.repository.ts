@@ -31,6 +31,7 @@ class UserRepository implements Repository {
 			username: user.username,
 			passwordHash: user.passwordHash,
 			passwordSalt: user.passwordSalt,
+			mainAchievementId: user.mainAchievementId,
 			createdAt: user.createdAt,
 			updatedAt: user.updatedAt,
 		});
@@ -46,6 +47,7 @@ class UserRepository implements Repository {
 					username: user.username,
 					passwordHash: user.passwordHash,
 					passwordSalt: user.passwordSalt,
+					mainAchievementId: user.mainAchievementId,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
 				})
@@ -67,6 +69,7 @@ class UserRepository implements Repository {
 					passwordSalt: user.passwordSalt,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
 					achievements: user.achievements.map((achievement) => ({
 						id: achievement.id,
 						title: achievement.title,
@@ -109,6 +112,7 @@ class UserRepository implements Repository {
 					passwordSalt: user.passwordSalt,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
 					achievements: user.achievements.map((achievement) => ({
 						id: achievement.id,
 						title: achievement.title,
@@ -140,6 +144,7 @@ class UserRepository implements Repository {
 					passwordSalt: user.passwordSalt,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
 					achievements: user.achievements.map((achievement) => ({
 						id: achievement.id,
 						title: achievement.title,
@@ -173,6 +178,7 @@ class UserRepository implements Repository {
 					passwordSalt: user.passwordSalt,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
 					achievements: user.achievements.map((achievement) => ({
 						id: achievement.id,
 						title: achievement.title,
@@ -181,6 +187,31 @@ class UserRepository implements Repository {
 						achievementEvent: achievement.achievementEvent,
 						targetCount: achievement.targetCount,
 					})),
+				})
+			: null;
+	}
+
+	public async editUserMainAchievement(
+		id: string,
+		mainAchievementId: string
+	): Promise<null | UserEntity> {
+		const user = await this.model
+			.query()
+			.findById(id)
+			.patch({ mainAchievementId })
+			.returning("*")
+			.first();
+
+		return user
+			? UserEntity.initialize({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					mainAchievementId: user.mainAchievementId,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
 				})
 			: null;
 	}

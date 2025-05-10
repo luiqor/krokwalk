@@ -17,6 +17,8 @@ class UserEntity implements Entity {
 
 	private updatedAt: string;
 
+	private mainAchievementId: string | null;
+
 	private achievements: AchievementDto[];
 
 	private constructor({
@@ -27,6 +29,7 @@ class UserEntity implements Entity {
 		passwordHash,
 		passwordSalt,
 		updatedAt,
+		mainAchievementId,
 		achievements,
 	}: {
 		createdAt: string;
@@ -36,6 +39,7 @@ class UserEntity implements Entity {
 		passwordHash: string;
 		passwordSalt: string;
 		updatedAt: string;
+		mainAchievementId: string | null;
 		achievements: AchievementDto[];
 	}) {
 		this.createdAt = createdAt;
@@ -45,6 +49,7 @@ class UserEntity implements Entity {
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
 		this.updatedAt = updatedAt;
+		this.mainAchievementId = mainAchievementId;
 		this.achievements = achievements;
 	}
 
@@ -55,6 +60,7 @@ class UserEntity implements Entity {
 		username,
 		passwordHash,
 		passwordSalt,
+		mainAchievementId,
 		updatedAt,
 	}: {
 		createdAt: string;
@@ -63,6 +69,7 @@ class UserEntity implements Entity {
 		username: string;
 		passwordHash: string;
 		passwordSalt: string;
+		mainAchievementId: string | null;
 		updatedAt: string;
 	}): UserEntity {
 		return new UserEntity({
@@ -73,6 +80,7 @@ class UserEntity implements Entity {
 			passwordHash,
 			passwordSalt,
 			updatedAt,
+			mainAchievementId: mainAchievementId,
 			achievements: [],
 		});
 	}
@@ -85,6 +93,7 @@ class UserEntity implements Entity {
 		passwordHash,
 		passwordSalt,
 		updatedAt,
+		mainAchievementId,
 		achievements,
 	}: {
 		createdAt: string;
@@ -94,6 +103,7 @@ class UserEntity implements Entity {
 		passwordHash: string;
 		passwordSalt: string;
 		updatedAt: string;
+		mainAchievementId: string | null;
 		achievements: AchievementDto[];
 	}): UserEntity {
 		return new UserEntity({
@@ -104,6 +114,7 @@ class UserEntity implements Entity {
 			passwordHash,
 			passwordSalt,
 			updatedAt,
+			mainAchievementId,
 			achievements,
 		});
 	}
@@ -127,6 +138,7 @@ class UserEntity implements Entity {
 			passwordHash,
 			passwordSalt,
 			updatedAt: "",
+			mainAchievementId: null,
 			achievements: [],
 		});
 	}
@@ -154,6 +166,7 @@ class UserEntity implements Entity {
 		email: string;
 		username: string;
 		id: string;
+		mainAchievementId: string | null;
 		updatedAt: string;
 	} {
 		return {
@@ -161,6 +174,7 @@ class UserEntity implements Entity {
 			email: this.email,
 			username: this.username,
 			id: this.id as string,
+			mainAchievementId: this.mainAchievementId,
 			updatedAt: this.updatedAt,
 		};
 	}
@@ -171,6 +185,7 @@ class UserEntity implements Entity {
 		username: string;
 		id: string;
 		updatedAt: string;
+		mainAchievementId: string | null;
 		achievements: AchievementDto[];
 	} {
 		return {
@@ -179,6 +194,7 @@ class UserEntity implements Entity {
 			username: this.username,
 			id: this.id as string,
 			updatedAt: this.updatedAt,
+			mainAchievementId: this.mainAchievementId,
 			achievements: this.achievements,
 		};
 	}

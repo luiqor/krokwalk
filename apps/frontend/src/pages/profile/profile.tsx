@@ -7,13 +7,15 @@ import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
 import { actions as usersActions } from "~/modules/users/users.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 
+import styles from "./profile.module.css";
+
 const Profile: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams<{ id: string }>();
 
 	const { user: authUser } = useAppSelector((state) => state.auth);
-	const { user, status } = useAppSelector((state) => state.users);
+	const { user, status, achievements } = useAppSelector((state) => state.users);
 
 	useEffect(() => {
 		if (status === "pending" || status === "fulfilled") {
@@ -103,6 +105,26 @@ const Profile: React.FC = () => {
 					>
 						Logout
 					</Button>
+				)}
+				{achievements.length > 0 && (
+					<div className={styles.achievementsContainer}>
+						{achievements.map((achievement) => (
+							<div
+								key={achievement.id}
+								className={styles.achievementCard}
+							>
+								<img
+									src={achievement.iconLink}
+									alt={achievement.title}
+									className={styles.achievementIcon}
+								/>
+								<h3 className={styles.achievementTitle}>{achievement.title}</h3>
+								<p className={styles.achievementDescription}>
+									{achievement.description}
+								</p>
+							</div>
+						))}
+					</div>
 				)}
 			</Card>
 		</Box>

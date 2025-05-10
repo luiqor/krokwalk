@@ -28,6 +28,9 @@ const HTTPErrorMessage = {
 		NOT_FOUND: "Place not found.",
 		TOO_FAR: "Place is too far. Unfortunately, you cannot confirm your visit.",
 	},
+	USER_ACHIEVEMENTS: {
+		NOT_FOUND: "You did not earn specified achievement yet.",
+	},
 } as const;
 
 export { HTTPErrorMessage };

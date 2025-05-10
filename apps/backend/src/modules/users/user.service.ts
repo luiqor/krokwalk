@@ -144,6 +144,40 @@ class UserService implements Service {
 
 		return entity.toDetailedObject();
 	}
+
+	public async editUserMainAchievement({
+		id,
+		achievementId,
+	}: {
+		id: string;
+		achievementId: string;
+	}): Promise<ReturnType<UserEntity["toObject"]>> {
+		const { achievements: userAchievements } = await this.getAchievementById({
+			id,
+			achievementId,
+		});
+
+		if (userAchievements.length === 0) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER_ACHIEVEMENTS.NOT_FOUND,
+			});
+		}
+
+		const entity = await this.repository.editUserMainAchievement(
+			id,
+			achievementId
+		);
+
+		if (entity === null) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER.NOT_FOUND,
+			});
+		}
+
+		return entity.toObject();
+	}
 }
 
 export { UserService };
