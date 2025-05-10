@@ -1,5 +1,6 @@
 import {
 	type GetUserProfileResponseDto,
+	type UserDto,
 	type UserPatchConfirmVisitResponseDto,
 	type UserPatchVisitStatusResponseDto,
 	type ValueOf,
@@ -46,6 +47,13 @@ class UserService extends BaseService {
 		return await this.http.load(this.getUrl(`/places/${placeId}/confirm`), {
 			method: "PATCH",
 			payload: JSON.stringify({ lat, lng }),
+			hasAuth: true,
+		});
+	}
+
+	async editMainAchievement(achievementId: string): Promise<UserDto> {
+		return await this.http.load(this.getUrl(`/achievements/${achievementId}`), {
+			method: "PATCH",
 			hasAuth: true,
 		});
 	}

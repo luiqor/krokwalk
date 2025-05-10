@@ -89,7 +89,7 @@ class UserController extends BaseController {
 		req: AppRequest,
 		res: Response
 	): Promise<void> {
-		const response = await this.service.addAchievement({
+		const response = await this.service.editUserMainAchievement({
 			id: req.user!.userId,
 			achievementId: req.params.achievementId,
 		});

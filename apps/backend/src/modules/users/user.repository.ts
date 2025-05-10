@@ -132,8 +132,10 @@ class UserRepository implements Repository {
 		const user = await this.model
 			.query()
 			.findById(id)
-			.withGraphFetched(DatabaseTableName.ACHIEVEMENTS)
-			.where(`${DatabaseTableName.ACHIEVEMENTS}.id`, achievementId);
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.where("achievements.id", achievementId);
+			});
 
 		return user
 			? UserEntity.initializeDetailed({

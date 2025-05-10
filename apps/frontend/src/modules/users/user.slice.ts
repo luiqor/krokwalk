@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { AchievementDto, UserDto, ValueOf } from "shared";
 
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
-import { getUser } from "./actions.js";
+import { editMainAchievement, getUser } from "./actions.js";
 
 type State = {
 	status: ValueOf<typeof DataStatus>;
@@ -25,6 +25,10 @@ const { reducer, actions, name } = createSlice({
 			const { achievements, ...userDetails } = action.payload;
 			state.user = userDetails;
 			state.achievements = achievements;
+			state.status = DataStatus.FULFILLED;
+		});
+		builder.addCase(editMainAchievement.fulfilled, (state, action) => {
+			state.user = action.payload;
 			state.status = DataStatus.FULFILLED;
 		});
 		builder.addCase(getUser.pending, (state) => {

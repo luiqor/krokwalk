@@ -7,7 +7,7 @@ const TableName = {
 
 const ColumnName = {
 	ID: "id",
-	MAIN_ACHIEVEMENT: "main_achievement",
+	MAIN_ACHIEVEMENT_ID: "main_achievement_id",
 } as const;
 
 const DELETE_STRATEGY = "CASCADE";
@@ -15,7 +15,7 @@ const DELETE_STRATEGY = "CASCADE";
 export async function up(knex: Knex): Promise<void> {
 	await knex.schema.alterTable(TableName.USERS, (table) => {
 		table
-			.uuid(ColumnName.MAIN_ACHIEVEMENT)
+			.uuid(ColumnName.MAIN_ACHIEVEMENT_ID)
 			.nullable()
 			.references(ColumnName.ID)
 			.inTable(TableName.ACHIEVEMENTS)
@@ -26,6 +26,6 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
 	await knex.schema.alterTable(TableName.USERS, (table) => {
-		table.dropColumn(ColumnName.MAIN_ACHIEVEMENT);
+		table.dropColumn(ColumnName.MAIN_ACHIEVEMENT_ID);
 	});
 }
