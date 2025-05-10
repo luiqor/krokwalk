@@ -38,7 +38,7 @@ class AchievementRepository implements Repository {
 	}: {
 		achievementEvent: string;
 		targetCount: number;
-	}): Promise<AchievementDto[] | null> {
+	}): Promise<AchievementDto[]> {
 		const models = await this.model
 			.query()
 			.where({ achievementEvent })
@@ -46,7 +46,7 @@ class AchievementRepository implements Repository {
 			.orderBy("targetCount", "desc");
 
 		if (!models || models.length === 0) {
-			return null;
+			return [];
 		}
 
 		return models.map((model) => ({

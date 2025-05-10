@@ -408,7 +408,7 @@ class TripService {
 				targetCount: confirmedPlaces.length,
 			});
 
-		if (!placeAchievements || placeAchievements.length === 0) {
+		if (placeAchievements.length === 0) {
 			return {
 				newAchievements: [],
 			};
