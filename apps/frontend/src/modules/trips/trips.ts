@@ -1,4 +1,5 @@
 import {
+	completeTrip,
 	confirmPlaceVisit,
 	createTrip,
 	getPlacesDataForUnauth,
@@ -17,6 +18,7 @@ const allActions = {
 	confirmPlaceVisit,
 	updatePlaceVisitStatusUnauth,
 	getPlacesDataForUnauth,
+	completeTrip,
 };
 
 const tripService = new TripService();

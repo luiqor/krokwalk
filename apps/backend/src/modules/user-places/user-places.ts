@@ -9,4 +9,4 @@ const userPlacesService = new UserPlacesService(
 	placeService
 );
 
-export { userPlacesService };
+export { userPlacesService, type UserPlacesService };

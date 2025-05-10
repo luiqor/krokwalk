@@ -4,6 +4,9 @@ import { TripRouteService } from "./trip-route.service";
 import { placeService } from "../places/places";
 import { tagService } from "../tags/tags";
 import { tourService } from "../tours/tours";
+import { userPlacesService } from "../user-places/user-places";
+import { achievementService } from "../achievements/achievements";
+import { userService } from "../users/users";
 
 import { TripController } from "./trip.controller";
 
@@ -15,6 +18,9 @@ const tripService = new TripService({
 	tagService,
 	tourService,
 	tripRouteService,
+	userPlacesService,
+	userService,
+	achievementService,
 });
 const tripController = new TripController(tripService);
 

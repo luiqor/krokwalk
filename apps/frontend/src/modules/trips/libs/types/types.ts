@@ -6,6 +6,8 @@ export type {
 	CreateTripBodyDto,
 	CreateTripResDto,
 	CreateTripPlace,
+	CompleteTripResponseDto,
+	CompleteTripRequestDto,
 } from "shared";
 
 type UnauthUserUpdateVisitStatusResult = {

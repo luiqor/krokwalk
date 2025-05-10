@@ -7,6 +7,8 @@ const DatabaseTableName = {
 	MIGRATIONS: "migrations",
 	USERS: "users",
 	USER_PLACES: "user_places",
+	ACHIEVEMENTS: "achievements",
+	USER_ACHIEVEMENTS: "user_achievements",
 } as const;
 
 export { DatabaseTableName };

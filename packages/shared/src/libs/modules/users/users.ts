@@ -6,5 +6,7 @@ export type {
 	UserSignUpResponseDto,
 	UserGetParametersDto,
 	UserGetResponseDto,
+	GetUserProfileResponseDto,
+	AchievementDto,
 } from "./libs/types/types";
 export { UsersApiPath } from "./libs/enums/enums";

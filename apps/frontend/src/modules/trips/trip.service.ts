@@ -7,6 +7,8 @@ import type {
 	CreateTripBodyDto,
 	CreateTripResDto,
 	GetWalkTimeDto,
+	CompleteTripResponseDto,
+	CompleteTripRequestDto,
 } from "./libs/types/types.js";
 
 class TripService extends BaseService<CreateTripResDto> {
@@ -33,6 +35,16 @@ class TripService extends BaseService<CreateTripResDto> {
 		return this.http.load(this.getUrl(TripsApiPath.ROOT), {
 			method: "POST",
 			payload: JSON.stringify(params),
+			hasAuth: true,
+		});
+	}
+
+	async complete(
+		payload: CompleteTripRequestDto
+	): Promise<CompleteTripResponseDto> {
+		return this.http.load(this.getUrl(TripsApiPath.COMPLETE), {
+			method: "POST",
+			payload: JSON.stringify(payload),
 			hasAuth: true,
 		});
 	}

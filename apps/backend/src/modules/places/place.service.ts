@@ -29,6 +29,14 @@ class PlaceService implements Service {
 		return { items: placeEntities.map((entity) => entity.toObject()) };
 	}
 
+	public async getManyByIds(
+		ids: string[]
+	): Promise<ReturnType<PlaceEntity["toUserDetailedObject"]>[]> {
+		const placeEntities = await this.repository.getManyByIds(ids);
+
+		return placeEntities.map((entity) => entity.toUserDetailedObject());
+	}
+
 	public async getById(id: string): Promise<GetPlaceByIdDto> {
 		const placeEntity = await this.repository.getById(id);
 

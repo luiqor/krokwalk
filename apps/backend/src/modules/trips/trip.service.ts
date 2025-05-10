@@ -1,15 +1,25 @@
+import { VisitStatus } from "shared";
+
 import { HTTPCode, HTTPError, HTTPErrorMessage } from "~/libs/http/http";
 import type { GeoApify } from "~/libs/modules/geo-apify/geo-apify";
 import type { PlaceService, PlacesGetAllQueryParams } from "../places/places";
 import type { TagService } from "../tags/tags";
 import type { TourService } from "../tours/tours";
+import type { UserService } from "../users/users";
+import {
+	AchievementEvent,
+	type AchievementService,
+} from "../achievements/achievements";
+import { ensureArray } from "~/libs/helpers/helpers";
+import type { UserPlacesService } from "../user-places/user-places";
 
 import type {
+	CompleteTripRequestDto,
+	CompleteTripResponseDto,
 	CreateTripBodyDto,
 	CreateTripResDto,
 	GetWalkTimeDto,
 } from "./libs/types/types";
-import { ensureArray } from "~/libs/helpers/helpers";
 import type { TripRouteService } from "./trip-route.service";
 
 const AVERAGE_NUMBER_OF_PLACES_TO_VISIT = 3;
@@ -26,6 +36,9 @@ type Constructor = {
 	tagService: TagService;
 	tourService: TourService;
 	tripRouteService: TripRouteService;
+	userPlacesService: UserPlacesService;
+	userService: UserService;
+	achievementService: AchievementService;
 };
 
 class TripService {
@@ -34,6 +47,9 @@ class TripService {
 	private tagService: TagService;
 	private tourService: TourService;
 	private tripRouteService: TripRouteService;
+	private userPlacesService: UserPlacesService;
+	private userService: UserService;
+	private achievementService: AchievementService;
 
 	public constructor({
 		geoApify,
@@ -41,12 +57,18 @@ class TripService {
 		tagService,
 		tourService,
 		tripRouteService,
+		userPlacesService,
+		userService,
+		achievementService,
 	}: Constructor) {
 		this.geoApify = geoApify;
 		this.placeService = placeService;
 		this.tagService = tagService;
 		this.tourService = tourService;
 		this.tripRouteService = tripRouteService;
+		this.userPlacesService = userPlacesService;
+		this.userService = userService;
+		this.achievementService = achievementService;
 	}
 
 	private filterClosestPlaces({
@@ -338,6 +360,99 @@ class TripService {
 			startingPoint: startingPointCoordinates,
 			destinationPoint: destinationPointCoordinates,
 			userId: userId ?? null,
+		};
+	}
+
+	public async completeTrip({
+		placeIds,
+		userId,
+	}: CompleteTripRequestDto & {
+		userId: string;
+	}): Promise<CompleteTripResponseDto> {
+		const userPlaces = await this.userPlacesService.getManyByIds(
+			userId,
+			placeIds
+		);
+
+		if (placeIds.length !== userPlaces.length) {
+			const notExistingPlaces = placeIds.filter(
+				(placeId) => !userPlaces.some((place) => place.id === placeId)
+			);
+
+			throw new HTTPError({
+				status: HTTPCode.BAD_REQUEST,
+				message: `${HTTPErrorMessage.NOT_FOUND}. Places ${notExistingPlaces.join(
+					", "
+				)} don't exist`,
+			});
+		}
+
+		const confirmedPlaces = userPlaces.filter(
+			(place) => place.visitStatus === VisitStatus.CONFIRMED
+		);
+
+		if (confirmedPlaces.length !== placeIds.length) {
+			const notConfirmedPlaces = placeIds.filter(
+				(placeId) => !confirmedPlaces.some((place) => place.id === placeId)
+			);
+
+			throw new HTTPError({
+				status: HTTPCode.BAD_REQUEST,
+				message: `Places ${notConfirmedPlaces.join(", ")} are not confirmed.`,
+			});
+		}
+
+		const placeAchievements =
+			await this.achievementService.getAchievementByEvent({
+				achievementEvent: AchievementEvent.VISIT_PLACE,
+				targetCount: confirmedPlaces.length,
+			});
+
+		if (placeAchievements.length === 0) {
+			return {
+				newAchievements: [],
+			};
+		}
+
+		const placeAchievementIds = placeAchievements.map(
+			(achievement) => achievement.id
+		);
+
+		const { achievements: existingPlaceUserAchievements } =
+			await this.userService.getAchievementsByIds({
+				id: userId,
+				achievementIds: placeAchievementIds,
+			});
+
+		const existingPlaceAchievementIds = existingPlaceUserAchievements.map(
+			(achievement) => achievement.id
+		);
+
+		const newAchievements = placeAchievements.filter(
+			(achievement) => !existingPlaceAchievementIds.includes(achievement.id)
+		);
+
+		if (newAchievements.length === 0) {
+			return {
+				newAchievements: [],
+			};
+		}
+
+		const newUserAchievements = (
+			await Promise.all(
+				newAchievements.map(async (achievement) => {
+					const { achievements } = await this.userService.addAchievement({
+						id: userId,
+						achievementId: achievement.id,
+					});
+
+					return achievements;
+				})
+			)
+		).flat();
+
+		return {
+			newAchievements: newUserAchievements,
 		};
 	}
 }

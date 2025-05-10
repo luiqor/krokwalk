@@ -2,6 +2,7 @@ import type { Repository } from "~/libs/types/types";
 
 import { UserModel } from "./user.model";
 import { UserEntity } from "./user.entity";
+import { DatabaseTableName } from "~/libs/modules/database/database";
 
 class UserRepository implements Repository {
 	private model: typeof UserModel;
@@ -30,6 +31,7 @@ class UserRepository implements Repository {
 			username: user.username,
 			passwordHash: user.passwordHash,
 			passwordSalt: user.passwordSalt,
+			mainAchievementId: user.mainAchievementId,
 			createdAt: user.createdAt,
 			updatedAt: user.updatedAt,
 		});
@@ -45,6 +47,7 @@ class UserRepository implements Repository {
 					username: user.username,
 					passwordHash: user.passwordHash,
 					passwordSalt: user.passwordSalt,
+					mainAchievementId: user.mainAchievementId,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
 				})
@@ -52,7 +55,154 @@ class UserRepository implements Repository {
 	}
 
 	public async getById(id: string): Promise<null | UserEntity> {
-		const user = await this.model.query().findById(id);
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphJoined(DatabaseTableName.ACHIEVEMENTS);
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
+
+	public getAll(): Promise<null[]> {
+		return Promise.resolve([null]);
+	}
+
+	public async addAchievement(
+		id: string,
+		achievementId: string
+	): Promise<null | UserEntity> {
+		await this.model
+			.relatedQuery(DatabaseTableName.ACHIEVEMENTS)
+			.for(id)
+			.relate(achievementId);
+
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.where("id", achievementId);
+			});
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
+
+	public async getAchievementById(
+		id: string,
+		achievementId: string
+	): Promise<null | UserEntity> {
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.where("achievements.id", achievementId);
+			});
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
+
+	public async getAchievementsByIds(
+		id: string,
+		achievementIds: string[]
+	): Promise<null | UserEntity> {
+		const user = await this.model
+			.query()
+			.findById(id)
+			.withGraphJoined("achievements")
+			.modifyGraph("achievements", (builder) => {
+				builder.whereIn("achievements.id", achievementIds);
+			});
+
+		return user
+			? UserEntity.initializeDetailed({
+					id: user.id,
+					email: user.email,
+					username: user.username,
+					passwordHash: user.passwordHash,
+					passwordSalt: user.passwordSalt,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					mainAchievementId: user.mainAchievementId,
+					achievements: user.achievements.map((achievement) => ({
+						id: achievement.id,
+						title: achievement.title,
+						description: achievement.description,
+						iconLink: achievement.iconLink,
+						achievementEvent: achievement.achievementEvent,
+						targetCount: achievement.targetCount,
+					})),
+				})
+			: null;
+	}
+
+	public async editUserMainAchievement(
+		id: string,
+		mainAchievementId: string
+	): Promise<null | UserEntity> {
+		const user = await this.model
+			.query()
+			.findById(id)
+			.patch({ mainAchievementId })
+			.returning("*")
+			.first();
 
 		return user
 			? UserEntity.initialize({
@@ -61,14 +211,11 @@ class UserRepository implements Repository {
 					username: user.username,
 					passwordHash: user.passwordHash,
 					passwordSalt: user.passwordSalt,
+					mainAchievementId: user.mainAchievementId,
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt,
 				})
 			: null;
-	}
-
-	public getAll(): Promise<null[]> {
-		return Promise.resolve([null]);
 	}
 }
 

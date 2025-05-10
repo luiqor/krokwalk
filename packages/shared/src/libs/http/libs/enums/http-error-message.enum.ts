@@ -9,6 +9,9 @@ const HTTPErrorMessage = {
 		TRIP_BETWEEN_POINTS_NOT_FOUND:
 			"Trip between specified points could not be created.",
 	},
+	ACHIEVEMENTS: {
+		NOT_FOUND: "Achievement not found.",
+	},
 	AUTH: {
 		INVALID_CREDENTIALS: "Invalid credentials.",
 		EMAIL_ALREADY_EXISTS: "User with this email already exists.",
@@ -24,6 +27,9 @@ const HTTPErrorMessage = {
 	PLACE: {
 		NOT_FOUND: "Place not found.",
 		TOO_FAR: "Place is too far. Unfortunately, you cannot confirm your visit.",
+	},
+	USER_ACHIEVEMENTS: {
+		NOT_FOUND: "You did not earn specified achievement yet.",
 	},
 } as const;
 

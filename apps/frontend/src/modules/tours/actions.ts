@@ -24,7 +24,6 @@ const loadTour = createAsyncThunk<
 >(`${sliceName}/load-tour`, async (payload, { extra }) => {
 	const { tourService } = extra;
 	const { id } = payload;
-	// console.log(id);
 
 	return await tourService.getById(id);
 });

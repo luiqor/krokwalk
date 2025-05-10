@@ -50,6 +50,15 @@ class UserPlacesService implements Service {
 		};
 	}
 
+	public async getManyByIds(
+		userId: string,
+		ids: string[]
+	): Promise<ReturnType<UserPlacesEntity["toUserObject"]>[]> {
+		const entities = await this.repository.getManyByIds(userId, ids);
+
+		return entities.map((entity) => entity.toUserObject());
+	}
+
 	public async updateVisitStatus({
 		userId,
 		placeId,
