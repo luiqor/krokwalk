@@ -216,9 +216,6 @@ const Profile: React.FC = () => {
 							{achievements.map((achievement) => (
 								<Grid
 									item
-									xs={12}
-									sm={6}
-									md={4}
 									key={achievement.id}
 								>
 									<Card
