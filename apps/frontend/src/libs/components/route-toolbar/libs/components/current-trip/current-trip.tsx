@@ -78,7 +78,7 @@ const CurrentTrip: React.FC = () => {
 					<Tooltip
 						title={
 							!areAllPointConfirmed
-								? "You need to confirm all stopover points to complete the trip."
+								? "You need to authorize and confirm all points to complete the trip."
 								: ""
 						}
 						placement="top"
