@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <span>
         © {new Date().getFullYear().toString()},
-        <a href="https://github.com/luiqor"> @luiqor</a>
+        <a className={styles.author} href="https://github.com/luiqor"> @luiqor</a>
       </span>
     </footer>
   );
