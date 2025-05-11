@@ -7,3 +7,5 @@ export type { UserGetParametersDto } from "./user-get-parameters-dto.type";
 export type { UserGetResponseDto } from "./user-get-response-dto.type";
 export type { GetUserProfileResponseDto } from "./get-user-profile-response-dto.type";
 export type { AchievementDto } from "./achievement-dto.type";
+export type { GetLeadersResponseDto } from "./get-leaders-response-dto.type";
+export type { GetLeadersRequestDto } from "./get-leaders-request-dto.type";

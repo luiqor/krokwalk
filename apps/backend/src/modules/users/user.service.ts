@@ -1,4 +1,10 @@
-import { HTTPCode, HTTPError, HTTPErrorMessage } from "shared";
+import {
+	type GetLeadersRequestDto,
+	type GetLeadersResponseDto,
+	HTTPCode,
+	HTTPError,
+	HTTPErrorMessage,
+} from "shared";
 import type { Encrypt } from "~/libs/modules/encrypt/encrypt";
 import type { Service } from "~/libs/types/types";
 
@@ -177,6 +183,39 @@ class UserService implements Service {
 		}
 
 		return entity.toObject();
+	}
+
+	public async getTopUsersByConfirmedPlaces({
+		monthsCount,
+		limit,
+		page,
+	}: GetLeadersRequestDto): Promise<GetLeadersResponseDto> {
+		const endDate = new Date();
+		const startDate = new Date();
+		startDate.setMonth(endDate.getMonth() - monthsCount);
+
+		const skip = page ? (page - 1) * limit : 0;
+
+		const topUsers = await this.repository.getTopUsersByConfirmedPlaces({
+			startDate,
+			endDate,
+			limit,
+			skip,
+		});
+
+		if (topUsers.length === 0) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER.NO_USERS_FOUND,
+			});
+		}
+
+		return {
+			items: topUsers.map(({ user, confirmedPlacesCount }) => ({
+				...user.toObject(),
+				confirmedPlacesCount,
+			})),
+		};
 	}
 }
 

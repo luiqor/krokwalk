@@ -39,6 +39,10 @@ class UserController extends BaseController {
 			UsersApiPath.ACHIEVEMENTS_$ACHIEVEMNT_ID,
 			this.editUserAchievement.bind(this)
 		);
+		this.get(
+			UsersApiPath.LEADERBOARD_CONFIRMED_PLACES,
+			this.getTopUsersByConfirmedPlaces.bind(this)
+		);
 	}
 
 	private async getProfile(req: AppRequest, res: Response): Promise<void> {
@@ -92,6 +96,20 @@ class UserController extends BaseController {
 		const response = await this.service.editUserMainAchievement({
 			id: req.user!.userId,
 			achievementId: req.params.achievementId,
+		});
+
+		res.status(HTTPCode.OK).send(response);
+	}
+
+	private async getTopUsersByConfirmedPlaces(
+		req: AppRequest,
+		res: Response
+	): Promise<void> {
+		const { limit, monthsCount, page } = req.query;
+		const response = await this.service.getTopUsersByConfirmedPlaces({
+			monthsCount: Number(monthsCount),
+			limit: Number(limit),
+			page: Number(page),
 		});
 
 		res.status(HTTPCode.OK).send(response);
