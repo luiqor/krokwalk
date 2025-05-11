@@ -190,6 +190,9 @@ class UserService implements Service {
 		limit,
 		page,
 	}: GetLeadersRequestDto): Promise<GetLeadersResponseDto> {
+		limit = Math.min(20, Math.max(3, limit));
+		monthsCount = Math.max(1, monthsCount);
+
 		const endDate = new Date();
 		const startDate = new Date();
 		startDate.setMonth(endDate.getMonth() - monthsCount);

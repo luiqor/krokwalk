@@ -232,7 +232,7 @@ class UserRepository implements Repository {
 		const users = await this.model
 			.query()
 			.joinRelated("places")
-			.whereBetween("places.confirmedAt", [startDate, endDate])
+			.whereBetween("places.visitedAt", [startDate, endDate])
 			.select("users.*")
 			.count("places.id as confirmedPlacesCount")
 			.groupBy("users.id")
