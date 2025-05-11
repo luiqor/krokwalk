@@ -216,7 +216,37 @@ class UserService implements Service {
 		return {
 			items: topUsers.map(({ user, confirmedPlacesCount }) => ({
 				...user.toObject(),
-				confirmedPlacesCount,
+				leaderItemsCount: confirmedPlacesCount,
+			})),
+		};
+	}
+
+	public async getTopUsersByAchievements({
+		limit,
+		page,
+	}: {
+		limit: number;
+		page: number;
+	}): Promise<GetLeadersResponseDto> {
+		limit = Math.min(20, Math.max(3, limit));
+		const skip = page ? (page - 1) * limit : 0;
+
+		const topUsers = await this.repository.getTopUsersByAchievements({
+			limit,
+			skip,
+		});
+
+		if (topUsers.length === 0) {
+			throw new HTTPError({
+				status: HTTPCode.NOT_FOUND,
+				message: HTTPErrorMessage.USER.NO_USERS_FOUND,
+			});
+		}
+
+		return {
+			items: topUsers.map(({ user, achievementsCount }) => ({
+				...user.toObject(),
+				leaderItemsCount: achievementsCount,
 			})),
 		};
 	}

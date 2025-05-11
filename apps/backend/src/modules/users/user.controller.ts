@@ -43,6 +43,10 @@ class UserController extends BaseController {
 			UsersApiPath.LEADERBOARD_CONFIRMED_PLACES,
 			this.getTopUsersByConfirmedPlaces.bind(this)
 		);
+		this.get(
+			UsersApiPath.LEADERBOARD_ACHIEVEMENTS,
+			this.getTopUsersByAchievements.bind(this)
+		);
 	}
 
 	private async getProfile(req: AppRequest, res: Response): Promise<void> {
@@ -108,6 +112,19 @@ class UserController extends BaseController {
 		const { limit, monthsCount, page } = req.query;
 		const response = await this.service.getTopUsersByConfirmedPlaces({
 			monthsCount: Number(monthsCount),
+			limit: Number(limit),
+			page: Number(page),
+		});
+
+		res.status(HTTPCode.OK).send(response);
+	}
+
+	private async getTopUsersByAchievements(
+		req: AppRequest,
+		res: Response
+	): Promise<void> {
+		const { limit, page } = req.query;
+		const response = await this.service.getTopUsersByAchievements({
 			limit: Number(limit),
 			page: Number(page),
 		});

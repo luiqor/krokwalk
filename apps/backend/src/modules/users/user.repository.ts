@@ -258,6 +258,42 @@ class UserRepository implements Repository {
 			confirmedPlacesCount: Number(user.confirmedPlacesCount),
 		}));
 	}
+
+	public async getTopUsersByAchievements({
+		limit,
+		skip = 0,
+	}: {
+		limit: number;
+		skip: number;
+	}): Promise<{ user: UserEntity; achievementsCount: number }[]> {
+		const users = await this.model
+			.query()
+			.joinRelated("achievements")
+			.select("users.*")
+			.count("achievements.id as achievementsCount")
+			.groupBy("users.id")
+			.orderBy("achievementsCount", "desc")
+			.offset(skip)
+			.limit(limit);
+
+		if (users.length === 0) {
+			return [];
+		}
+
+		return users.map((user) => ({
+			user: UserEntity.initialize({
+				id: user.id,
+				email: user.email,
+				username: user.username,
+				passwordHash: user.passwordHash,
+				passwordSalt: user.passwordSalt,
+				mainAchievementId: user.mainAchievementId,
+				createdAt: user.createdAt,
+				updatedAt: user.updatedAt,
+			}),
+			achievementsCount: Number(user.achievementsCount),
+		}));
+	}
 }
 
 export { UserRepository };

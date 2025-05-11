@@ -20,6 +20,8 @@ class UserModel extends BaseModel {
 
 	confirmedPlacesCount?: number;
 
+	achievementsCount?: number;
+
 	static get relationMappings(): RelationMappings {
 		return {
 			places: {
