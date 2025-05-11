@@ -1,6 +1,7 @@
 import { TextField, Button, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { signInValidationSchema, UserSignInRequestDto } from "shared";
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
 
 import { useAppDispatch, useAppForm } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
@@ -70,7 +71,7 @@ const SignIn: React.FC = () => {
 					Don't have an account?
 					<Button
 						color="primary"
-						onClick={() => navigate("/sign-up")}
+						onClick={() => navigate(AppRoute.SIGN_UP)}
 					>
 						Sign Up
 					</Button>

@@ -1,11 +1,11 @@
 const AppRoute = {
 	ANY: "*",
 	ROOT: "/",
-	INFORMATION: "places/:id",
+	PLACE_$ID: "/places/:id",
 	SIGN_IN: "/sign-in",
 	SIGN_UP: "/sign-up",
-	TOURPAGE: "/tour-page",
-	TOURSPAGE: "/tours",
+	TOUR_$ID: "/tour/:id",
+	TOURS: "/tours",
 	PROFILE: "/profile",
 	PROFILE_$ID: "/profile/:id",
 } as const;

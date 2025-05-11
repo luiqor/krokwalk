@@ -22,7 +22,7 @@ const App = () => {
 				},
 				{
 					element: <Information />,
-					path: AppRoute.INFORMATION,
+					path: AppRoute.PLACE_$ID,
 				},
 				{
 					element: <SignIn />,
@@ -42,11 +42,11 @@ const App = () => {
 				},
 				{
 					element: <TourPage />,
-					path: AppRoute.TOURPAGE,
+					path: AppRoute.TOUR_$ID,
 				},
 				{
 					element: <ToursPage />,
-					path: AppRoute.TOURSPAGE,
+					path: AppRoute.TOURS,
 				},
 				{
 					element: <ProtectedRoute />,

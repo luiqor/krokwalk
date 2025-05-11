@@ -4,6 +4,7 @@ import { TextField, Button, Typography, Box } from "@mui/material";
 
 import { useAppDispatch, useAppForm } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
 
 const SignUp: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -82,7 +83,7 @@ const SignUp: React.FC = () => {
 					Already have an account?{" "}
 					<Button
 						color="primary"
-						onClick={() => navigate("/sign-in")}
+						onClick={() => navigate(AppRoute.SIGN_IN)}
 					>
 						Sign In
 					</Button>

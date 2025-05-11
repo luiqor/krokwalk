@@ -1,11 +1,9 @@
 import React from "react";
-import { AppRoute } from "~/libs/enums/app-route.enum.js";
 import { useNavigate } from "react-router-dom";
 
 import { IconElement } from "~/libs/components/components.js";
-
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
 import type { ToursArr } from "./libs/types/types.js";
-
 import IconLovely from "../../../assets/images/mapckik-lovely.svg";
 import IconJumps from "../../../assets/images/mapchik-jumps-happily.svg";
 import IconRuns from "../../../assets/images/mapchik-runs.svg";
@@ -72,7 +70,10 @@ const TourInfoItem: React.FC<ToursArr> = ({ data }) => {
 		<section>
 			{data &&
 				data.map((item, index) => (
-					<div className={styles.toursItemBlock}>
+					<div
+						className={styles.toursItemBlock}
+						key={item.id}
+					>
 						<article
 							className={`${styles.toursItem} ${stylesPostion(index)}`}
 							key={item.id}
@@ -96,9 +97,9 @@ const TourInfoItem: React.FC<ToursArr> = ({ data }) => {
 							</span>
 							<h3>{item.title}</h3>
 							<button
-								onClick={() =>
-									navigate(`${AppRoute.INFORMATION}?id=${item.id}`)
-								}
+								onClick={() => {
+									navigate(AppRoute.PLACE_$ID.replace(":id", item.id));
+								}}
 							>
 								read more
 							</button>

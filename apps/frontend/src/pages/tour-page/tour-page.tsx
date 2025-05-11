@@ -1,23 +1,28 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { TourInfo, TourInfoItem } from "~/libs/components/components.js";
-
-import { useSearchParams } from "react-router-dom";
 import { useAppDispatch } from "~/libs/hooks/hooks.js";
 import { actions as toursActions } from "~/modules/tours/tours.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { ButtonBack } from "~/libs/components/button-back/button-back.js";
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
 
 import styles from "./tour-page.module.css";
-import { ButtonBack } from "~/libs/components/button-back/button-back.js";
 
 const TourPage = () => {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { tour } = useAppSelector((state) => state.tours);
-	const [searchParams] = useSearchParams();
+	const { id } = useParams<{ id: string }>();
 
 	useEffect(() => {
-		dispatch(toursActions.loadTour({ id: searchParams.get("id") as string }));
-	}, [dispatch, searchParams]);
+		if (!id) {
+			navigate(AppRoute.ROOT);
+		}
+
+		dispatch(toursActions.loadTour({ id: id! }));
+	}, [dispatch, id, navigate]);
 
 	return (
 		<section className={styles.container}>

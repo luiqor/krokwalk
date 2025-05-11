@@ -1,4 +1,6 @@
 import { ReactNode, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { VisitStatus } from "shared";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -19,9 +21,6 @@ import { Icon } from "../components.js";
 import styles from "./root-map.module.css";
 import type { GeoPoint } from "~/libs/types/types.js";
 import { themeOptions } from "~/libs/constants/theme-options.constant.js";
-
-import { useNavigate } from "react-router-dom";
-import { ValueOf, VisitStatus } from "shared";
 
 const ZOOM_DEFAULT = 16;
 
@@ -319,7 +318,7 @@ const RootMap = () => {
 			marker.addTo(mapInstanceRef.current!);
 
 			marker.on("click", () => {
-				navigate(`places/${id}`);
+				navigate(AppRoute.PLACE_$ID.replace(":id", id));
 			});
 		});
 	}, [places, status, navigate]);
@@ -405,7 +404,7 @@ const RootMap = () => {
 			marker.addTo(mapInstanceRef.current!);
 
 			marker.on("click", () => {
-				navigate(`${AppRoute.INFORMATION}?id=${point.id}`);
+				navigate(AppRoute.PLACE_$ID.replace(":id", point.id));
 			});
 		}
 

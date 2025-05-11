@@ -8,7 +8,7 @@ import styles from "./information-section.module.css";
 
 const InformationSection = () => {
 	const [info, setInfo] = useState<PlaceDto | null>(null);
-	const { id } = useParams();
+	const { id } = useParams<{ id: string }>();
 
 	useEffect(() => {
 		if (!id || info !== null) {

@@ -34,7 +34,7 @@ const ToursInfoElement: React.FC<ToursInfoElement> = ({ data }) => {
 					<h3>{item.title}</h3>
 					<p>{item.description}</p>
 					<button
-						onClick={() => navigate(`${AppRoute.TOURPAGE}?id=${item.id}`)}
+						onClick={() => navigate(AppRoute.TOUR_$ID.replace(":id", item.id))}
 					>
 						read more
 					</button>
