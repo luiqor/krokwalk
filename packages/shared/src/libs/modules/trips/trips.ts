@@ -11,4 +11,6 @@ export type {
 	GeoPoint,
 	CreateTripPlace,
 	CreateTripResDto,
+	CompleteTripRequestDto,
+	CompleteTripResponseDto,
 } from "./libs/types/types";

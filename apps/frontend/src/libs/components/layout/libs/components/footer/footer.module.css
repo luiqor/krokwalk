@@ -5,3 +5,7 @@
   color: var(--color-white);
   background-color: var(--color-blue-300);
 }
+
+.author:hover{
+  color: var(--color-blue-400);
+}

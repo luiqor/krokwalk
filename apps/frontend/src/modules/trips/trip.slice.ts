@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { type AchievementDto } from "shared";
 
 import type { TagDto } from "../tags/tags.js";
 import type { TourDto } from "../tours/tours.js";
 import {
+	completeTrip,
 	confirmPlaceVisit,
 	createTrip,
 	getPlacesDataForUnauth,
@@ -12,6 +14,7 @@ import {
 } from "./actions.js";
 import { DataStatus, SliceName } from "~/libs/enums/enums.js";
 import type { CreateTripPlace } from "./libs/types/types.js";
+import { DEFAULT_ACHIEVEMENT } from "./libs/constants/constants.js";
 
 type State = {
 	minimumWalkSeconds: number | null;
@@ -22,6 +25,7 @@ type State = {
 	stopoverPoints: CreateTripPlace[];
 	walkSeconds: number | null;
 	status: (typeof DataStatus)[keyof typeof DataStatus];
+	newAchievements: AchievementDto[];
 };
 
 const initialState: State = {
@@ -33,6 +37,7 @@ const initialState: State = {
 	destinationPoint: [],
 	walkSeconds: null,
 	status: DataStatus.IDLE,
+	newAchievements: [],
 };
 
 const updateStopoverPoints = (
@@ -63,6 +68,9 @@ const { reducer, actions, name } = createSlice({
 			state.filteredTags = [];
 			state.filteredTours = [];
 			state.status = DataStatus.IDLE;
+		},
+		shiftNewAchievements: (state) => {
+			state.newAchievements = state.newAchievements.slice(1);
 		},
 	},
 	extraReducers: (builder) => {
@@ -115,24 +123,31 @@ const { reducer, actions, name } = createSlice({
 			);
 			state.status = DataStatus.FULFILLED;
 		});
-				builder.addCase(getPlacesDataForUnauth.fulfilled, (state, action) => {
-					const placesWithIdAndVisitStatus = action.payload;
+		builder.addCase(getPlacesDataForUnauth.fulfilled, (state, action) => {
+			const placesWithIdAndVisitStatus = action.payload;
 
-					state.stopoverPoints = state.stopoverPoints.map((stopoverPoint) => {
-						const matchingPlace = placesWithIdAndVisitStatus.find(
-							(place) => place.id === stopoverPoint.id
-						);
+			state.stopoverPoints = state.stopoverPoints.map((stopoverPoint) => {
+				const matchingPlace = placesWithIdAndVisitStatus.find(
+					(place) => place.id === stopoverPoint.id
+				);
 
-						if (matchingPlace) {
-							return {
-								...stopoverPoint,
-								visitStatus: matchingPlace.visitStatus,
-							};
-						}
+				if (matchingPlace) {
+					return {
+						...stopoverPoint,
+						visitStatus: matchingPlace.visitStatus,
+					};
+				}
 
-						return stopoverPoint;
-					});
-				});
+				return stopoverPoint;
+			});
+		});
+		builder.addCase(completeTrip.fulfilled, (state, action) => {
+			state.newAchievements = [
+				...action.payload.newAchievements,
+				DEFAULT_ACHIEVEMENT,
+			];
+			state.status = DataStatus.FULFILLED;
+		});
 		builder.addMatcher(
 			(action) =>
 				action.type === loadMinimumWalkTime.pending.type ||

@@ -1,0 +1,38 @@
+.achievementsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.achievementCard {
+	width: 200px;
+	height: 200px;
+	padding: 16px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	background-color: #fff;
+}
+
+.achievementIcon {
+	width: 60px;
+	height: 60px;
+	margin-bottom: 8px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.achievementTitle {
+	font-size: 1rem;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.achievementDescription {
+	font-size: 0.8rem;
+	color: #666;
+}

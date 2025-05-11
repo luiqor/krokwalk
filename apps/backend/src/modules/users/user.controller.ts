@@ -35,6 +35,10 @@ class UserController extends BaseController {
 			UsersApiPath.PLACES_$ID_CONFIRM,
 			this.confirmPlaceVisit.bind(this)
 		);
+		this.patch(
+			UsersApiPath.ACHIEVEMENTS_$ACHIEVEMNT_ID,
+			this.editUserAchievement.bind(this)
+		);
 	}
 
 	private async getProfile(req: AppRequest, res: Response): Promise<void> {
@@ -76,6 +80,18 @@ class UserController extends BaseController {
 			placeId: req.params.placeId,
 			lat: req.body.lat,
 			lng: req.body.lng,
+		});
+
+		res.status(HTTPCode.OK).send(response);
+	}
+
+	private async editUserAchievement(
+		req: AppRequest,
+		res: Response
+	): Promise<void> {
+		const response = await this.service.editUserMainAchievement({
+			id: req.user!.userId,
+			achievementId: req.params.achievementId,
 		});
 
 		res.status(HTTPCode.OK).send(response);

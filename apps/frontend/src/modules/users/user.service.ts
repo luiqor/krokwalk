@@ -1,6 +1,7 @@
 import {
+	type GetUserProfileResponseDto,
 	type UserDto,
-	UserPatchConfirmVisitResponseDto,
+	type UserPatchConfirmVisitResponseDto,
 	type UserPatchVisitStatusResponseDto,
 	type ValueOf,
 	VisitStatus,
@@ -18,7 +19,7 @@ class UserService extends BaseService {
 		});
 	}
 
-	async getById(id: string): Promise<UserDto> {
+	async getById(id: string): Promise<GetUserProfileResponseDto> {
 		return await this.http.load(this.getUrl(`/${id}`), {
 			method: "GET",
 		});
@@ -46,6 +47,13 @@ class UserService extends BaseService {
 		return await this.http.load(this.getUrl(`/places/${placeId}/confirm`), {
 			method: "PATCH",
 			payload: JSON.stringify({ lat, lng }),
+			hasAuth: true,
+		});
+	}
+
+	async editMainAchievement(achievementId: string): Promise<UserDto> {
+		return await this.http.load(this.getUrl(`/achievements/${achievementId}`), {
+			method: "PATCH",
 			hasAuth: true,
 		});
 	}

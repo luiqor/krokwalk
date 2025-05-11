@@ -5,7 +5,7 @@ import { token } from "~/libs/modules/token/token";
 import { HTTPError, HTTPCode, HTTPErrorMessage } from "~/libs/http/http";
 import { AppRequest } from "../types/types";
 
-const AUTH_ONLY_PATHS = ["/health/auth", "/auth", "/users"];
+const AUTH_ONLY_PATHS = ["/health/auth", "/auth", "/users", "/trips/complete"];
 const WHITELIST_NESTED_ROUTES = [
 	"/auth/sign-up",
 	"/auth/sign-in",
@@ -36,6 +36,7 @@ export const authMiddleware = async (
 				try {
 					const decodedToken = await token.decode(jwtToken);
 					req.user = decodedToken.payload;
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				} catch (error) {
 					return next();
 				}

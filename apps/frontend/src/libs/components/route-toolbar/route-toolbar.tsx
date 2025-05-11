@@ -6,17 +6,13 @@ import {
 	RouteForm,
 	CurrentTrip,
 } from "./libs/components/components.js";
-import { useAppDispatch, useAppSelector } from "~/libs/hooks/hooks.js";
-import {
-	Screen,
-	actions as locationAction,
-} from "~/modules/location/location.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { Screen } from "~/modules/location/location.js";
 import { IconElement } from "~/libs/components/components.js";
 
 import styles from "./route-toolbar.module.css";
 
 const RouteToolbar: React.FC = () => {
-	const dispatch = useAppDispatch();
 	const { selectionMode, screen } = useAppSelector((state) => state.location);
 	const { status } = useAppSelector((state) => state.trips);
 	const [toolbarState, setToolbarState] = useState<boolean>(true);
