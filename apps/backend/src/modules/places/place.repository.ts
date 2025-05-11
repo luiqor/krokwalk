@@ -43,22 +43,20 @@ class PlaceRepository implements Repository {
 
 		const places = await query;
 
-		return await Promise.all(
-			places.map(async (place) => {
-				return PlaceEntity.initialize({
-					id: place.id,
-					title: place.title,
-					description: place.description,
-					address: place.address,
-					thumbnailLink: place.thumbnailLink,
-					lat: place.lat,
-					lng: place.lng,
-					elevation: place.elevation ?? null,
-					createdAt: place.createdAt,
-					updatedAt: place.updatedAt,
-				});
-			})
-		);
+		return places.map((place) => {
+			return PlaceEntity.initialize({
+				id: place.id,
+				title: place.title,
+				description: place.description,
+				address: place.address,
+				thumbnailLink: place.thumbnailLink,
+				lat: place.lat,
+				lng: place.lng,
+				elevation: place.elevation ?? null,
+				createdAt: place.createdAt,
+				updatedAt: place.updatedAt,
+			});
+		});
 	}
 
 	public async getById(id: string): Promise<PlaceEntity | null> {
