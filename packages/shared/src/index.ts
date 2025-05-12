@@ -44,6 +44,7 @@ export {
 	type AchievementDto,
 	type GetLeadersResponseDto,
 	type GetLeadersRequestDto,
+	type LeaderUser,
 	UsersApiPath,
 } from "./libs/modules/users/users";
 export {

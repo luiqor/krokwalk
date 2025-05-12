@@ -8,6 +8,7 @@ const AppRoute = {
 	TOURS: "/tours",
 	PROFILE: "/profile",
 	PROFILE_$ID: "/profile/:id",
+	LEADERBOARD: "/leaderboard",
 } as const;
 
 export { AppRoute };

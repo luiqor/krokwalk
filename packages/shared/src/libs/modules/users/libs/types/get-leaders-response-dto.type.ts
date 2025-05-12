@@ -8,4 +8,4 @@ type GetLeadersResponseDto = {
 	items: LeaderUser[];
 };
 
-export type { GetLeadersResponseDto };
+export type { GetLeadersResponseDto, LeaderUser };
