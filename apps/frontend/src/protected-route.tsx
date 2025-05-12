@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 import { AppRoute } from "./libs/enums/app-route.enum.js";
-import { useAppSelector } from "./libs/hooks/hooks.js";
+import { storage, StorageKey } from "./modules/storage/storage.js";
 
 const ProtectedRoute = () => {
-	const { user } = useAppSelector((state) => state.auth);
+	const token = storage.get<string>(StorageKey.TOKEN);
 
-	if (!user) {
+	if (!token) {
 		return (
 			<Navigate
 				to={AppRoute.SIGN_IN}

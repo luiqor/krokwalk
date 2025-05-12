@@ -5,7 +5,14 @@ import {
 } from "react-router-dom";
 import { AppRoute } from "./libs/enums/enums.js";
 import { Layout } from "./libs/components/components.js";
-import { Root, Information, SignIn, SignUp, Profile } from "./pages/pages.js";
+import {
+	Root,
+	Information,
+	SignIn,
+	SignUp,
+	Profile,
+	Leaderboard,
+} from "./pages/pages.js";
 import ProtectedRoute from "./protected-route.js";
 import { TourPage } from "~/pages/tour-page/tour-page.js";
 import { ToursPage } from "~/pages/tours-page/tours-page.js";
@@ -34,10 +41,6 @@ const App = () => {
 				},
 				{
 					element: <Profile />,
-					path: AppRoute.PROFILE,
-				},
-				{
-					element: <Profile />,
 					path: AppRoute.PROFILE_$ID,
 				},
 				{
@@ -51,7 +54,14 @@ const App = () => {
 				{
 					element: <ProtectedRoute />,
 					children: [
-						// Add user-logged-in routes here
+						{
+							element: <Leaderboard />,
+							path: AppRoute.LEADERBOARD,
+						},
+						{
+							element: <Profile />,
+							path: AppRoute.PROFILE,
+						},
 					],
 				},
 				{

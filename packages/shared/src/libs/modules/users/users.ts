@@ -8,5 +8,8 @@ export type {
 	UserGetResponseDto,
 	GetUserProfileResponseDto,
 	AchievementDto,
+	GetLeadersResponseDto,
+	GetLeadersRequestDto,
+	LeaderUser,
 } from "./libs/types/types";
 export { UsersApiPath } from "./libs/enums/enums";

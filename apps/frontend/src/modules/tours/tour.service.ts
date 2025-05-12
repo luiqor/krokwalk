@@ -15,7 +15,7 @@ class TourService extends BaseService<TourDto, unknown> {
 	public async getById(id: string): Promise<GetTourByIdDto> {
 		return this.http.load(this.getUrl(`/${id}`), {
 			method: "GET",
-			token: BaseService.getToken(),
+			hasAuth: true,
 		});
 	}
 }
