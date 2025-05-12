@@ -79,7 +79,7 @@ const Leaderboard: React.FC = () => {
 	const getTabLabel = (index: number) => {
 		switch (index) {
 			case 0:
-				return "12 Months Places";
+				return "1 Year Places";
 			case 1:
 				return "1 Month Places";
 			case 2:
