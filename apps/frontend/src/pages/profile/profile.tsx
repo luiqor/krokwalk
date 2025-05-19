@@ -37,19 +37,27 @@ const Profile: React.FC = () => {
 	const isOwnProfile = authUser && user && authUser.id === user.id;
 
 	useEffect(() => {
-		if (status === "pending" || status === "fulfilled") {
-			return;
-		}
 		if (status === "rejected" || (!authUser && !id)) {
 			navigate(AppRoute.SIGN_IN);
 			return;
 		}
-		if (id) {
-			dispatch(usersActions.getUser({ id }));
-		} else if (authUser) {
-			dispatch(usersActions.getUser({ id: authUser.id }));
+
+		if (
+			(id && user?.id !== id) ||
+			(!id && authUser && user?.id !== authUser.id)
+		) {
+			if (id) {
+				dispatch(usersActions.getUser({ id }));
+			} else if (authUser) {
+				dispatch(usersActions.getUser({ id: authUser.id }));
+			}
 		}
-	}, [dispatch, id, authUser, status, navigate]);
+
+		return () => {
+			dispatch(usersActions.resetUser());
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleOpenAchievementDialog = () => {
 		setDialogOpen(true);

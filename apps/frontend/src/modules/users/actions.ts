@@ -2,7 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
 	type UserGetParametersDto,
 	type GetUserProfileResponseDto,
-	UserDto,
+	type UserDto,
+	type GetLeadersResponseDto,
+	type GetLeadersRequestDto,
 } from "shared";
 
 import type { AsyncThunkConfig } from "~/libs/types/types.js";
@@ -35,4 +37,38 @@ const editMainAchievement = createAsyncThunk<
 	}
 );
 
-export { getUser, editMainAchievement };
+const getTopUsersByConfirmedPlaces = createAsyncThunk<
+	GetLeadersResponseDto,
+	GetLeadersRequestDto,
+	AsyncThunkConfig
+>(
+	`${sliceName}/get-top-users-by-confirmed-places`,
+	async (payload, { extra: { userService } }) => {
+		const users = await userService.getTopUsersByConfirmedPlaces(payload);
+
+		return users;
+	}
+);
+
+const getTopUsersByVisitedPlaces = createAsyncThunk<
+	GetLeadersResponseDto,
+	{
+		limit: number;
+		page?: number;
+	},
+	AsyncThunkConfig
+>(
+	`${sliceName}/get-top-users-by-visited-places`,
+	async (payload, { extra: { userService } }) => {
+		const users = await userService.getTopUsersByVisitedPlaces(payload);
+
+		return users;
+	}
+);
+
+export {
+	getUser,
+	editMainAchievement,
+	getTopUsersByConfirmedPlaces,
+	getTopUsersByVisitedPlaces,
+};

@@ -1,8 +1,11 @@
 import {
+	GetLeadersRequestDto,
+	type GetLeadersResponseDto,
 	type GetUserProfileResponseDto,
 	type UserDto,
 	type UserPatchConfirmVisitResponseDto,
 	type UserPatchVisitStatusResponseDto,
+	UsersApiPath,
 	type ValueOf,
 	VisitStatus,
 } from "shared";
@@ -56,6 +59,33 @@ class UserService extends BaseService {
 			method: "PATCH",
 			hasAuth: true,
 		});
+	}
+
+	async getTopUsersByConfirmedPlaces(
+		params: GetLeadersRequestDto
+	): Promise<GetLeadersResponseDto> {
+		const queryString = params ? this.getQueryString(params) : "";
+		return await this.http.load(
+			this.getUrl(`${UsersApiPath.LEADERBOARD_CONFIRMED_PLACES}${queryString}`),
+			{
+				method: "GET",
+				hasAuth: true,
+			}
+		);
+	}
+
+	async getTopUsersByVisitedPlaces(params: {
+		limit: number;
+		page?: number;
+	}): Promise<GetLeadersResponseDto> {
+		const queryString = params ? this.getQueryString(params) : "";
+		return await this.http.load(
+			this.getUrl(`${UsersApiPath.LEADERBOARD_ACHIEVEMENTS}${queryString}`),
+			{
+				method: "GET",
+				hasAuth: true,
+			}
+		);
 	}
 }
 
