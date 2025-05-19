@@ -24,15 +24,16 @@ const Header = () => {
 				</Link>
 				<nav className={styles.navigation}>
 					<Link to={AppRoute.TOURS}>Tours</Link>
-					<div>
-						{user ? (
-							<>
+					{user ? (
+						<>
+							<Link to={AppRoute.LEADERBOARD}>Leaderboard</Link>
+							<div>
 								Welcome <Link to={AppRoute.PROFILE}>{user.username}</Link>
-							</>
-						) : (
-							<Link to={AppRoute.SIGN_IN}>Login</Link>
-						)}
-					</div>
+							</div>
+						</>
+					) : (
+						<Link to={AppRoute.SIGN_IN}>Login</Link>
+					)}
 				</nav>
 			</div>
 		</header>
