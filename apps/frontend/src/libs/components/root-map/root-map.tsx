@@ -364,7 +364,7 @@ const RootMap = () => {
 				routeWhileDragging: false,
 				addWaypoints: false,
 				createMarker: () => null,
-				show: false,
+				show: true,
 				lineOptions: {
 					styles: [getLineStyle(from.visitStatus, to.visitStatus)],
 				},
