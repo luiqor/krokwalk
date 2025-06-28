@@ -1,6 +1,15 @@
-# KrokWalk
+# KrokWalk 🗺️
 
 Interactive Web Application for Personalized Self-Guided Tours
+
+## Technology stack
+
+### Shared 👉 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![NPM](https://img.shields.io/badge/NPM%20workspaces-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) ![Zod](https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white)
+
+
+### Server 👉 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![KnexNObjection](https://img.shields.io/badge/-Knex.js%20&%20Objection.JS-D26B38?style=for-the-badge&logo=knexdotjs&logoColor=white) 
+
+### Client 👉 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white) ![leaflet](https://img.shields.io/badge/leaflet.JS-faf4f0?&style=for-the-badge&logo=leaflet&logoColor=green)
 
 ## Prerequirements
 
