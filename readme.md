@@ -2,6 +2,9 @@
 
 Interactive Web Application for Personalized Self-Guided Tours
 
+Basic use cases:
+![image](https://github.com/user-attachments/assets/97f81905-29a4-4875-8d69-1c4f6f63f912)
+
 ## Features Preview
 
 https://github.com/user-attachments/assets/1a4a7743-1b2c-4084-b066-495204e86da9
@@ -16,6 +19,13 @@ https://github.com/user-attachments/assets/3936abaa-fbe5-411e-8e77-00f797d52b51
 ### Server 👉 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![KnexNObjection](https://img.shields.io/badge/-Knex.js%20&%20Objection.JS-D26B38?style=for-the-badge&logo=knexdotjs&logoColor=white) 
 
 ### Client 👉 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white) ![leaflet](https://img.shields.io/badge/leaflet.JS-faf4f0?&style=for-the-badge&logo=leaflet&logoColor=green)
+
+## Architecture
+![krowkwalk_db_schema_schema-deployment-uml drawio](https://github.com/user-attachments/assets/52505441-80b5-43c3-9635-29f2f2a1214e)
+
+## Basic Scenario of Self-Guided Tour Creation
+![krowkwalk sequence diagram](https://github.com/user-attachments/assets/f641ace5-0e0d-485f-808e-6d9bb7663361)
+
 
 ## Prerequirements
 
