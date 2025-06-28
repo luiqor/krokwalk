@@ -2,6 +2,36 @@
 
 Interactive Web Application for Personalized Self-Guided Tours
 
+## ✨ Key Features
+
+- **Interactive POI Selection**  
+  Choose from a range of **tags** or **(thematic) tours**
+
+- **Personalized Route Calculation**  
+  Generates an optimal path based on:
+  - Your selected preferences
+  - Geolocation data
+  - Time constraints
+
+- **Interactive Map Interface**  
+  Visualize your route and explore detailed info about each location.
+
+- **User Progress & Gamification**  
+  - Track your visit history  
+  - Unlock achievements  
+  - Confirm completed visits using geolocation
+  *(Requires authentication)*
+
+### ⚠️ What It Doesn't Do
+
+While the app provides high-level route planning, it **does not** include:
+
+- Turn-by-turn street-level navigation  
+- Fine-grained routing between POIs  
+
+Instead, it relies on external geospatial APIs for actual route traversal between locations  
+
+
 Basic use cases:
 ![image](https://github.com/user-attachments/assets/97f81905-29a4-4875-8d69-1c4f6f63f912)
 
