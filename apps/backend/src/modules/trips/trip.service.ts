@@ -80,7 +80,7 @@ class TripService {
 		destinationPointCoordinates: number[];
 		places: { items: { lat: number; lng: number }[] };
 	}): { lat: number; lng: number }[] {
-		const distanceBufferInDegrees = 0.05;
+		const distanceBufferInDegrees = 0.05; // Approx. 5 km buffer in degrees
 		const minLat =
 			Math.min(startingPointCoordinates[0], destinationPointCoordinates[0]) -
 			distanceBufferInDegrees;
@@ -153,25 +153,6 @@ class TripService {
 			startingPointRow,
 			lastRow,
 		};
-	}
-
-	private getTravelTimesBetweenPlaces({
-		placesIndices: closestPlacesIndices,
-		durationMatrix: timeMatrix,
-	}: {
-		placesIndices: number[];
-		durationMatrix: { time: number }[][];
-	}): number[] {
-		const travelTimesBetweenClosestPlaces: number[] = [];
-
-		for (const [i, sourceIndex] of closestPlacesIndices.entries()) {
-			for (const destinationIndex of closestPlacesIndices.slice(i + 1)) {
-				const travelTime = timeMatrix[sourceIndex][destinationIndex].time;
-				travelTimesBetweenClosestPlaces.push(travelTime);
-			}
-		}
-
-		return travelTimesBetweenClosestPlaces;
 	}
 
 	private destructureSumsAndIndicies(
@@ -258,8 +239,10 @@ class TripService {
 			? await this.tourService.getManyBySlugs(ensureArray(tours))
 			: await this.tourService.getAll();
 
+		const millisecondsInSecond = 60;
+
 		return {
-			minimumWalkSeconds: averageTimeStartToPlaceToEnd,
+			minimumWalkSeconds: averageTimeStartToPlaceToEnd + millisecondsInSecond,
 			tags: selectedTags.items,
 			tours: selectedTours.items,
 			startingPoint,
