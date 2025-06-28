@@ -2,6 +2,12 @@
 
 Interactive Web Application for Personalized Self-Guided Tours
 
+## Features Preview
+
+https://github.com/user-attachments/assets/1a4a7743-1b2c-4084-b066-495204e86da9
+
+https://github.com/user-attachments/assets/3936abaa-fbe5-411e-8e77-00f797d52b51
+
 ## Technology stack
 
 ### Shared 👉 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![NPM](https://img.shields.io/badge/NPM%20workspaces-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) ![Zod](https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white)
