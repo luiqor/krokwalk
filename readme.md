@@ -2,7 +2,7 @@
 
 Interactive Web Application for Personalized Self-Guided Tours
 
-## ✨ Key Features
+### ✨ Key Features
 
 - **Interactive POI Selection**  
   Choose from a range of **tags** or **(thematic) tours**
@@ -31,9 +31,12 @@ While the app provides high-level route planning, it **does not** include:
 
 Instead, it relies on external geospatial APIs for actual route traversal between locations  
 
-
-Basic use cases:
+### Basic use cases
 ![image](https://github.com/user-attachments/assets/97f81905-29a4-4875-8d69-1c4f6f63f912)
+
+### Behind the Story
+
+This application was developed as a **course project** during the **third year of a Bachelor's degree**. The core development took place over **three months**, primarily in **personal time outside of class**
 
 ## Features Preview
 
