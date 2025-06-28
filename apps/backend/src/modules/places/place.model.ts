@@ -20,8 +20,6 @@ class PlaceModel extends BaseModel {
 
 	public lng!: number;
 
-	public elevation?: number;
-
 	public tags?: TagModel[];
 
 	public tours?: TourModel[];

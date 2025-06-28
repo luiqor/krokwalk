@@ -52,7 +52,6 @@ class PlaceRepository implements Repository {
 				thumbnailLink: place.thumbnailLink,
 				lat: place.lat,
 				lng: place.lng,
-				elevation: place.elevation ?? null,
 				createdAt: place.createdAt,
 				updatedAt: place.updatedAt,
 			});
@@ -77,7 +76,6 @@ class PlaceRepository implements Repository {
 			thumbnailLink: place.thumbnailLink,
 			lat: place.lat,
 			lng: place.lng,
-			elevation: place.elevation ?? null,
 			createdAt: place.createdAt,
 			updatedAt: place.updatedAt,
 			tags: place.tags!.map((tag) => {
@@ -118,7 +116,6 @@ class PlaceRepository implements Repository {
 					thumbnailLink: place.thumbnailLink,
 					lat: place.lat,
 					lng: place.lng,
-					elevation: place.elevation ?? null,
 					createdAt: place.createdAt,
 					updatedAt: place.updatedAt,
 				});
@@ -162,7 +159,6 @@ class PlaceRepository implements Repository {
 					thumbnailLink: place.thumbnailLink,
 					lat: place.lat,
 					lng: place.lng,
-					elevation: place.elevation ?? null,
 					createdAt: place.createdAt,
 					updatedAt: place.updatedAt,
 					tags: place.tags!.map((tag) => {

@@ -10,7 +10,6 @@ type PlacesEntityParameters = {
 	thumbnailLink: string;
 	lat: number;
 	lng: number;
-	elevation: number | null;
 	createdAt: string;
 	updatedAt: string;
 	tags: TagEntity[];

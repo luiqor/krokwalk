@@ -22,8 +22,6 @@ class PlaceEntity implements Entity {
 
 	private lng: number;
 
-	private elevation: null | number;
-
 	private createdAt: string;
 
 	private updatedAt: string;
@@ -42,7 +40,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink,
 		lat,
 		lng,
-		elevation,
 		createdAt,
 		updatedAt,
 		tags,
@@ -56,7 +53,6 @@ class PlaceEntity implements Entity {
 		this.thumbnailLink = thumbnailLink;
 		this.lat = lat;
 		this.lng = lng;
-		this.elevation = elevation;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.tags = tags;
@@ -71,7 +67,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink,
 		lat,
 		lng,
-		elevation,
 	}: {
 		title: string;
 		description: string;
@@ -79,7 +74,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink: string;
 		lat: number;
 		lng: number;
-		elevation?: number;
 	}): PlaceEntity {
 		return new PlaceEntity({
 			id: uuidv4(),
@@ -89,7 +83,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink,
 			lat,
 			lng,
-			elevation: elevation ?? null,
 			createdAt: new Date().toISOString(),
 			updatedAt: new Date().toISOString(),
 			tags: [],
@@ -106,7 +99,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink,
 		lat,
 		lng,
-		elevation,
 		createdAt,
 		updatedAt,
 	}: Omit<
@@ -121,7 +113,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink,
 			lat,
 			lng,
-			elevation,
 			createdAt,
 			updatedAt,
 			tags: [],
@@ -138,7 +129,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink,
 		lat,
 		lng,
-		elevation,
 		createdAt,
 		updatedAt,
 		tags,
@@ -152,7 +142,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink,
 			lat,
 			lng,
-			elevation,
 			createdAt,
 			updatedAt,
 			tags,
@@ -169,7 +158,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink,
 		lat,
 		lng,
-		elevation,
 		createdAt,
 		updatedAt,
 		tags,
@@ -184,7 +172,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink,
 			lat,
 			lng,
-			elevation,
 			createdAt,
 			updatedAt,
 			tags,
@@ -201,7 +188,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink: string;
 		lat: number;
 		lng: number;
-		elevation: number | null;
 		createdAt: string;
 		updatedAt: string;
 	} {
@@ -213,7 +199,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink: this.thumbnailLink,
 			lat: this.lat,
 			lng: this.lng,
-			elevation: this.elevation,
 			createdAt: this.createdAt,
 			updatedAt: this.updatedAt,
 		};
@@ -227,7 +212,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink: string;
 		lat: number;
 		lng: number;
-		elevation: number | null;
 		createdAt: string;
 		updatedAt: string;
 		tags: ReturnType<TagEntity["toObject"]>[];
@@ -241,7 +225,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink: this.thumbnailLink,
 			lat: this.lat,
 			lng: this.lng,
-			elevation: this.elevation,
 			createdAt: this.createdAt,
 			updatedAt: this.updatedAt,
 			tags: this.tags.map((tag) => tag.toObject()),
@@ -257,7 +240,6 @@ class PlaceEntity implements Entity {
 		thumbnailLink: string;
 		lat: number;
 		lng: number;
-		elevation: number | null;
 		createdAt: string;
 		updatedAt: string;
 		tags: ReturnType<TagEntity["toObject"]>[];
@@ -275,7 +257,6 @@ class PlaceEntity implements Entity {
 			thumbnailLink: this.thumbnailLink,
 			lat: this.lat,
 			lng: this.lng,
-			elevation: this.elevation,
 			createdAt: this.createdAt,
 			updatedAt: this.updatedAt,
 			tags: this.tags.map((tag) => tag.toObject()),
