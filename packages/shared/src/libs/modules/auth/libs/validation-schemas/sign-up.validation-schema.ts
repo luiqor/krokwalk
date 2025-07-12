@@ -1,9 +1,6 @@
 import { z } from "zod";
 
-import {
-	UserValidationRegexRule,
-	UserValidationRule,
-} from "../enums/enums.js";
+import { UserValidationRegexRule, UserValidationRule } from "../enums/enums";
 
 type UserSignUpRequestValidationDto = {
 	email: z.ZodString;

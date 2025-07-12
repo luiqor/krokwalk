@@ -1,9 +1,14 @@
 export default {
+	preset: "ts-jest",
 	testEnvironment: "node",
-	roots: ["<rootDir>/src/tests"],
+	testMatch: ["**/__tests__/**/*.(js|ts)", "**/*.(test|spec).(js|ts)"],
+	moduleNameMapper: {
+		"^~/(.*)$": "<rootDir>/src/$1",
+		"^shared$": "<rootDir>/../../packages/shared/src/index.ts",
+	},
 	transform: {
 		"^.+\\.ts$": "ts-jest",
 	},
-	testRegex: "(/__tests__/.*|(\\.|/))(test|spec)\\.(ts|js)$",
-	moduleFileExtensions: ["ts", "js", "json", "node"],
+	moduleFileExtensions: ["ts", "js", "json"],
+	collectCoverageFrom: ["src/**/*.{ts,js}", "!src/**/*.d.ts"],
 };
