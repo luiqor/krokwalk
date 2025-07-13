@@ -40,16 +40,20 @@ expect.extend({
 	},
 
 	toHaveValidUserPlaceStructure(received: any) {
+		const isReceivedDataTypesValid =
+			typeof received.userId === "string" ||
+			(received.items && Array.isArray(received.items));
+
+		const areItemsValid = received.items
+			? received.items.every(
+					(item: any) =>
+						typeof item.placeId === "string" && item.visitStatus !== undefined
+				)
+			: typeof received.placeId === "string";
+
 		const hasRequiredFields =
-			received &&
-			(typeof received.userId === "string" ||
-				(received.items && Array.isArray(received.items))) &&
-			(received.items
-				? received.items.every(
-						(item: any) =>
-							typeof item.placeId === "string" && item.visitStatus !== undefined
-					)
-				: typeof received.placeId === "string");
+			received && isReceivedDataTypesValid && areItemsValid;
+
 		return {
 			message: () => `expected ${received} to have valid user place structure`,
 			pass: hasRequiredFields,
