@@ -7,7 +7,8 @@
 		"migrate:latest": "npx knex migrate:latest --knexfile knexfile.ts",
 		"migrate:rollback": "npx knex migrate:rollback --knexfile knexfile.ts",
 		"seed:run": "npx knex seed:run --knexfile knexfile.ts",
-		"seed:create": "npx knex seed:make --knexfile knexfile.ts"
+		"seed:create": "npx knex seed:make --knexfile knexfile.ts",
+		"test": "jest"
 	},
 	"dependencies": {
 		"bcrypt": "5.1.1",
